@@ -1,6 +1,7 @@
 package frontier
 
 import (
+	"context"
 	"fmt"
 	"sync"
 	"testing"
@@ -75,6 +76,77 @@ func TestPerHostSerializationAndPoliteness(t *testing.T) {
 		if got[h] != perHost {
 			t.Errorf("%s 收到 %d 个任务，期望 %d", h, got[h], perHost)
 		}
+	}
+}
+
+// TestGateThrottlesEveryRequest 锁住一条曾经真实违反过的不变量：
+// 一个 worker 在自己的时间片内可能发多个请求（robots.txt + 页面），
+// 这些请求之间的间隔同样不得小于 delay。
+//
+// 这个 bug 用 -trace 在真实抓取里量出来过：32 对相邻请求的间隔低于配置值，
+// 全部是 robots.txt 与紧随其后的页面请求。修复方式是把「发请求」显式摆到
+// Gate 前面，而不是在 robots 那条分支上打补丁——所以这里测的是 Gate 本身。
+func TestGateThrottlesEveryRequest(t *testing.T) {
+	const delay = 30 * time.Millisecond
+	f := New(delay, 100, 4)
+	f.Add("http://a.example.com/1")
+
+	var mu sync.Mutex
+	lastSent := make(map[string]time.Time)
+
+	done := make(chan struct{})
+	go func() {
+		defer close(done)
+		for task := range f.Tasks() {
+			// 模拟一个 worker 在一个时间片内连发三个请求
+			for i := 0; i < 3; i++ {
+				if err := f.Gate(context.Background(), task.Host); err != nil {
+					t.Errorf("Gate: %v", err)
+					return
+				}
+				mu.Lock()
+				now := time.Now()
+				if prev, ok := lastSent[task.Host]; ok {
+					if gap := now.Sub(prev); gap < delay {
+						t.Errorf("第 %d 个请求与前一个相隔 %s < %s，限速被绕过", i+1, gap, delay)
+					}
+				}
+				lastSent[task.Host] = now
+				mu.Unlock()
+			}
+			f.Done(task.Host)
+		}
+	}()
+
+	select {
+	case <-done:
+	case <-time.After(5 * time.Second):
+		t.Fatal("超时：Gate 可能永久阻塞")
+	}
+	if n := len(lastSent); n == 0 {
+		t.Fatal("没有发出任何请求，用例本身失效")
+	}
+}
+
+// TestGateRespectsContextCancel 保证 ctx 取消时 Gate 会立刻返回而不是睡满间隔——
+// 否则 Ctrl-C 之后进程还要被每个在途请求拖住一个 delay。
+func TestGateRespectsContextCancel(t *testing.T) {
+	f := New(time.Hour, 10, 2)
+	f.Add("http://a.example.com/1")
+
+	// 先占用掉第一个时间片，使闸门关上
+	if err := f.Gate(context.Background(), "a.example.com"); err != nil {
+		t.Fatalf("首次 Gate: %v", err)
+	}
+
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	start := time.Now()
+	if err := f.Gate(ctx, "a.example.com"); err == nil {
+		t.Fatal("闸门关闭时 Gate 应返回 ctx 错误")
+	}
+	if el := time.Since(start); el > time.Second {
+		t.Fatalf("Gate 等了 %s 才返回，没有响应取消", el)
 	}
 }
 
