@@ -10,12 +10,13 @@ cmd/seeds/seeds
 *.out
 *.prof
 
-# 原始语料：数千个 HTML 文件，体积大，不入库
-data/raw/
+# 抓取现场：待抓队列是运行期状态，每次续爬都会追加，
+# 保留它的意义只有「下次能接着爬」，对读代码的人是纯噪声
+data/queue.jsonl
 data/tmp/
 
 # 注意：以下**保留**在仓库里，它们是面试官要看的证据
-#   data/manifest.jsonl    爬取结果索引
+#   data/pages.jsonl       爬取产物：一行一页的标题与正文
 #   eval/                  对比实验结果表
 #   bench/                 性能基准输出
 

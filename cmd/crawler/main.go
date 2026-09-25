@@ -1,4 +1,5 @@
-// Command crawler 是并发爬虫：从种子域名出发，每域抓取若干篇正文页并落盘。
+// Command crawler 是并发爬虫：从种子域名出发，每域抓若干篇正文页，边抓边抽，
+// 最终产出 data/pages.jsonl——一行一页的 {url, meta_title, real_title, main_content}。
 //
 // 结构上它就是四个部件的接线：
 //
@@ -9,6 +10,14 @@
 //
 // 每域的抓取走一条四级漏斗：首页 → 抽同域链接 → URL 粗筛排序 → 抓回来用
 // 抽取器精筛。预算是硬约束，所以先把钱花在最像正文页的 URL 上。
+//
+// **抽取在抓取时就地完成，原始 HTML 不落盘**：题目要的交付物是标题与正文，
+// HTML 只是中间态；把它留成磁盘上的 700MB 换来的唯一好处是「不重爬就能换
+// 算法重抽」，代价与收益不成比例。代价是有意接受的，README 的取舍一节写明。
+//
+// 唯一需要跨页上下文的是站点模板与模板残留，它们都是**域名级**统计量。
+// 调度器保证同一域串行，一个域的页面因此会在内存里自然聚齐，等 frontier
+// 报告该域排空时统一收尾即可——不需要磁盘上的原文做中转。
 package main
 
 import (
@@ -48,11 +57,15 @@ type config struct {
 	minContent int // 判为正文页的最小字符数
 	maxLinkRt  float64
 	ua         string
+
+	// noTemplates 关闭跨页模板过滤，仅用于消融实验：关掉后指标应当变差
+	// （正文里混进站点页脚），否则说明这套机制没起作用。
+	noTemplates bool
 }
 
 func main() {
 	var c config
-	flag.StringVar(&c.dataDir, "data", "data", "数据目录：原始 HTML 与 manifest 落在这里")
+	flag.StringVar(&c.dataDir, "data", "data", "数据目录：抽取产物 pages.jsonl 与待抓队列落在这里")
 	flag.StringVar(&c.seedsPath, "seeds", "", "种子文件，一行一个 URL 或域名")
 	flag.IntVar(&c.workers, "workers", 32, "并发 worker 数（= 同时在抓的不同域数）")
 	flag.DurationVar(&c.delay, "delay", 1500*time.Millisecond, "同一域名两次请求的最小间隔")
@@ -64,6 +77,7 @@ func main() {
 	flag.IntVar(&c.minContent, "min-content", 300, "判为正文页的最小正文长度")
 	flag.Float64Var(&c.maxLinkRt, "max-link-rate", 0.3, "判为正文页的最大正文链接密度")
 	flag.StringVar(&c.ua, "ua", fetch.DefaultUA, "User-Agent（单一、诚实，不轮换）")
+	flag.BoolVar(&c.noTemplates, "no-templates", false, "消融：关闭跨页模板过滤")
 	flag.Parse()
 
 	if c.workers < 1 {
@@ -132,6 +146,7 @@ func run(c config) error {
 
 	wg.Wait()
 	close(progressDone)
+	cr.flushRemaining()
 	if err := st.Flush(); err != nil {
 		return err
 	}
@@ -160,10 +175,27 @@ type siteState struct {
 	fetched  int  // 本域已抓页数
 	articles int  // 本域已确认的正文页数
 	seeded   bool // 首页是否已处理过（漏斗只跑一次）
+	flushed  bool // 收尾是否已做过
+
+	// pages 攒着本域已抽取的页面，等这个域爬完再统一做跨页清洗并落盘。
+	//
+	// 之所以不逐页落盘：跨页模板过滤是**域名级统计量**——「这段文字是这篇文章
+	// 的内容还是这个站的页脚」，单看一页永远判断不了，必须等同域的多页都到手。
+	// 而调度器保证同一域串行，一个域的页面本来就会在一段时间内陆续回来，攒着
+	// 几乎不占内存（每域十余页 × 每页千余字符）。域的边界由 frontier.Done 的
+	// 返回值给出，那是唯一知道「这个域一页不剩了」的地方。
+	pages []pageOut
+}
+
+// pageOut 是一页的抽取产物，等待域级收尾。
+type pageOut struct {
+	entry store.Entry
+	res   extract.Result
 }
 
 type stats struct {
 	pages, articles, empty, failed, skipped, robotsBlocked int64
+	sitesFlushed                                           int64
 	bytes                                                  int64
 	contentChars, linkChars, pageChars                     int64
 	queuedAt                                               []int64
@@ -193,7 +225,12 @@ func (c *crawler) handle(ctx context.Context, t frontier.Task) {
 		if len(discovered) > 0 {
 			c.add(discovered)
 		}
-		c.fr.Done(t.Host)
+		// 必须先把新发现的 URL 交回队列再销账：Done 返回「是否排空」，
+		// 顺序颠倒会让本域刚发现的候选还没入队就被判为爬完，然后被收尾落盘，
+		// 那批候选就永远留在队列里没人处理。
+		if c.fr.Done(t.Host) {
+			c.flushSite(t.Host)
+		}
 	}()
 
 	if c.cfg.maxPages > 0 && atomic.LoadInt64(&c.stats.pages) >= int64(c.cfg.maxPages) {
@@ -234,30 +271,26 @@ func (c *crawler) handle(ctx context.Context, t frontier.Task) {
 		Host:      t.Host,
 		Status:    res.StatusCode,
 		Bytes:     res.Bytes,
+		HTMLSha1:  store.Digest(res.HTML),
 		ElapsedMS: res.Elapsed.Milliseconds(),
 		FetchedAt: time.Now(),
 	}
 	if exErr == nil {
-		entry.Title, entry.RealTitle, entry.Chars = out.MetaTitle, out.RealTitle, out.ContentChars
-	}
-	if err := c.st.Save(entry, res.HTML); err != nil {
-		fmt.Fprintf(os.Stderr, "落盘失败 %s: %v\n", t.URL, err)
+		entry.MetaTitle = out.MetaTitle
+		entry.RealTitle = out.RealTitle
+		entry.MainContent = out.MainContent
+		entry.Chars = out.ContentChars
+		entry.LinkRate = out.LinkRate
 	}
 
+	// 判「是不是正文页」用的是**清洗前**的长度：这一步要即时反馈给漏斗，
+	// 决定本域还要不要再抓候选，等不到域级收尾。
 	isArticle := exErr == nil &&
 		out.ContentChars >= c.cfg.minContent &&
 		out.LinkRate <= c.cfg.maxLinkRt
 
 	atomic.AddInt64(&c.stats.pages, 1)
 	atomic.AddInt64(&c.stats.bytes, int64(res.Bytes))
-	if exErr == nil {
-		atomic.AddInt64(&c.stats.contentChars, int64(out.ContentChars))
-		atomic.AddInt64(&c.stats.linkChars, int64(out.LinkChars))
-		atomic.AddInt64(&c.stats.pageChars, int64(out.PageChars))
-		if out.MainContent == "" {
-			atomic.AddInt64(&c.stats.empty, 1)
-		}
-	}
 	if isArticle {
 		atomic.AddInt64(&c.stats.articles, 1)
 	}
@@ -268,11 +301,91 @@ func (c *crawler) handle(ctx context.Context, t frontier.Task) {
 	if isArticle {
 		s.articles++
 	}
+	s.pages = append(s.pages, pageOut{entry: entry, res: out})
 	if !s.seeded {
 		s.seeded = true
 		discovered = c.funnel(t.Host, t.URL, res.HTML, s)
-	} else if isArticle && s.articles >= c.cfg.perHost {
-		// 配额已满，不再追加候选。已在队列里的照抓（有 budget 兜底）。
+	}
+}
+
+// flushSite 在一个域爬完之后做收尾：学跨页模板、清洗正文、落盘。
+//
+// 这是「只存抽取结果、不存原始 HTML」能成立的关键一步——跨页统计所需的
+// 上下文（同域多页的正文）此刻全在内存里，用完即弃，不必落盘再读回来。
+//
+// 落盘的数值一律按**清洗后**的正文重算，保证产物文件里 main_content 的长度
+// 与 content_chars 对得上；若照搬抓取时的旧值，读产物的人会发现两者矛盾。
+func (c *crawler) flushSite(host string) {
+	c.mu.Lock()
+	s := c.sites[host]
+	if s == nil || s.flushed || len(s.pages) == 0 {
+		c.mu.Unlock()
+		return
+	}
+	s.flushed = true
+	pages := s.pages
+	s.pages = nil // 尽早交还给 GC：收尾期间该域不会有新页面进来
+	c.mu.Unlock()
+
+	if !c.cfg.noTemplates {
+		contents := make([]string, len(pages))
+		for i := range pages {
+			contents[i] = pages[i].res.MainContent
+		}
+		if tm := extract.LearnTemplates(contents); tm != nil {
+			for i := range pages {
+				cleaned := tm.Strip(pages[i].res.MainContent)
+				if cleaned == pages[i].res.MainContent {
+					continue
+				}
+				pages[i].res.MainContent = cleaned
+				pages[i].res.ContentChars = extract.CountContent(cleaned)
+				pages[i].entry.MainContent = cleaned
+				pages[i].entry.Chars = pages[i].res.ContentChars
+			}
+		}
+	}
+
+	var empty, contentChars, linkChars, pageChars int64
+	for i := range pages {
+		e := &pages[i].entry
+		if err := c.st.Save(*e); err != nil {
+			fmt.Fprintf(os.Stderr, "落盘失败 %s: %v\n", e.URL, err)
+		}
+		if e.MainContent == "" {
+			empty++
+		}
+		contentChars += int64(pages[i].res.ContentChars)
+		linkChars += int64(pages[i].res.LinkChars)
+		pageChars += int64(pages[i].res.PageChars)
+	}
+	atomic.AddInt64(&c.stats.empty, empty)
+	atomic.AddInt64(&c.stats.contentChars, contentChars)
+	atomic.AddInt64(&c.stats.linkChars, linkChars)
+	atomic.AddInt64(&c.stats.pageChars, pageChars)
+	atomic.AddInt64(&c.stats.sitesFlushed, 1)
+}
+
+// flushRemaining 在所有 worker 退出后兜底收尾。
+//
+// 正常路径下每个域都在 frontier.Done 返回「排空」时收过尾了，这里是保险：
+// 万一某个域的排空信号没走到（例如未来改动引入新的提前返回分支），
+// 兜底至少保证它的页面不会**静默丢失**——宁可晚一点落盘，不可丢数据。
+func (c *crawler) flushRemaining() {
+	c.mu.Lock()
+	hosts := make([]string, 0, len(c.sites))
+	for h, s := range c.sites {
+		if !s.flushed && len(s.pages) > 0 {
+			hosts = append(hosts, h)
+		}
+	}
+	c.mu.Unlock()
+
+	for _, h := range hosts {
+		c.flushSite(h)
+	}
+	if len(hosts) > 0 {
+		fmt.Fprintf(os.Stderr, "兜底收尾 %d 个域\n", len(hosts))
 	}
 }
 
@@ -404,7 +517,8 @@ func (c *crawler) printFinal(w io.Writer) {
 	}
 	fmt.Fprintf(w, "\n=== 抓取结束 ===\n")
 	fmt.Fprintf(w, "用时        %s（%.1f pages/s）\n", el.Truncate(time.Second), rate)
-	fmt.Fprintf(w, "落盘页数    %d（累计含续爬 %d）\n", pages, c.st.Saved())
+	fmt.Fprintf(w, "产出页数    %d（累计含续爬 %d）\n", pages, c.st.Saved())
+	fmt.Fprintf(w, "覆盖域名    %d（已收尾 %d）\n", len(c.sites), atomic.LoadInt64(&c.stats.sitesFlushed))
 	fmt.Fprintf(w, "其中正文页  %d\n", atomic.LoadInt64(&c.stats.articles))
 	fmt.Fprintf(w, "下载字节    %.1f MB\n", float64(atomic.LoadInt64(&c.stats.bytes))/(1<<20))
 	fmt.Fprintf(w, "抽取为空    %d\n", atomic.LoadInt64(&c.stats.empty))

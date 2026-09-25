@@ -25,7 +25,6 @@ import (
 	"io"
 	"net/url"
 	"os"
-	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
@@ -60,8 +59,6 @@ func main() {
 	var opt extract.Options
 	var batch int
 	var showStats, noCrossPage bool
-	var dataDir string
-	flag.StringVar(&dataDir, "data", "", "改为消费爬取产物目录（含 manifest.jsonl 与 raw/），而不是 stdin")
 	flag.BoolVar(&opt.DisablePunctGate, "no-punct", false, "消融：关闭标点率因子")
 	flag.BoolVar(&opt.DisableLinkPenalty, "no-link", false, "消融：关闭链接密度惩罚")
 	flag.BoolVar(&opt.DisablePropagation, "no-propagate", false, "消融：关闭祖先累积（退化为选单块最高分）")
@@ -79,16 +76,8 @@ func main() {
 		learner = extract.NewChromeLearner()
 	}
 
-	in := io.Reader(os.Stdin)
-	if dataDir != "" {
-		rc := dataReader(dataDir)
-		defer rc.Close()
-		in = rc
-		fmt.Fprintf(os.Stderr, "从爬取产物读取：%s\n", dataDir)
-	}
-
 	var st stats
-	if err := run(in, os.Stdout, extract.New(opt), learner, batch, &st); err != nil {
+	if err := run(os.Stdin, os.Stdout, extract.New(opt), learner, batch, &st); err != nil {
 		fmt.Fprintf(os.Stderr, "extractor: %v\n", err)
 		os.Exit(1)
 	}
@@ -96,57 +85,6 @@ func main() {
 	if showStats {
 		reportStats(os.Stderr, &st)
 	}
-}
-
-// dataReader 把爬取产物目录伪装成一个 JSONL 输入流。
-//
-// 这样重抽完全复用 stdin 那条路径——分批、批内并行、跨页模板学习、原序写出
-// 一行都不用改。若另写一条「从目录读」的路径，两份实现迟早会漂移，
-// 而它们本该产出完全相同的结果。
-func dataReader(dir string) io.ReadCloser {
-	pr, pw := io.Pipe()
-	go func() { pw.CloseWithError(streamData(dir, pw)) }()
-	return pr
-}
-
-// streamData 逐行读 manifest、逐页读回落盘的 HTML，编码成输入格式写进管道。
-//
-// 单页读失败只跳过、不中断：几千页里总有落盘不完整或被清理掉的，
-// 不该因为一页就让整轮重抽失败。
-func streamData(dir string, w io.Writer) error {
-	f, err := os.Open(filepath.Join(dir, "manifest.jsonl"))
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	sc := bufio.NewScanner(f)
-	sc.Buffer(make([]byte, 0, 1<<20), 16<<20)
-
-	for sc.Scan() {
-		var e struct {
-			URL  string `json:"url"`
-			Path string `json:"path"`
-		}
-		if err := json.Unmarshal(sc.Bytes(), &e); err != nil {
-			continue
-		}
-		if e.URL == "" || e.Path == "" {
-			continue
-		}
-		raw, err := os.ReadFile(filepath.Join(dir, e.Path))
-		if err != nil {
-			continue
-		}
-		b, err := json.Marshal(record{URL: e.URL, HTML: string(raw)})
-		if err != nil {
-			continue
-		}
-		if _, err := w.Write(append(b, '\n')); err != nil {
-			return err
-		}
-	}
-	return sc.Err()
 }
 
 func reportStats(w io.Writer, st *stats) {
@@ -262,7 +200,7 @@ func processBatch(ext *extract.Extractor, learner *extract.ChromeLearner, recs [
 		go func(i int) {
 			defer wg.Done()
 			defer func() { <-sem }()
-			outs[i] = extractOne(ext, &recs[i], chroma[i])
+			outs[i] = extractOne(ext, recs[i].URL, recs[i].HTML, chroma[i])
 		}(i)
 	}
 	wg.Wait()
@@ -272,42 +210,48 @@ func processBatch(ext *extract.Extractor, learner *extract.ChromeLearner, recs [
 		if it.out == nil {
 			continue
 		}
-		st.Pages++
-		if it.out.MainContent == "" {
-			st.Empty++
-		}
-		// 用 ContentChars 而非 MainContent 的 rune 数：后者含段落换行，
-		// 与 PageChars（非空白字符）不同量纲，两个平均值放一起没法比。
-		st.ContentLen += it.res.ContentChars
-		st.LinkChars += it.res.LinkChars
-		st.PageChars += it.res.PageChars
+		accumulate(st, it)
 	}
 }
 
 // extractOne 抽取单页。单页 panic 不能带崩整批——输入里明确允许存在
 // 少量垃圾页面，一个畸形 HTML 不该让整轮任务失败。
-func extractOne(ext *extract.Extractor, rec *record, ch extract.Chrome) (it item) {
+func extractOne(ext *extract.Extractor, pageURL, htmlStr string, ch extract.Chrome) (it item) {
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Fprintf(os.Stderr, "panic on %s: %v\n", rec.URL, r)
-			it = item{out: &output{URL: rec.URL}}
+			fmt.Fprintf(os.Stderr, "panic on %s: %v\n", pageURL, r)
+			it = item{out: &output{URL: pageURL}}
 		}
 	}()
 
-	res, err := ext.ExtractWithChrome(rec.URL, rec.HTML, ch)
+	res, err := ext.ExtractWithChrome(pageURL, htmlStr, ch)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "extract %s: %v\n", rec.URL, err)
-		return item{out: &output{URL: rec.URL}}
+		fmt.Fprintf(os.Stderr, "extract %s: %v\n", pageURL, err)
+		return item{out: &output{URL: pageURL}}
 	}
 	return item{
 		out: &output{
-			URL:         rec.URL,
+			URL:         pageURL,
 			MetaTitle:   res.MetaTitle,
 			RealTitle:   res.RealTitle,
 			MainContent: res.MainContent,
 		},
 		res: res,
 	}
+}
+
+// accumulate 汇总一页的统计量。两条路径（流式与语料）共用，保证同一次输入
+// 无论走哪条路径，报出来的指标都可直接比较。
+func accumulate(st *stats, it item) {
+	st.Pages++
+	if it.out.MainContent == "" {
+		st.Empty++
+	}
+	// 用 ContentChars 而非 MainContent 的 rune 数：后者含段落换行，
+	// 与 PageChars（非空白字符）不同量纲，两个平均值放一起没法比。
+	st.ContentLen += it.res.ContentChars
+	st.LinkChars += it.res.LinkChars
+	st.PageChars += it.res.PageChars
 }
 
 // hostOf 取 URL 的 host，作为「同一站点」的归并键。

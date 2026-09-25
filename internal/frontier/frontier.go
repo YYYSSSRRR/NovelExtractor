@@ -182,12 +182,18 @@ func (f *Frontier) Add(urls ...string) int {
 	return n
 }
 
-// Done 由 worker 在**处理完一个任务、并把它发现的新 URL 全部 Add 之后**调用。
+// Done 由 worker 在**处理完一个任务、并把它发现的新 URL 全部 Add 之后**调用，
+// 返回该域是否就此排空（队列里再无待抓 URL）。
 //
 // 这个顺序是终止判定的前提：先把新 URL 交回队列再销账，所以 queued 和
 // inflight 不可能同时为 0 而仍有 worker 在路上——否则会出现「提前判定爬完」，
 // 丢掉最后一批发现。
-func (f *Frontier) Done(host string) {
+//
+// 返回值给调用方一个**域的边界**。跨页统计（站点模板、模板残留）是域名级的量，
+// 只有在这个域一页都不剩时才能算准；调度器本来就是唯一知道这件事的地方，
+// 与其让上层去猜，不如在这里一并告诉它。判定必须在锁内做：「排空」这个事实
+// 只在 Done 的那一刻成立，出了锁就可能被新的 Add 推翻。
+func (f *Frontier) Done(host string) (drained bool) {
 	f.mu.Lock()
 	defer f.mu.Unlock()
 
@@ -202,9 +208,11 @@ func (f *Frontier) Done(host string) {
 		} else {
 			q.state = stateIdle
 			q.nextAt = time.Now().Add(q.gap(f.delay))
+			drained = true
 		}
 	}
 	f.checkDrainedLocked()
+	return drained
 }
 
 // Tasks 返回任务通道。通道关闭意味着全部工作结束，worker 应当退出。

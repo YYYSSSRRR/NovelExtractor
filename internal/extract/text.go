@@ -200,6 +200,10 @@ func dropLeadingTitleLine(content, title string) string {
 	return strings.Join(lines[drop:], "\n")
 }
 
+// CountContent 数正文里的非空白字符数。跨页模板清洗会改写正文，清洗后
+// 需要按同一套量纲重算长度，故对外暴露。
+func CountContent(s string) int { return countContentChars(s) }
+
 // countContentChars 数正文里的非空白字符数，用作长度类质量判据。
 func countContentChars(s string) int {
 	n := 0
