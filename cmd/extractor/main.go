@@ -25,7 +25,6 @@ import (
 	"runtime"
 	"strings"
 	"sync"
-	"unicode/utf8"
 
 	"web-extract/internal/extract"
 )
@@ -212,7 +211,9 @@ func processBatch(ext *extract.Extractor, learner *extract.ChromeLearner, recs [
 		if it.out.MainContent == "" {
 			st.Empty++
 		}
-		st.ContentLen += utf8.RuneCountInString(it.out.MainContent)
+		// 用 ContentChars 而非 MainContent 的 rune 数：后者含段落换行，
+		// 与 PageChars（非空白字符）不同量纲，两个平均值放一起没法比。
+		st.ContentLen += it.res.ContentChars
 		st.LinkChars += it.res.LinkChars
 		st.PageChars += it.res.PageChars
 	}

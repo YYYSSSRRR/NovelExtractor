@@ -174,6 +174,7 @@ func dropLeadingTitleLine(content, title string) string {
 	if t == "" {
 		return content
 	}
+	tl := utf8.RuneCountInString(t)
 	lines := strings.Split(content, "\n")
 	drop := 0
 	for drop < len(lines) && drop < 3 { // 只检查开头几行，避免误删正文中段的正常句子
@@ -182,10 +183,15 @@ func dropLeadingTitleLine(content, title string) string {
 			drop++
 			continue
 		}
-		// 三种重复形态：完全相同、是标题的片段（如标题被拆行）、包含标题
+		ll := utf8.RuneCountInString(l)
+		// 三种重复形态：完全相同、是标题的片段（如标题被拆行）、包含标题。
+		//
+		// 后两种必须带长度约束。否则「包含标题」会退化成「正文里只要提到标题
+		// 就删」——新闻页常在第一段复述标题，那样会整段吃掉。判据收敛为
+		// 「这一行基本就是标题本身」，所以要求它与标题长度相当。
 		dup := l == t ||
-			(strings.Contains(t, l) && utf8.RuneCountInString(l) >= 4) ||
-			strings.Contains(l, t)
+			(strings.Contains(t, l) && ll >= 4 && ll <= tl*2) ||
+			(strings.Contains(l, t) && ll <= tl*2+8)
 		if !dup {
 			break
 		}

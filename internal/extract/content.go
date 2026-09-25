@@ -148,6 +148,16 @@ func pickContainer(accum map[*html.Node]float64, stats map[*html.Node]*textStats
 	return best
 }
 
+// isBlockElement 判定元素是否为块级，即「能独立成段」。
+//
+// 输出阶段的处理分两类：块级元素做「整块跳过」判断（导航、相关阅读、标签云
+// 都是整块出现的），行内元素（<a>、<span>、<em>…）不能套用同一条规则——
+// 它们自身的链接密度天然接近 1，一挡就把正文里的内联链接连文字一起删掉，
+// 句子会从中间断掉。
+func isBlockElement(a atom.Atom) bool {
+	return isBlockBoundary[a] || isBlockCandidate(a)
+}
+
 // isBlockBoundary 列出会在视觉上产生换行的标签，用于在输出文本里
 // 还原段落边界。输出要求「包含换行」，靠的就是这一步。
 var isBlockBoundary = map[atom.Atom]bool{
@@ -160,8 +170,9 @@ var isBlockBoundary = map[atom.Atom]bool{
 
 // render 按文档序输出容器内的可见文本，块级边界插入换行。
 //
-// 整块链接密度超标的子树直接跳过——正文区里残留的「相关阅读」「上一篇」
-// 「标签云」正是在这里被吃掉，全程不需要知道任何 class 名。
+// 「整块跳过」只对块级元素生效。行内元素（<a>、<span>…）不能套用同一条规则：
+// 它们自身的链接密度天然接近 1，一挡就会把正文段落里的内联链接连文字一起删掉，
+// 句子从中间断掉——而块级层面已经把导航、相关阅读、标签云拦住了，行内无需再拦。
 func render(sb *strings.Builder, n *html.Node, stats map[*html.Node]*textStats, inLink bool, res *Result) {
 	switch n.Type {
 	case html.TextNode:
@@ -175,8 +186,10 @@ func render(sb *strings.Builder, n *html.Node, stats map[*html.Node]*textStats, 
 		}
 		return
 	case html.ElementNode:
-		if st := stats[n]; st != nil && st.chars > 0 && st.linkRate() > skipLinkRate {
-			return
+		if isBlockElement(n.DataAtom) {
+			if st := stats[n]; st != nil && st.chars > 0 && st.linkRate() > skipLinkRate {
+				return
+			}
 		}
 		if n.DataAtom == atom.A {
 			inLink = true
