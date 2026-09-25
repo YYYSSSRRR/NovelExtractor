@@ -22,38 +22,46 @@ func loadFixture(tb testing.TB, name string) (string, string) {
 	return "https://www.gov.cn/zhengce/jiedu/202609/content_1.htm", string(raw)
 }
 
+// fixtures 是基准用的真实页面。两个体量差十倍，单看一个数字会误导：
+// 抽取耗时几乎全在建 DOM 上，与页面字节数近似线性。
+var fixtures = []string{"news_1.html", "news_2.html"}
+
 func BenchmarkExtract(b *testing.B) {
-	u, page := loadFixture(b, "news_1.html")
 	e := New(Options{})
-
-	b.SetBytes(int64(len(page)))
-	b.ReportAllocs()
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		if _, err := e.ExtractWithChrome(u, page, Chrome{}); err != nil {
-			b.Fatal(err)
-		}
+	for _, fx := range fixtures {
+		b.Run(fx, func(b *testing.B) {
+			u, page := loadFixture(b, fx)
+			b.SetBytes(int64(len(page)))
+			b.ReportAllocs()
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				if _, err := e.ExtractWithChrome(u, page, Chrome{}); err != nil {
+					b.Fatal(err)
+				}
+			}
+		})
 	}
 }
 
 // BenchmarkExtractParallel 量的是吞吐上限：爬虫侧是多 worker 并发的，
 // 单核数字不能直接换算成整机 pages/sec，必须实测并行扩展性。
 func BenchmarkExtractParallel(b *testing.B) {
-	u, page := loadFixture(b, "news_1.html")
 	e := New(Options{})
-
-	b.SetBytes(int64(len(page)))
-	b.ReportAllocs()
-	b.ResetTimer()
-
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() {
-			if _, err := e.ExtractWithChrome(u, page, Chrome{}); err != nil {
-				b.Fatal(err)
-			}
-		}
-	})
+	for _, fx := range fixtures {
+		b.Run(fx, func(b *testing.B) {
+			u, page := loadFixture(b, fx)
+			b.SetBytes(int64(len(page)))
+			b.ReportAllocs()
+			b.ResetTimer()
+			b.RunParallel(func(pb *testing.PB) {
+				for pb.Next() {
+					if _, err := e.ExtractWithChrome(u, page, Chrome{}); err != nil {
+						b.Fatal(err)
+					}
+				}
+			})
+		})
+	}
 }
 
 // TestExtractRealPages 用真实页面做端到端回归。

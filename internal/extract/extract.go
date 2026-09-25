@@ -30,18 +30,24 @@ type Options struct {
 	KeepAttribution    bool // 保留「本文来自 xxx(http://...)」这类署名行
 }
 
-func (o Options) disabled() map[string]bool {
-	m := make(map[string]bool, 3)
-	if o.DisablePunctGate {
-		m["punct"] = true
+// gates 是消融开关的运行时形态。
+//
+// 这里刻意用结构体字段而不是 map[string]bool。两者读起来一样直白，但
+// score 与 accumulate 是在整棵 DOM 上**逐节点**执行的：每个候选块查两次
+// map、每个元素节点再查一次，而 Go 的 map 查找即便命中也要算哈希、比字符串。
+// 换成字段访问后不仅省掉这一步，编译器还能把判断提到循环外。
+type gates struct {
+	noPunct     bool // 关掉标点率因子
+	noLink      bool // 关掉链接密度惩罚
+	noPropagate bool // 关掉祖先累积
+}
+
+func (o Options) gates() gates {
+	return gates{
+		noPunct:     o.DisablePunctGate,
+		noLink:      o.DisableLinkPenalty,
+		noPropagate: o.DisablePropagation,
 	}
-	if o.DisableLinkPenalty {
-		m["link"] = true
-	}
-	if o.DisablePropagation {
-		m["propagate"] = true
-	}
-	return m
 }
 
 // Result 是抽取产物。除三个必需输出字段外还带上若干中间统计量：
@@ -68,13 +74,13 @@ type Result struct {
 
 // Extractor 可复用。内部无可变状态，可安全并发调用。
 type Extractor struct {
-	opt      Options
-	disabled map[string]bool
+	opt Options
+	g   gates
 }
 
 // New 构造抽取器。传零值 Options 即完整算法。
 func New(opt Options) *Extractor {
-	return &Extractor{opt: opt, disabled: opt.disabled()}
+	return &Extractor{opt: opt, g: opt.gates()}
 }
 
 // Extract 抽取单页。pageURL 目前只用于诊断，算法本身不依赖 URL 结构
@@ -107,8 +113,8 @@ func (e *Extractor) ExtractWithChrome(pageURL, htmlStr string, ch Chrome) (Resul
 		}
 	}
 
-	own := ownScores(stats, e.disabled)
-	accum, best := accumulate(doc, own, e.disabled)
+	own := ownScores(stats, e.g)
+	accum, best := accumulate(doc, own, e.g)
 	container := pickContainer(accum, stats, best)
 
 	var sb strings.Builder

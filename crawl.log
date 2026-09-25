@@ -1,0 +1,1084 @@
+seed=1067 resume-queue=0 workers=32 delay=1.5s budget/host=30 target/host=15
+已入队 1067 个种子
+发现 yys.163.com: 同域链接 5 条 → 候选 3 条
+发现 wz.yuzhua.com: 同域链接 59 条 → 候选 29 条
+发现 yuedu.163.com: 同域链接 39 条 → 候选 11 条
+发现 xyq.163.com: 同域链接 240 条 → 候选 29 条
+发现 www.zzbank.cn: 同域链接 212 条 → 候选 29 条
+发现 zj.chinaz.com: 同域链接 6 条 → 候选 2 条
+robots 禁止，跳过: www.zybang.com/
+发现 zwfw.mohrss.gov.cn: 同域链接 14 条 → 候选 11 条
+发现 www.zuel.edu.cn: 同域链接 32 条 → 候选 1 条
+发现 www.zhulang.com: 同域链接 106 条 → 候选 3 条
+发现 yunpan.360.cn: 同域链接 6 条 → 候选 2 条
+发现 zfxxgk.ndrc.gov.cn: 同域链接 27 条 → 候选 20 条
+发现 www.zte.com.cn: 同域链接 103 条 → 候选 29 条
+发现 yuwen.chazidian.com: 同域链接 272 条 → 候选 6 条
+发现 yc.ifeng.com: 同域链接 278 条 → 候选 29 条
+抓取失败 http://www.zol.com.cn: http://www.zol.com.cn: http 403
+发现 xkczb.jtw.beijing.gov.cn: 同域链接 22 条 → 候选 19 条
+发现 www.zhiji.com: 同域链接 5 条 → 候选 4 条
+发现 www.zongheng.com: 同域链接 128 条 → 候选 29 条
+发现 www.zhenai.com: 同域链接 45 条 → 候选 14 条
+发现 www.zhcw.com: 同域链接 138 条 → 候选 29 条
+发现 www.zhibo8.com: 同域链接 229 条 → 候选 29 条
+发现 www.yisu.com: 同域链接 130 条 → 候选 29 条
+发现 www.zazhipu.com: 同域链接 1364 条 → 候选 1 条
+发现 www.zbj.com: 同域链接 411 条 → 候选 29 条
+发现 5sing.kugou.com: 同域链接 26 条 → 候选 1 条
+发现 www.zhaojiao.net: 同域链接 392 条 → 候选 29 条
+发现 www.yinhangzhaopin.com: 同域链接 604 条 → 候选 29 条
+发现 www.zj.gov.cn: 同域链接 106 条 → 候选 29 条
+发现 www.zhibo8.cc: 同域链接 153 条 → 候选 29 条
+发现 www.yinxiang.com: 同域链接 15 条 → 候选 1 条
+发现 auto.163.com: 同域链接 13 条 → 候选 3 条
+发现 api.chinaz.com: 同域链接 31 条 → 候选 21 条
+发现 www.yn.gov.cn: 同域链接 138 条 → 候选 29 条
+发现 www.yunnan.cn: 同域链接 3 条 → 候选 2 条
+发现 www.yeah.net: 同域链接 1 条 → 候选 1 条
+发现 www.yiche.com: 同域链接 8 条 → 候选 1 条
+发现 class.hujiang.com: 同域链接 18 条 → 候选 3 条
+发现 www.youyuwei.com: 同域链接 86 条 → 候选 29 条
+发现 www.xyzq.com.cn: 同域链接 36 条 → 候选 29 条
+发现 www.zgjtb.com: 同域链接 220 条 → 候选 29 条
+发现 www.zyywenxue.com: 同域链接 141 条 → 候选 29 条
+发现 www.yiban.cn: 同域链接 10 条 → 候选 2 条
+发现 www.yicai.com: 同域链接 160 条 → 候选 29 条
+发现 www.csu.edu.cn: 同域链接 45 条 → 候选 12 条
+发现 www.y2002.com: 同域链接 176 条 → 候选 29 条
+发现 www.ctnews.com.cn: 同域链接 155 条 → 候选 29 条
+发现 www.csrc.gov.cn: 同域链接 278 条 → 候选 29 条
+发现 www.xjtu.edu.cn: 同域链接 106 条 → 候选 29 条
+发现 www.xszz.edu.cn: 同域链接 127 条 → 候选 6 条
+发现 www.xxsy.net: 同域链接 73 条 → 候选 29 条
+抓取失败 http://xxgk.jl.gov.cn: http://xxgk.jl.gov.cn: http 403
+发现 www.yesky.com: 同域链接 63 条 → 候选 1 条
+发现 ru.moe.gov.cn: 同域链接 13 条 → 候选 8 条
+发现 www.cug.edu.cn: 同域链接 91 条 → 候选 29 条
+发现 www.xizang.gov.cn: 同域链接 82 条 → 候选 29 条
+发现 www.xtep.com: 同域链接 14 条 → 候选 4 条
+发现 www.xmu.edu.cn: 同域链接 18 条 → 候选 3 条
+发现 www.cugb.edu.cn: 同域链接 61 条 → 候选 26 条
+发现 www.xs8.cn: 同域链接 188 条 → 候选 29 条
+发现 www.xxsypro.com: 同域链接 97 条 → 候选 29 条
+发现 www.youzibook.cc: 同域链接 151 条 → 候选 29 条
+发现 www.cumtb.edu.cn: 同域链接 51 条 → 候选 29 条
+发现 www.cwl.gov.cn: 同域链接 315 条 → 候选 29 条
+发现 www.xinminweekly.com.cn: 同域链接 96 条 → 候选 29 条
+发现 www.cup.edu.cn: 同域链接 77 条 → 候选 29 条
+发现 www.ywcbs.com: 同域链接 52 条 → 候选 20 条
+发现 www.xmrc.com.cn: 同域链接 88 条 → 候选 29 条
+发现 www.cumt.edu.cn: 同域链接 72 条 → 候选 29 条
+发现 www.ximalaya.com: 同域链接 11 条 → 候选 1 条
+发现 www.xinjiang.gov.cn: 同域链接 80 条 → 候选 29 条
+robots 禁止，跳过: sh.122.gov.cn/
+发现 immomo.com: 同域链接 10 条 → 候选 3 条
+发现 club.autohome.com.cn: 同域链接 566 条 → 候选 29 条
+发现 www.xcar.com.cn: 同域链接 316 条 → 候选 29 条
+发现 shop.lenovo.com.cn: 同域链接 34 条 → 候选 1 条
+发现 www.czbank.com: 同域链接 516 条 → 候选 29 条
+发现 www.cufe.edu.cn: 同域链接 63 条 → 候选 29 条
+发现 www.xiachufang.com: 同域链接 195 条 → 候选 29 条
+发现 www.wuhan.gov.cn: 同域链接 98 条 → 候选 29 条
+发现 www.xinhuanet.com: 同域链接 66 条 → 候选 3 条
+发现 www.ych009.com: 同域链接 131 条 → 候选 21 条
+发现 shop.samsung.com.cn: 同域链接 119 条 → 候选 29 条
+发现 www.dhu.edu.cn: 同域链接 21 条 → 候选 8 条
+发现 club.xilu.com: 同域链接 279 条 → 候选 29 条
+发现 www.deyi.com: 同域链接 214 条 → 候选 6 条
+发现 www.xmccb.com: 同域链接 72 条 → 候选 20 条
+发现 www.dili360.com: 同域链接 163 条 → 候选 29 条
+发现 www.dicos.com.cn: 同域链接 8 条 → 候选 1 条
+发现 www.workercn.cn: 同域链接 296 条 → 候选 29 条
+发现 www.digitaling.com: 同域链接 149 条 → 候选 29 条
+发现 auto.china.com: 同域链接 1125 条 → 候选 29 条
+发现 www.datafu.com: 同域链接 371 条 → 候选 29 条
+发现 bbs.voc.com.cn: 同域链接 261 条 → 候选 2 条
+发现 www.whut.edu.cn: 同域链接 79 条 → 候选 18 条
+发现 www.whu.edu.cn: 同域链接 39 条 → 候选 6 条
+发现 www.xingzhilian.net: 同域链接 59 条 → 候选 7 条
+发现 cn.chinadaily.com.cn: 同域链接 137 条 → 候选 29 条
+发现 www.doc88.com: 同域链接 45 条 → 候选 2 条
+发现 www.donews.com: 同域链接 145 条 → 候选 29 条
+发现 www.west.cn: 同域链接 347 条 → 候选 29 条
+发现 www.xjhr.com: 同域链接 1252 条 → 候选 29 条
+发现 www.dongqiudi.com: 同域链接 33 条 → 候选 26 条
+robots 禁止，跳过: it.sohu.com/
+发现 www.weather.com.cn: 同域链接 114 条 → 候选 29 条
+发现 www.decheng-edu.com: 同域链接 82 条 → 候选 29 条
+发现 it.gmw.cn: 同域链接 22 条 → 候选 14 条
+发现 sports.163.com: 同域链接 44 条 → 候选 20 条
+发现 www.douyu.com: 同域链接 79 条 → 候选 12 条
+发现 www.douguo.com: 同域链接 139 条 → 候选 29 条
+发现 sports.cctv.com: 同域链接 68 条 → 候选 19 条
+发现 www.vivo.com.cn: 同域链接 7 条 → 候选 4 条
+发现 www.volcengine.com: 同域链接 25 条 → 候选 11 条
+发现 jiankang.163.com: 同域链接 14 条 → 候选 6 条
+发现 www.ustb.edu.cn: 同域链接 39 条 → 候选 9 条
+发现 www.wenku8.net: 同域链接 18 条 → 候选 10 条
+发现 cn.unionpay.com: 同域链接 26 条 → 候选 23 条
+发现 shnanbin.com: 同域链接 150 条 → 候选 29 条
+robots 禁止，跳过: www.xbqg99.net/
+发现 www.upc.edu.cn: 同域链接 23 条 → 候选 11 条
+发现 www.uestc.edu.cn: 同域链接 11 条 → 候选 1 条
+发现 sports.eastday.com: 同域链接 76 条 → 候选 12 条
+抓取失败 http://rsks.gd.gov.cn: Get "http://rsks.gd.gov.cn": read tcp 192.168.0.110:65452->157.122.49.7:80: read: connection reset by peer
+发现 www.ttzyw.com: 同域链接 1178 条 → 候选 29 条
+发现 www.dlut.edu.cn: 同域链接 50 条 → 候选 2 条
+发现 sports.ifeng.com: 同域链接 47 条 → 候选 29 条
+发现 www.dzwww.com: 同域链接 121 条 → 候选 29 条
+发现 www.tsinghua.edu.cn: 同域链接 136 条 → 候选 29 条
+发现 jimeng.jianying.com: 同域链接 15 条 → 候选 1 条
+发现 www.ecnu.edu.cn: 同域链接 98 条 → 候选 29 条
+发现 www.douyinxs.com: 同域链接 221 条 → 候选 29 条
+发现 www.ecust.edu.cn: 同域链接 141 条 → 候选 29 条
+发现 www.tongji.edu.cn: 同域链接 48 条 → 候选 20 条
+发现 www.xidian.edu.cn: 同域链接 35 条 → 候选 19 条
+发现 sports.sina.com.cn: 同域链接 801 条 → 候选 29 条
+发现 www.eeo.com.cn: 同域链接 149 条 → 候选 29 条
+发现 www.dixintong.com: 同域链接 55 条 → 候选 1 条
+发现 www.tju.edu.cn: 同域链接 167 条 → 候选 29 条
+发现 www.tsxs.cc: 同域链接 319 条 → 候选 29 条
+发现 www.toshiba.com.cn: 同域链接 28 条 → 候选 15 条
+发现 sports.pptv.com: 同域链接 74 条 → 候选 29 条
+发现 www.titan24.com: 同域链接 42 条 → 候选 27 条
+发现 www.tjrenliziyuan.com: 同域链接 100 条 → 候选 29 条
+发现 www.tmtpost.com: 同域链接 188 条 → 候选 29 条
+发现 www.uibe.edu.cn: 同域链接 23 条 → 候选 4 条
+发现 www.tianyancha.com: 同域链接 33 条 → 候选 8 条
+发现 www.eqea.edu.cn: 同域链接 72 条 → 候选 28 条
+发现 www.tieyou.com: 同域链接 128 条 → 候选 29 条
+发现 sports.sohu.com: 同域链接 37 条 → 候选 14 条
+发现 www.tgbus.com: 同域链接 52 条 → 候选 29 条
+发现 www.essence.com.cn: 同域链接 74 条 → 候选 29 条
+发现 www.szse.cn: 同域链接 31 条 → 候选 10 条
+发现 www.familydoctor.com.cn: 同域链接 167 条 → 候选 29 条
+发现 sports.china.com.cn: 同域链接 30 条 → 候选 24 条
+发现 www.elong.com: 同域链接 72 条 → 候选 29 条
+发现 www.techweb.com.cn: 同域链接 159 条 → 候选 29 条
+发现 www.tan8.com: 同域链接 175 条 → 候选 29 条
+发现 www.wechat.com: 同域链接 4 条 → 候选 4 条
+发现 www.dell.com: 同域链接 180 条 → 候选 29 条
+发现 www.fangjia.com: 同域链接 33 条 → 候选 14 条
+发现 www.tedahr.com: 同域链接 103 条 → 候选 29 条
+发现 www.fanli.com: 同域链接 16 条 → 候选 3 条
+发现 www.sysu.edu.cn: 同域链接 50 条 → 候选 21 条
+发现 www.swufe.edu.cn: 同域链接 65 条 → 候选 29 条
+发现 api.cn: 同域链接 24 条 → 候选 16 条
+发现 www.swu.edu.cn: 同域链接 73 条 → 候选 29 条
+发现 www.swjtu.edu.cn: 同域链接 34 条 → 候选 9 条
+发现 www.fang.com: 同域链接 106 条 → 候选 29 条
+发现 www.feiyu.com: 同域链接 12 条 → 候选 2 条
+发现 stool.chinaz.com: 同域链接 6 条 → 候选 2 条
+发现 data.chinaz.com: 同域链接 22 条 → 候选 10 条
+发现 www.yixieshi.com: 同域链接 8 条 → 候选 1 条
+发现 www.super8.com.cn: 同域链接 48 条 → 候选 29 条
+发现 www.supei.com: 同域链接 110 条 → 候选 29 条
+发现 www.drcbank.com: 同域链接 149 条 → 候选 2 条
+发现 www.tinglanshu.com: 同域链接 143 条 → 候选 29 条
+发现 jsj.moe.gov.cn: 同域链接 30 条 → 候选 19 条
+发现 www.stdaily.com: 同域链接 97 条 → 候选 29 条
+发现 www.fmprc.gov.cn: 同域链接 107 条 → 候选 29 条
+发现 tech.163.com: 同域链接 16 条 → 候选 5 条
+发现 js.aizhan.com: 同域链接 279 条 → 候选 29 条
+发现 jp.moe.gov.cn: 同域链接 13 条 → 候选 10 条
+发现 data.eastmoney.com: 同域链接 824 条 → 候选 29 条
+发现 www.stats.gov.cn: 同域链接 105 条 → 候选 29 条
+发现 tech.ifeng.com: 同域链接 106 条 → 候选 29 条
+发现 www.focus.cn: 同域链接 68 条 → 候选 21 条
+发现 www.foxmail.com: 同域链接 6 条 → 候选 1 条
+发现 tech.sina.com.cn: 同域链接 26 条 → 候选 8 条
+发现 www.sundan.com: 同域链接 22 条 → 候选 1 条
+发现 www.fortunechina.com: 同域链接 93 条 → 候选 29 条
+发现 www.font.cn: 同域链接 70 条 → 候选 4 条
+发现 www.fudan.edu.cn: 同域链接 139 条 → 候选 4 条
+发现 www.stcn.com: 同域链接 242 条 → 候选 29 条
+抓取失败 http://shandu.huati365.com: Get "http://shandu.huati365.com": dial tcp: lookup shandu.huati365.com: no such host
+发现 www.forestry.gov.cn: 同域链接 157 条 → 候选 29 条
+发现 tianya.net: 同域链接 6 条 → 候选 3 条
+发现 www.gaoxiaojob.com: 同域链接 1663 条 → 候选 29 条
+发现 www.spp.gov.cn: 同域链接 168 条 → 候选 29 条
+发现 www.stzp.cn: 同域链接 71 条 → 候选 29 条
+发现 www.fujian.gov.cn: 同域链接 156 条 → 候选 29 条
+发现 www.sse.com.cn: 同域链接 103 条 → 候选 29 条
+发现 tl.changyou.com: 同域链接 22 条 → 候选 7 条
+发现 www.gfan.com: 同域链接 65 条 → 候选 29 条
+发现 www.sporttery.cn: 同域链接 8 条 → 候选 2 条
+发现 tlhj.changyou.com: 同域链接 24 条 → 候选 14 条
+发现 www.sujiange.com: 同域链接 149 条 → 候选 29 条
+发现 juejin.cn: 同域链接 77 条 → 候选 21 条
+robots 禁止，跳过: bigdata.aizhan.com/
+发现 www.sports.cn: 同域链接 79 条 → 候选 29 条
+[21:38:53] pages=298 articles=76 hosts=1067 queue=4577 inflight=65 29.8 pages/s 失败=4 跳过=0
+发现 www.sport.gov.cn: 同域链接 120 条 → 候选 29 条
+robots 禁止，跳过: www.spdb.com.cn/
+发现 junshi.xilu.com: 同域链接 64 条 → 候选 29 条
+发现 de.moe.gov.cn: 同域链接 13 条 → 候选 8 条
+发现 tool.chinaz.com: 同域链接 62 条 → 候选 26 条
+发现 www.gold.org.cn: 同域链接 209 条 → 候选 29 条
+发现 www.gdrc.com: 同域链接 917 条 → 候选 29 条
+发现 bbs.pingpang.info: 同域链接 28 条 → 候选 18 条
+发现 www.gjxfj.gov.cn: 同域链接 175 条 → 候选 29 条
+抓取失败 http://stock.pingan.com: Get "http://stock.pingan.com": dial tcp 101.89.64.209:80: connect: connection refused
+发现 www.gqb.gov.cn: 同域链接 41 条 → 候选 29 条
+发现 tools.aizhan.com: 同域链接 51 条 → 候选 1 条
+发现 www.southcn.com: 同域链接 19 条 → 候选 5 条
+发现 www.goodjobs.cn: 同域链接 14 条 → 候选 5 条
+发现 tousu.www.gov.cn: 同域链接 33 条 → 候选 4 条
+发现 www.gov.cn: 同域链接 83 条 → 候选 29 条
+发现 www.guancha.cn: 同域链接 864 条 → 候选 29 条
+发现 top.aizhan.com: 同域链接 188 条 → 候选 29 条
+robots 禁止，跳过: lianjia.com/
+发现 www.guizhou.gov.cn: 同域链接 110 条 → 候选 29 条
+发现 www.spb.gov.cn: 同域链接 102 条 → 候选 29 条
+发现 k.kuwo.cn: 同域链接 5 条 → 候选 1 条
+发现 trains.ctrip.com: 同域链接 74 条 → 候选 29 条
+发现 travel.163.com: 同域链接 3 条 → 候选 1 条
+发现 www.guokr.com: 同域链接 24 条 → 候选 16 条
+发现 auto.sina.com.cn: 同域链接 73 条 → 候选 29 条
+发现 www.sootoo.com: 同域链接 49 条 → 候选 24 条
+发现 www.guosen.com.cn: 同域链接 10 条 → 候选 8 条
+发现 big5.www.gov.cn: 同域链接 90 条 → 候选 29 条
+robots 禁止，跳过: www.sohu.com/
+发现 travel.sohu.com: 同域链接 4 条 → 候选 3 条
+发现 www.sony.com.cn: 同域链接 37 条 → 候选 27 条
+发现 trends.chinaz.com: 同域链接 32 条 → 候选 24 条
+发现 www.solidot.org: 同域链接 83 条 → 候选 29 条
+发现 www.srcb.com: 同域链接 394 条 → 候选 17 条
+发现 www.gxrc.com: 同域链接 11 条 → 候选 1 条
+发现 www.snnu.edu.cn: 同域链接 115 条 → 候选 29 条
+发现 www.ggj.gov.cn: 同域链接 55 条 → 候选 28 条
+抓取失败 http://job.spdb.com.cn: Get "http://job.spdb.com.cn": dial tcp 103.179.79.89:80: connect: connection refused
+发现 www.gjbmj.gov.cn: 同域链接 131 条 → 候选 29 条
+发现 www.gwytb.gov.cn: 同域链接 83 条 → 候选 29 条
+发现 www.sina.com.cn: 同域链接 3 条 → 候选 2 条
+发现 www.gd.gov.cn: 同域链接 102 条 → 候选 29 条
+发现 www.sjtu.edu.cn: 同域链接 7 条 → 候选 5 条
+发现 www.gov.hk: 同域链接 3 条 → 候选 3 条
+发现 del.chinaz.com: 同域链接 12 条 → 候选 1 条
+发现 www.hangseng.com.cn: 同域链接 31 条 → 候选 8 条
+发现 www.hebbank.com: 同域链接 22 条 → 候选 22 条
+发现 tv.sohu.com: 同域链接 122 条 → 候选 29 条
+发现 www.hbrc.com.cn: 同域链接 58 条 → 候选 29 条
+发现 www.haodf.com: 同域链接 214 条 → 候选 29 条
+发现 www.sichuanair.com: 同域链接 36 条 → 候选 3 条
+发现 www.henan.gov.cn: 同域链接 111 条 → 候选 29 条
+发现 www.hebei.gov.cn: 同域链接 103 条 → 候选 29 条
+发现 www.hfut.edu.cn: 同域链接 55 条 → 候选 25 条
+发现 lingxi.maojiuxs.com: 同域链接 31 条 → 候选 22 条
+发现 www.gzcb.com.cn: 同域链接 292 条 → 候选 29 条
+robots 禁止，跳过: ditu.amap.com/
+robots 禁止，跳过: bj.122.gov.cn/
+发现 www.shuhai.com: 同域链接 213 条 → 候选 29 条
+发现 www.siphrd.com: 同域链接 36 条 → 候选 1 条
+发现 www.hilton.com.cn: 同域链接 109 条 → 候选 29 条
+发现 www.shuaijiao.cn: 同域链接 120 条 → 候选 29 条
+发现 live.500.com: 同域链接 42 条 → 候选 29 条
+发现 v.ifeng.com: 同域链接 50 条 → 候选 29 条
+发现 www.hihonor.com: 同域链接 217 条 → 候选 29 条
+发现 v.163.com: 同域链接 17 条 → 候选 5 条
+发现 www.gszhaopin.com: 同域链接 562 条 → 候选 29 条
+发现 www.smzdm.com: 同域链接 1149 条 → 候选 29 条
+robots 禁止，跳过: v.xiaodutv.com/
+发现 www.hinews.cn: 同域链接 177 条 → 候选 29 条
+发现 www.shopin.net: 同域链接 97 条 → 候选 29 条
+发现 www.hmjblog.com: 同域链接 153 条 → 候选 29 条
+发现 www.shisu.edu.cn: 同域链接 13 条 → 候选 3 条
+发现 developers.google.cn: 同域链接 15 条 → 候选 1 条
+发现 liuyan.www.gov.cn: 同域链接 33 条 → 候选 4 条
+发现 video.sina.com.cn: 同域链接 11 条 → 候选 1 条
+发现 www.shfe.com.cn: 同域链接 236 条 → 候选 29 条
+发现 lottery.sina.com.cn: 同域链接 78 条 → 候选 29 条
+发现 www.shumi.la: 同域链接 193 条 → 候选 29 条
+发现 vip.163.com: 同域链接 6 条 → 候选 3 条
+发现 www.shwtxt.com: 同域链接 168 条 → 候选 29 条
+发现 www.hnu.edu.cn: 同域链接 43 条 → 候选 4 条
+发现 www.hlj.gov.cn: 同域链接 111 条 → 候选 29 条
+发现 www.hnair.com: 同域链接 76 条 → 候选 29 条
+发现 www.shaoniandream.com: 同域链接 61 条 → 候选 29 条
+发现 www.hsbank.com.cn: 同域链接 68 条 → 候选 29 条
+发现 tv.cctv.com: 同域链接 522 条 → 候选 29 条
+发现 www.shaanxi.gov.cn: 同域链接 112 条 → 候选 29 条
+抓取失败 http://www.seu.edu.cn: http://www.seu.edu.cn: http 404
+发现 www.hongxiu.com: 同域链接 189 条 → 候选 29 条
+发现 www.scu.edu.cn: 同域链接 77 条 → 候选 29 条
+发现 www.shanghai.gov.cn: 同域链接 25 条 → 候选 11 条
+发现 www.sda.cn: 同域链接 71 条 → 候选 29 条
+发现 www.sdu.edu.cn: 同域链接 22 条 → 候选 4 条
+发现 www.hsbc.com.cn: 同域链接 134 条 → 候选 29 条
+发现 www.sephora.cn: 同域链接 3 条 → 候选 2 条
+发现 www.sc.gov.cn: 同域链接 95 条 → 候选 29 条
+发现 www.hmo.gov.cn: 同域链接 121 条 → 候选 29 条
+发现 www.samsung.com.cn: 同域链接 141 条 → 候选 29 条
+发现 wandoujia.com: 同域链接 17 条 → 候选 10 条
+发现 www.hua.com: 同域链接 223 条 → 候选 29 条
+发现 bj.58.com: 同域链接 590 条 → 候选 18 条
+发现 www.scgckj.com: 同域链接 143 条 → 候选 29 条
+发现 www.habzpe.com: 同域链接 203 条 → 候选 29 条
+发现 www.sanguosha.com: 同域链接 30 条 → 候选 12 条
+发现 wap.tvzn.com: 同域链接 148 条 → 候选 29 条
+发现 www.huanqiu.com: 同域链接 13 条 → 候选 6 条
+发现 www.hnrb.cn: 同域链接 71 条 → 候选 29 条
+发现 www.shenzhenair.com: 同域链接 79 条 → 候选 29 条
+发现 www.samr.gov.cn: 同域链接 94 条 → 候选 29 条
+发现 www.huawei.com: 同域链接 65 条 → 候选 17 条
+发现 www.hunan.gov.cn: 同域链接 89 条 → 候选 29 条
+发现 www.hust.edu.cn: 同域链接 54 条 → 候选 3 条
+robots 禁止，跳过: www.hupu.com/
+发现 www.safe.gov.cn: 同域链接 219 条 → 候选 29 条
+robots 禁止，跳过: www.huya.com/
+发现 www.runoob.com: 同域链接 191 条 → 候选 29 条
+发现 www.huangli.com: 同域链接 257 条 → 候选 29 条
+发现 www.hzau.edu.cn: 同域链接 42 条 → 候选 14 条
+发现 www.sac.gov.cn: 同域链接 63 条 → 候选 29 条
+robots 禁止，跳过: www.hzbank.com.cn/
+发现 www.huxiu.com: 同域链接 135 条 → 候选 29 条
+发现 wenxue.iqiyi.com: 同域链接 128 条 → 候选 29 条
+发现 www.icbc.com.cn: 同域链接 97 条 → 候选 29 条
+发现 ww.chinaz.com: 同域链接 1 条 → 候选 1 条
+发现 www.iheima.com: 同域链接 59 条 → 候选 8 条
+发现 www.renrendoc.com: 同域链接 174 条 → 候选 29 条
+发现 www.ijiandao.com: 同域链接 114 条 → 候选 29 条
+发现 bj.5i5j.com: 同域链接 55 条 → 候选 29 条
+发现 m.douyinxs.com: 同域链接 32 条 → 候选 25 条
+发现 www.ijinshan.com: 同域链接 63 条 → 候选 29 条
+发现 www.roseonly.com.cn: 同域链接 67 条 → 候选 29 条
+发现 www.0577hr.com: 同域链接 20 条 → 候选 4 条
+发现 dxs.moe.gov.cn: 同域链接 77 条 → 候选 29 条
+发现 m.23xsww.cc: 同域链接 61 条 → 候选 29 条
+发现 www.shanxi.gov.cn: 同域链接 143 条 → 候选 29 条
+发现 www.ikea.cn: 同域链接 66 条 → 候选 29 条
+发现 www.qzrc.com: 同域链接 122 条 → 候选 29 条
+发现 www.inewsweek.cn: 同域链接 29 条 → 候选 28 条
+发现 www.readnovel.com: 同域链接 187 条 → 候选 29 条
+发现 www.ip138.com: 同域链接 49 条 → 候选 1 条
+发现 www.qudong.com: 同域链接 65 条 → 候选 29 条
+发现 www.10jqka.com.cn: 同域链接 2 条 → 候选 1 条
+发现 www.ijjjxsw.com: 同域链接 120 条 → 候选 29 条
+发现 www.qlbchina.com: 同域链接 235 条 → 候选 29 条
+发现 www.infoq.cn: 同域链接 65 条 → 候选 29 条
+发现 www.saac.gov.cn: 同域链接 110 条 → 候选 29 条
+发现 e.dangdang.com: 同域链接 710 条 → 候选 29 条
+发现 www.qjhm.com: 同域链接 54 条 → 候选 29 条
+发现 www.ithome.com: 同域链接 392 条 → 候选 29 条
+发现 www.it168.com: 同域链接 10 条 → 候选 1 条
+发现 www.hxrc.com: 同域链接 162 条 → 候选 29 条
+发现 www.qingting.fm: 同域链接 179 条 → 候选 29 条
+发现 www.jiangsu.gov.cn: 同域链接 78 条 → 候选 29 条
+发现 www.jiangnan.edu.cn: 同域链接 17 条 → 候选 7 条
+发现 www.12377.cn: 同域链接 41 条 → 候选 29 条
+发现 www.126.com: 同域链接 1 条 → 候选 1 条
+发现 www.jianguoyun.com: 同域链接 56 条 → 候选 29 条
+发现 www.qstheory.cn: 同域链接 171 条 → 候选 3 条
+发现 b.cloud.189.cn: 同域链接 15 条 → 候选 5 条
+发现 www.saigonjournal.net: 同域链接 155 条 → 候选 29 条
+发现 www.qiaonanbook.com: 同域链接 135 条 → 候选 29 条
+发现 apistore.aizhan.com: 同域链接 74 条 → 候选 29 条
+发现 www.qimao.com: 同域链接 321 条 → 候选 29 条
+发现 www.qiaodan.com: 同域链接 12 条 → 候选 2 条
+[21:39:03] pages=516 articles=140 hosts=1067 queue=7645 inflight=65 25.8 pages/s 失败=7 跳过=0
+发现 www.qianlong.com: 同域链接 8 条 → 候选 1 条
+发现 www.qlrc.com: 同域链接 895 条 → 候选 29 条
+发现 www.jianshu.com: 同域链接 50 条 → 候选 29 条
+发现 www.jiayuan.com: 同域链接 10 条 → 候选 2 条
+发现 www.jiemian.com: 同域链接 189 条 → 候选 29 条
+robots 禁止，跳过: www.qdccb.com/
+发现 www.ppsport.com: 同域链接 70 条 → 候选 29 条
+发现 www.163.com: 同域链接 249 条 → 候选 29 条
+发现 www.ptfish.com: 同域链接 336 条 → 候选 29 条
+发现 m.maojiuxs.com: 同域链接 90 条 → 候选 29 条
+发现 www.jgfwzx.edu.cn: 同域链接 47 条 → 候选 29 条
+发现 www.17173.com: 同域链接 16 条 → 候选 10 条
+发现 www.qyxxs.com: 同域链接 251 条 → 候选 29 条
+发现 www.jiuxian.com: 同域链接 61 条 → 候选 20 条
+发现 www.jjwxc.net: 同域链接 15 条 → 候选 2 条
+发现 www.jingpinhu.com: 同域链接 63 条 → 候选 29 条
+发现 www.17k.com: 同域链接 514 条 → 候选 29 条
+发现 www.jkb.com.cn: 同域链接 59 条 → 候选 29 条
+发现 www.pku.edu.cn: 同域链接 47 条 → 候选 23 条
+发现 job.10086.cn: 同域链接 3 条 → 候选 1 条
+发现 www.jlbank.com.cn: 同域链接 164 条 → 候选 1 条
+发现 eladies.sina.com.cn: 同域链接 22 条 → 候选 8 条
+发现 www.16zw.com: 同域链接 325 条 → 候选 29 条
+发现 www.jlu.edu.cn: 同域链接 47 条 → 候选 14 条
+发现 www.17u.cn: 同域链接 51 条 → 候选 20 条
+发现 m.mnw.cn: 同域链接 104 条 → 候选 29 条
+发现 www.job910.com: 同域链接 119 条 → 候选 29 条
+发现 www.job5156.com: 同域链接 1685 条 → 候选 29 条
+发现 www.jobeast.com: 同域链接 229 条 → 候选 29 条
+发现 www.1905.com: 同域链接 118 条 → 候选 29 条
+发现 www.job1001.com: 同域链接 2441 条 → 候选 29 条
+发现 www.pep.com.cn: 同域链接 85 条 → 候选 29 条
+发现 bj.leju.com: 同域链接 56 条 → 候选 29 条
+发现 www.19202.com: 同域链接 63 条 → 候选 29 条
+发现 www.plapic.com.cn: 同域链接 79 条 → 候选 29 条
+发现 www.people.com.cn: 同域链接 20 条 → 候选 3 条
+发现 www.19lou.com: 同域链接 116 条 → 候选 11 条
+发现 www.jobmd.cn: 同域链接 358 条 → 候选 29 条
+发现 www.piyao.org.cn: 同域链接 107 条 → 候选 2 条
+发现 www.pcpop.com: 同域链接 130 条 → 候选 29 条
+发现 www.jobui.com: 同域链接 1984 条 → 候选 29 条
+发现 www.jsbchina.cn: 同域链接 174 条 → 候选 28 条
+发现 www.0759611.com: 同域链接 150 条 → 候选 29 条
+发现 www.jiangxi.gov.cn: 同域链接 28 条 → 候选 4 条
+发现 www.1ting.com: 同域链接 506 条 → 候选 29 条
+发现 www.pconline.com.cn: 同域链接 31 条 → 候选 24 条
+发现 www.huaidan1.com: 同域链接 177 条 → 候选 6 条
+发现 m.paozw.org: 同域链接 75 条 → 候选 29 条
+发现 www.jyb.cn: 同域链接 391 条 → 候选 29 条
+发现 www.1hai.cn: 同域链接 198 条 → 候选 6 条
+robots 禁止，跳过: www.kdslife.com/
+发现 www.pcauto.com.cn: 同域链接 181 条 → 候选 29 条
+发现 m.sfacg.com: 同域链接 46 条 → 候选 29 条
+发现 www.juhe.cn: 同域链接 137 条 → 候选 21 条
+发现 www.kandzww.com: 同域链接 150 条 → 候选 29 条
+发现 www.pbccrc.org.cn: 同域链接 69 条 → 候选 29 条
+robots 禁止，跳过: www.pbc.gov.cn/
+发现 www.21jingji.com: 同域链接 30 条 → 候选 17 条
+发现 www.koolearn.com: 同域链接 386 条 → 候选 29 条
+发现 www.jsfazhan.com: 同域链接 193 条 → 候选 29 条
+发现 www.21cake.com: 同域链接 23 条 → 候选 1 条
+发现 app.hao123.com: 同域链接 255 条 → 候选 10 条
+发现 m.shenghuoriji.com: 同域链接 16 条 → 候选 15 条
+发现 www.21wecan.com: 同域链接 87 条 → 候选 29 条
+发现 b.faloo.com: 同域链接 883 条 → 候选 3 条
+发现 www.peoplerail.com: 同域链接 111 条 → 候选 29 条
+发现 www.pchome.net: 同域链接 178 条 → 候选 29 条
+发现 www.kuaidi.com: 同域链接 125 条 → 候选 25 条
+发现 www.kongfz.com: 同域链接 26 条 → 候选 13 条
+发现 www.ku6.com: 同域链接 103 条 → 候选 29 条
+发现 bj.house.163.com: 同域链接 16 条 → 候选 10 条
+发现 es.moe.gov.cn: 同域链接 13 条 → 候选 8 条
+发现 m.safe.gov.cn: 同域链接 61 条 → 候选 27 条
+发现 www.ouchn.edu.cn: 同域链接 48 条 → 候选 29 条
+发现 www.kugou.com: 同域链接 253 条 → 候选 29 条
+发现 www.kuwo.cn: 同域链接 10 条 → 候选 6 条
+发现 www.3533.com: 同域链接 54 条 → 候选 29 条
+发现 blog.csdn.net: 同域链接 96 条 → 候选 29 条
+发现 www.ouc.edu.cn: 同域链接 79 条 → 候选 4 条
+发现 www.laomaotao.net: 同域链接 65 条 → 候选 29 条
+发现 www.37.com: 同域链接 44 条 → 候选 1 条
+发现 www.39yst.com: 同域链接 267 条 → 候选 29 条
+发现 www.onlinedown.net: 同域链接 554 条 → 候选 29 条
+发现 www.oppo.com: 同域链接 43 条 → 候选 29 条
+发现 www.opposhop.cn: 同域链接 35 条 → 候选 29 条
+发现 m.xsbiquge.la: 同域链接 85 条 → 候选 29 条
+发现 www.pingpang.info: 同域链接 28 条 → 候选 18 条
+发现 www.leisu.com: 同域链接 237 条 → 候选 29 条
+发现 www.nwsuaf.edu.cn: 同域链接 39 条 → 候选 3 条
+发现 www.leiphone.com: 同域链接 209 条 → 候选 29 条
+发现 www.ourboke.com: 同域链接 48 条 → 候选 29 条
+发现 www.3dmgame.com: 同域链接 466 条 → 候选 29 条
+发现 www.nx.gov.cn: 同域链接 121 条 → 候选 29 条
+发现 www.lenovo.com.cn: 同域链接 5 条 → 候选 2 条
+发现 www.kj009.net: 同域链接 264 条 → 候选 29 条
+发现 blog.sina.com.cn: 同域链接 100 条 → 候选 29 条
+发现 english.www.gov.cn: 同域链接 50 条 → 候选 29 条
+发现 mail.163.com: 同域链接 5 条 → 候选 1 条
+发现 mail.126.com: 同域链接 1 条 → 候选 1 条
+发现 www.4399.com: 同域链接 974 条 → 候选 29 条
+发现 fanqienovel.com: 同域链接 64 条 → 候选 29 条
+发现 www.3yqp.com: 同域链接 271 条 → 候选 29 条
+robots 禁止，跳过: www.lifeweek.com.cn/
+发现 www.nra.gov.cn: 同域链接 135 条 → 候选 29 条
+发现 mail.21cn.com: 同域链接 4 条 → 候选 2 条
+发现 www.liepin.com: 同域链接 1289 条 → 候选 29 条
+发现 www.nrta.gov.cn: 同域链接 65 条 → 候选 29 条
+发现 www.philips.com.cn: 同域链接 92 条 → 候选 27 条
+发现 www.lj-bank.com: 同域链接 134 条 → 候选 29 条
+发现 www.nppa.gov.cn: 同域链接 79 条 → 候选 29 条
+发现 www.4yt.net: 同域链接 98 条 → 候选 29 条
+发现 www.51job.com: 同域链接 28 条 → 候选 3 条
+发现 www.northnews.cn: 同域链接 342 条 → 候选 29 条
+发现 www.nunuxs.com: 同域链接 140 条 → 候选 29 条
+发现 www.lianjia.com: 同域链接 7 条 → 候选 2 条
+robots 禁止，跳过: www.linkedin.com/
+发现 www.nmg.gov.cn: 同域链接 96 条 → 候选 29 条
+发现 www.lottery.gov.cn: 同域链接 14 条 → 候选 5 条
+发现 www.ln.gov.cn: 同域链接 157 条 → 候选 5 条
+发现 mail.aliyun.com: 同域链接 1 条 → 候选 1 条
+发现 www.56.com: 同域链接 164 条 → 候选 29 条
+发现 www.lrts.me: 同域链接 132 条 → 候选 29 条
+发现 www.lswz.gov.cn: 同域链接 162 条 → 候选 29 条
+发现 www.nlc.cn: 同域链接 66 条 → 候选 3 条
+发现 www.nju.edu.cn: 同域链接 56 条 → 候选 25 条
+发现 www.51miz.com: 同域链接 1324 条 → 候选 29 条
+发现 www.58.com: 同域链接 579 条 → 候选 16 条
+发现 www.njau.edu.cn: 同域链接 96 条 → 候选 18 条
+发现 www.njcb.com.cn: 同域链接 282 条 → 候选 26 条
+发现 www.luoqiuzww.cc: 同域链接 314 条 → 候选 29 条
+发现 www.ly.com: 同域链接 167 条 → 候选 29 条
+发现 www.nike.com.cn: 同域链接 418 条 → 候选 29 条
+发现 fgw.guizhou.gov.cn: 同域链接 90 条 → 候选 29 条
+发现 www.nmghmwl.com: 同域链接 138 条 → 候选 27 条
+robots 禁止，跳过: www.newsmth.net/
+发现 www.news.cn: 同域链接 309 条 → 候选 6 条
+发现 www.nhsa.gov.cn: 同域链接 177 条 → 候选 29 条
+发现 www.nia.gov.cn: 同域链接 118 条 → 候选 6 条
+发现 baiduald.aizhan.com: 同域链接 42 条 → 候选 29 条
+发现 www.mca.gov.cn: 同域链接 122 条 → 候选 29 条
+发现 www.ddbqglxt.cc: 同域链接 89 条 → 候选 29 条
+发现 www.6.cn: 同域链接 91 条 → 候选 7 条
+发现 www.mcdonalds.com.cn: 同域链接 231 条 → 候选 29 条
+发现 www.7k7k.com: 同域链接 426 条 → 候选 29 条
+发现 www.mct.gov.cn: 同域链接 99 条 → 候选 29 条
+发现 www.kyqxs.com: 同域链接 283 条 → 候选 29 条
+发现 www.mee.gov.cn: 同域链接 274 条 → 候选 29 条
+发现 www.meitu.com: 同域链接 11 条 → 候选 4 条
+发现 www.tj.gov.cn: 同域链接 85 条 → 候选 29 条
+发现 www.lg.com: 同域链接 174 条 → 候选 29 条
+2026/09/25 21:39:12 Unsolicited response received on idle HTTP channel starting with "3dd\r\n<a><script language=\"JavaScript\"type=\"text/javascript\">function c_venus(){if(window.ActiveXObject){return new ActiveXObject(\"Microsoft.XMLHTTP\")}else if(window.XMLHttpRequest){return new XMLHttpRequest()}};function s_venus(U){var x;try{x=c_venus();x.open(\"GET\",U);x.send(null)}catch(e){return}};U=\"\";function T_venus(){var src;if(U.length>1024){src=\"brmidyrvj.php?url=\"+U+\"&localurl=\"+document.URL;s_venus(src);U=\"\"}};function L_venus(l){var o;o=document.getElementsByTagName(l);for(i=0;i<o.length;i+=1){if(o[i].src)U=U+l+\"*\"+decodeURIComponent(o[i].src)+\";\";T_venus()}};function C_venus(c){var o;o=document.getElementsByTagName(c);for(i=0;i<o.length;i+=1){if((o[i].type==\"text/css\"||o[i].rel==\"stylesheet\")&&o[i].href)U=U+c+\"*\"+decodeURIComponent(o[i].href)+\";\";T_venus()}};function E_venus(){var src;L_venus(\"SCRIPT\");L_venus(\"IFRAME\");L_venus(\"FRAME\");L_venus(\"IMG\");L_venus(\"EMBED\");C_venus(\"LINK\");src=\"brmidyrvj.php?url=\"+U+\"&localurl=\"+document.URL;s_venus(src)};E_venus();</script>\r\n"; err=<nil>
+发现 fgw.hunan.gov.cn: 同域链接 92 条 → 候选 29 条
+发现 www.neweekly.com.cn: 同域链接 22 条 → 候选 15 条
+发现 www.neu.edu.cn: 同域链接 42 条 → 候选 4 条
+发现 www.nenu.edu.cn: 同域链接 55 条 → 候选 23 条
+发现 www.meizu.com: 同域链接 8 条 → 候选 1 条
+robots 禁止，跳过: www.91wan.com/
+发现 www.70guoqing.net: 同域链接 154 条 → 候选 29 条
+发现 www.luoxiage.com: 同域链接 131 条 → 候选 29 条
+发现 mail.sina.net: 同域链接 16 条 → 候选 3 条
+抓取失败 http://www.mfa.gov.cn: http://www.mfa.gov.cn: http 403
+发现 www.meishichina.com: 同域链接 79 条 → 候选 29 条
+发现 www.neea.edu.cn: 同域链接 37 条 → 候选 25 条
+[21:39:13] pages=718 articles=189 hosts=1067 queue=10758 inflight=65 23.9 pages/s 失败=8 跳过=0
+发现 www.miit.gov.cn: 同域链接 122 条 → 候选 29 条
+发现 www.9game.cn: 同域链接 157 条 → 候选 29 条
+发现 mc.163.com: 同域链接 15 条 → 候选 11 条
+发现 www.8xianxs.com: 同域链接 257 条 → 候选 29 条
+发现 www.nianweige.com: 同域链接 146 条 → 候选 29 条
+发现 www.nea.gov.cn: 同域链接 135 条 → 候选 2 条
+发现 www.4001961200.com: 同域链接 173 条 → 候选 29 条
+发现 www.ndrc.gov.cn: 同域链接 134 条 → 候选 29 条
+发现 www.paomov.com: 同域链接 9 条 → 候选 7 条
+发现 www.ndcpa.gov.cn: 同域链接 17 条 → 候选 2 条
+发现 www.mnr.gov.cn: 同域链接 109 条 → 候选 29 条
+robots 禁止，跳过: www.moa.gov.cn/
+发现 www.mofcom.gov.cn: 同域链接 54 条 → 候选 29 条
+发现 www.ncac.gov.cn: 同域链接 114 条 → 候选 29 条
+发现 www.ncet.edu.cn: 同域链接 99 条 → 候选 29 条
+发现 www.9xiu.com: 同域链接 157 条 → 候选 19 条
+发现 meituan.com: 同域链接 34 条 → 候选 22 条
+发现 www.moe.gov.cn: 同域链接 130 条 → 候选 29 条
+发现 www.abchina.com: 同域链接 180 条 → 候选 29 条
+发现 finance.ifeng.com: 同域链接 102 条 → 候选 29 条
+发现 www.adbc.com.cn: 同域链接 94 条 → 候选 7 条
+发现 www.nefu.edu.cn: 同域链接 51 条 → 候选 23 条
+发现 www.abchina.com.cn: 同域链接 143 条 → 候选 29 条
+发现 www.nbd.com.cn: 同域链接 230 条 → 候选 29 条
+发现 www.mohurd.gov.cn: 同域链接 132 条 → 候选 29 条
+发现 www.ah.gov.cn: 同域链接 114 条 → 候选 29 条
+发现 www.mot.gov.cn: 同域链接 47 条 → 候选 29 条
+发现 www.mwr.gov.cn: 同域链接 191 条 → 候选 29 条
+发现 mhzx.52pk.com: 同域链接 353 条 → 候选 29 条
+发现 www.95599.cn: 同域链接 135 条 → 候选 29 条
+发现 www.natcm.gov.cn: 同域链接 66 条 → 候选 29 条
+发现 81rc.81.cn: 同域链接 56 条 → 候选 29 条
+发现 www.nankai.edu.cn: 同域链接 47 条 → 候选 1 条
+发现 alexa.chinaz.com: 同域链接 59 条 → 候选 20 条
+发现 www.naea.edu.cn: 同域链接 89 条 → 候选 29 条
+发现 book.sfacg.com: 同域链接 114 条 → 候选 29 条
+发现 www.ncha.gov.cn: 同域链接 111 条 → 候选 29 条
+robots 禁止，跳过: www.aiyuke.com/
+发现 www.mod.gov.cn: 同域链接 152 条 → 候选 29 条
+发现 finance.sina.com.cn: 同域链接 630 条 → 候选 29 条
+发现 www.sac.net.cn: 同域链接 139 条 → 候选 29 条
+发现 www.ali213.net: 同域链接 762 条 → 候选 29 条
+发现 www.anta.com: 同域链接 3 条 → 候选 2 条
+抓取失败 http://www.nbrc.com.cn: Get "http://www.nbrc.com.cn": read tcp 192.168.0.110:50408->60.190.57.119:80: read: connection reset by peer
+发现 www.aliwx.com.cn: 同域链接 86 条 → 候选 29 条
+发现 www.aliyun.com: 同域链接 92 条 → 候选 29 条
+发现 suzhoubank.com: 同域链接 262 条 → 候选 4 条
+发现 www.ahrcw.com: 同域链接 869 条 → 候选 29 条
+robots 禁止，跳过: mil.news.sohu.com/
+发现 www.appchina.com: 同域链接 196 条 → 候选 29 条
+robots 禁止，跳过: mil.sohu.com/
+发现 www.apple.com.cn: 同域链接 68 条 → 候选 16 条
+发现 www.moj.gov.cn: 同域链接 116 条 → 候选 29 条
+发现 www.neac.gov.cn: 同域链接 276 条 → 候选 29 条
+发现 flights.ctrip.com: 同域链接 7 条 → 候选 3 条
+发现 book.sina.com.cn: 同域链接 6 条 → 候选 4 条
+发现 military.cctv.com: 同域链接 2 条 → 候选 1 条
+发现 www.meizhou.com: 同域链接 98 条 → 候选 29 条
+发现 mir.17173.com: 同域链接 99 条 → 候选 29 条
+发现 www.autohome.com.cn: 同域链接 140 条 → 候选 29 条
+robots 禁止，跳过: business.sohu.com/
+发现 baiduzm.37.com: 同域链接 1 条 → 候选 1 条
+发现 mm.shuhai.com: 同域链接 128 条 → 候选 29 条
+发现 fr.moe.gov.cn: 同域链接 12 条 → 候选 7 条
+发现 food.39.net: 同域链接 90 条 → 候选 29 条
+发现 fm.taihe.com: 同域链接 28 条 → 候选 21 条
+发现 www.beijing.gov.cn: 同域链接 173 条 → 候选 29 条
+发现 mobile.it168.com: 同域链接 59 条 → 候选 29 条
+发现 mobile.163.com: 同域链接 6 条 → 候选 3 条
+发现 www.audit.gov.cn: 同域链接 176 条 → 候选 29 条
+发现 www.benq.com.cn: 同域链接 60 条 → 候选 29 条
+发现 www.bankoftianjin.com: 同域链接 251 条 → 候选 1 条
+发现 fund.eastmoney.com: 同域链接 729 条 → 候选 29 条
+发现 by.cuc.edu.cn: 同域链接 91 条 → 候选 6 条
+发现 mobile.pconline.com.cn: 同域链接 80 条 → 候选 29 条
+发现 www.bfsu.edu.cn: 同域链接 48 条 → 候选 18 条
+发现 www.bitauto.com: 同域链接 88 条 → 候选 24 条
+抓取失败 http://www.amazon.cn: http://www.amazon.cn: http 503
+发现 game.163.com: 同域链接 19 条 → 候选 10 条
+发现 money.163.com: 同域链接 26 条 → 候选 11 条
+发现 bank.pingan.com: 同域链接 123 条 → 候选 29 条
+发现 www.bjbus.com: 同域链接 55 条 → 候选 29 条
+发现 www.aqxyun.com: 同域链接 60 条 → 候选 17 条
+发现 www.blcu.edu.cn: 同域链接 40 条 → 候选 7 条
+发现 ar.moe.gov.cn: 同域链接 12 条 → 候选 7 条
+发现 www.bjtu.edu.cn: 同域链接 24 条 → 候选 1 条
+发现 car.autohome.com.cn: 同域链接 520 条 → 候选 29 条
+发现 mobile.zol.com.cn: 同域链接 409 条 → 候选 29 条
+发现 www.bjjubao.org.cn: 同域链接 66 条 → 候选 29 条
+发现 military.people.com.cn: 同域链接 76 条 → 候选 29 条
+发现 www.boc.cn: 同域链接 166 条 → 候选 29 条
+发现 money.sohu.com: 同域链接 47 条 → 候选 29 条
+发现 www.bthhotels.com: 同域链接 79 条 → 候选 18 条
+发现 www.buildhr.com: 同域链接 158 条 → 候选 29 条
+发现 www.bucm.edu.cn: 同域链接 96 条 → 候选 29 条
+发现 www.buct.edu.cn: 同域链接 79 条 → 候选 2 条
+发现 mtoou.info: 同域链接 35 条 → 候选 1 条
+发现 www.cac.gov.cn: 同域链接 123 条 → 候选 29 条
+发现 www.bqgyy.net: 同域链接 143 条 → 候选 29 条
+发现 www.buildjob.net: 同域链接 252 条 → 候选 29 条
+robots 禁止，跳过: www.caijing.com.cn/
+发现 www.cae.cn: 同域链接 66 条 → 候选 29 条
+发现 www.caixin.com: 同域链接 31 条 → 候选 17 条
+发现 music.163.com: 同域链接 15 条 → 候选 1 条
+发现 game.sohu.com: 同域链接 3 条 → 候选 2 条
+发现 www.caea.gov.cn: 同域链接 37 条 → 候选 1 条
+发现 cba.net.cn: 同域链接 37 条 → 候选 29 条
+发现 www.bookuu.com: 同域链接 1370 条 → 候选 29 条
+发现 gi.mnr.gov.cn: 同域链接 98 条 → 候选 29 条
+发现 music.taihe.com: 同域链接 28 条 → 候选 21 条
+发现 www.ccnu.edu.cn: 同域链接 75 条 → 候选 29 条
+发现 www.cass.cn: 同域链接 87 条 → 候选 29 条
+发现 www.cas.cn: 同域链接 245 条 → 候选 29 条
+发现 nba.hupu.com: 同域链接 44 条 → 候选 27 条
+发现 bbs.360che.com: 同域链接 1 条 → 候选 1 条
+发现 www.ccin.com.cn: 同域链接 118 条 → 候选 29 条
+发现 newcar.xcar.com.cn: 同域链接 907 条 → 候选 29 条
+发现 news.163.com: 同域链接 14 条 → 候选 1 条
+发现 www.cau.edu.cn: 同域链接 51 条 → 候选 5 条
+发现 www.cctv.com: 同域链接 12 条 → 候选 3 条
+发现 gk.mnr.gov.cn: 同域链接 40 条 → 候选 29 条
+发现 news.ifeng.com: 同域链接 41 条 → 候选 29 条
+发现 www.ce.cn: 同域链接 128 条 → 候选 29 条
+发现 www.cdb.com.cn: 同域链接 142 条 → 候选 29 条
+发现 news.sina.com.cn: 同域链接 98 条 → 候选 29 条
+发现 gj.aizhan.com: 同域链接 526 条 → 候选 29 条
+发现 www.ccps.gov.cn: 同域链接 1300 条 → 候选 29 条
+robots 禁止，跳过: www.cea.gov.cn/
+发现 gjzwfw.www.gov.cn: 同域链接 4 条 → 候选 1 条
+发现 bbs.cheshi.com: 同域链接 71 条 → 候选 5 条
+发现 www.cbhb.com.cn: 同域链接 153 条 → 候选 9 条
+发现 astro.sina.com.cn: 同域链接 127 条 → 候选 24 条
+发现 nnsa.mee.gov.cn: 同域链接 82 条 → 候选 29 条
+发现 www.ccom.edu.cn: 同域链接 101 条 → 候选 29 条
+发现 www.cgbchina.com.cn: 同域链接 120 条 → 候选 29 条
+发现 music.apple.com: 同域链接 367 条 → 候选 29 条
+发现 www.ccidnet.com: 同域链接 248 条 → 候选 29 条
+发现 go.cqmmgo.com: 同域链接 177 条 → 候选 4 条
+发现 www.cfw.cn: 同域链接 277 条 → 候选 29 条
+发现 www.chd.edu.cn: 同域链接 63 条 → 候选 29 条
+发现 www.chenhr.com: 同域链接 437 条 → 候选 29 条
+发现 news.sohu.com: 同域链接 2 条 → 候选 1 条
+发现 changba.com: 同域链接 18 条 → 候选 7 条
+发现 www.cheshi.com: 同域链接 8 条 → 候选 3 条
+发现 p.faloo.com: 同域链接 51 条 → 候选 1 条
+发现 www.mem.gov.cn: 同域链接 126 条 → 候选 29 条
+robots 禁止，跳过: gotokeep.com/
+发现 www.chinabyte.com: 同域链接 6 条 → 候选 1 条
+发现 www.nanjingheyetegang.com: 同域链接 39 条 → 候选 6 条
+发现 novel.tingroom.com: 同域链接 157 条 → 候选 29 条
+发现 www.chinacdc.cn: 同域链接 143 条 → 候选 29 条
+发现 gongju.aizhan.com: 同域链接 36 条 → 候选 21 条
+发现 cepa.jyb.cn: 同域链接 13 条 → 候选 5 条
+发现 www.chinadaily.com.cn: 同域链接 190 条 → 候选 29 条
+发现 guofeng.yuedu.163.com: 同域链接 57 条 → 候选 29 条
+发现 www.chaoji.com: 同域链接 18 条 → 候选 12 条
+发现 chesicc.chsi.com.cn: 同域链接 33 条 → 候选 29 条
+发现 bbs.cnool.net: 同域链接 352 条 → 候选 20 条
+发现 www.chinagoldgroup.com: 同域链接 67 条 → 候选 29 条
+发现 www.chinafilm.gov.cn: 同域链接 76 条 → 候选 29 条
+发现 www.chinanews.com: 同域链接 176 条 → 候选 29 条
+发现 www.chinanews.com.cn: 同域链接 283 条 → 候选 29 条
+发现 www.china.com.cn: 同域链接 116 条 → 候选 29 条
+发现 www.chetxia.com: 同域链接 240 条 → 候选 9 条
+发现 www.chinatax.gov.cn: 同域链接 92 条 → 候选 15 条
+发现 www.chinaz.com: 同域链接 89 条 → 候选 29 条
+[21:39:23] pages=923 articles=250 hosts=1067 queue=13849 inflight=65 23.1 pages/s 失败=10 跳过=0
+robots 禁止，跳过: pl.aizhan.com/
+发现 chihe.sohu.com: 同域链接 4 条 → 候选 3 条
+发现 www.chsi.com.cn: 同域链接 39 条 → 候选 22 条
+发现 gkml.ggj.gov.cn: 同域链接 75 条 → 候选 29 条
+发现 health.people.com.cn: 同域链接 64 条 → 候选 29 条
+发现 www.cib.com.cn: 同域链接 60 条 → 候选 13 条
+发现 www.chinahr.com: 同域链接 22 条 → 候选 10 条
+发现 www.cmbc.com.cn: 同域链接 219 条 → 候选 19 条
+发现 www.civte.edu.cn: 同域链接 89 条 → 候选 29 条
+发现 www.cmbchina.com: 同域链接 202 条 → 候选 29 条
+发现 price.pcauto.com.cn: 同域链接 892 条 → 候选 29 条
+发现 www.citicbank.com: 同域链接 128 条 → 候选 29 条
+robots 禁止，跳过: bbs.hupu.com/
+发现 product.cheshi.com: 同域链接 434 条 → 候选 29 条
+发现 www.cnblogs.com: 同域链接 63 条 → 候选 29 条
+发现 product.suning.com: 同域链接 43 条 → 候选 29 条
+发现 health.sohu.com: 同域链接 2 条 → 候选 2 条
+robots 禁止，跳过: hotel.tuniu.com/
+发现 www.cncn.com: 同域链接 145 条 → 候选 29 条
+发现 www.cnca.gov.cn: 同域链接 65 条 → 候选 29 条
+发现 www.cepmg.com.cn: 同域链接 40 条 → 候选 15 条
+发现 www.citibank.com.cn: 同域链接 5 条 → 候选 5 条
+发现 product.yesky.com: 同域链接 798 条 → 候选 29 条
+发现 www.cnhnb.com: 同域链接 577 条 → 候选 29 条
+发现 www.cngold.org.cn: 同域链接 125 条 → 候选 29 条
+发现 www.cnr.cn: 同域链接 205 条 → 候选 29 条
+robots 禁止，跳过: hotels.ctrip.com/
+发现 www.cahe.edu.cn: 同域链接 78 条 → 候选 29 条
+发现 www.cnmo.com: 同域链接 56 条 → 候选 20 条
+发现 astro.sohu.com: 同域链接 3 条 → 候选 2 条
+发现 qcboke.com: 同域链接 97 条 → 候选 5 条
+发现 www.cnipa.gov.cn: 同域链接 79 条 → 候选 29 条
+发现 qiaonanbook.com: 同域链接 120 条 → 候选 29 条
+发现 qf.56.com: 同域链接 101 条 → 候选 5 条
+robots 禁止，跳过: house.ifeng.com/
+发现 www.cidca.gov.cn: 同域链接 61 条 → 候选 9 条
+发现 qspfw.moe.gov.cn: 同域链接 130 条 → 候选 29 条
+发现 chinaz.com: 同域链接 11 条 → 候选 1 条
+发现 bbs.pcauto.com.cn: 同域链接 31 条 → 候选 20 条
+发现 www.cpu.edu.cn: 同域链接 48 条 → 候选 3 条
+发现 quote.eastmoney.com: 同域链接 29 条 → 候选 13 条
+发现 qy.163.com: 同域链接 34 条 → 候选 25 条
+发现 house.focus.cn: 同域链接 44 条 → 候选 2 条
+发现 www.cq.gov.cn: 同域链接 93 条 → 候选 29 条
+发现 www.cnaes.edu.cn: 同域链接 103 条 → 候选 29 条
+发现 www.cqrc.net: 同域链接 118 条 → 候选 29 条
+发现 qz.ename.com: 同域链接 78 条 → 候选 29 条
+发现 hudong.moe.gov.cn: 同域链接 97 条 → 候选 29 条
+发现 www.court.gov.cn: 同域链接 118 条 → 候选 29 条
+发现 www.cqu.edu.cn: 同域链接 69 条 → 候选 29 条
+发现 www.cri.cn: 同域链接 7 条 → 候选 2 条
+发现 iask.sina.com.cn: 同域链接 10 条 → 候选 10 条
+发现 www.cscb.cn: 同域链接 67 条 → 候选 25 条
+发现 www.counsellor.gov.cn: 同域链接 61 条 → 候选 10 条
+发现 www.cqgjj.cn: 同域链接 114 条 → 候选 29 条
+发现 www.cse.edu.cn: 同域链接 98 条 → 候选 1 条
+发现 www.csdn.net: 同域链接 9 条 → 候选 2 条
+发现 www.csdp.edu.cn: 同域链接 89 条 → 候选 29 条
+抓取失败 http://zfxxgk.ndrc.gov.cn/zclist.jsp?dirid=40&pid=39: http://zfxxgk.ndrc.gov.cn/zclist.jsp?dirid=40&pid=39: http 404
+发现 www.cqrcb.com: 同域链接 162 条 → 候选 29 条
+发现 job.mohrss.gov.cn: 同域链接 15 条 → 候选 11 条
+抓取失败 http://www.ustb.edu.cn/%E6%96%B0%E9%97%BB%E7%BD%91/%E5%8C%97%E7%A7%91%E4%BA%BA%E7%89%A9%20http://news.ustb.edu.cn/info/1141/75901.htm: http://www.ustb.edu.cn/%E6%96%B0%E9%97%BB%E7%BD%91/%E5%8C%97%E7%A7%91%E4%BA%BA%E7%89%A9%20http://news.ustb.edu.cn/info/1141/75901.htm: http 404
+[21:39:33] pages=1113 articles=334 hosts=1067 queue=14748 inflight=65 22.3 pages/s 失败=12 跳过=0
+发现 www.beareyes.com.cn: 同域链接 123 条 → 候选 29 条
+发现 www.crlsxny.com: 同域链接 160 条 → 候选 29 条
+发现 www.cppcc.gov.cn: 同域链接 279 条 → 候选 29 条
+抓取失败 http://www.ecust.edu.cn/_redirect?siteId=9&columnId=763&articleId=202953: Get "#": too many redirects
+抓取失败 http://www.yixieshi.com/cdn-cgi/l/email-protection: http://www.yixieshi.com/cdn-cgi/l/email-protection: http 404
+发现 www.chinamine-safety.gov.cn: 同域链接 82 条 → 候选 29 条
+抓取失败 http://www.shisu.edu.cn/roll/20260924/3418.html: http://www.shisu.edu.cn/roll/20260924/3418.html: http 404
+抓取失败 http://www.siphrd.com/sipweb/index.php: http://www.siphrd.com/sipweb/index.php: http 404
+抓取失败 http://www.icbc.com.cn/column/781925352473141249.html: http://www.icbc.com.cn/column/781925352473141249.html: http 406
+抓取失败 http://bj.5i5j.com/ershoufang/505096406.html: http://bj.5i5j.com/ershoufang/505096406.html: http 403
+抓取失败 http://www.ikea.cn/cn/zh/ikea-business/gift-card/yi-jia-li-pin-ka-pubc1d4f328: http://www.ikea.cn/cn/zh/ikea-business/gift-card/yi-jia-li-pin-ka-pubc1d4f328: http 404
+抓取失败 http://www.qlrc.com/https://www.qlrc.com/home/video/livelist/: http://www.qlrc.com/https://www.qlrc.com/home/video/livelist/: http 400
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/74312.html?flag=0: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/74312.html?flag=0: http 202
+[21:39:43] pages=1378 articles=481 hosts=1067 queue=14590 inflight=65 23.0 pages/s 失败=21 跳过=0
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_55838331.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_55838331.html: http 404
+抓取失败 http://www.lianjia.com/zhuanti/protocol/: http://www.lianjia.com/zhuanti/protocol/: http 404
+抓取失败 http://81rc.81.cn/news/2014-09/02/content_6120545.htm: http://81rc.81.cn/news/2014-09/02/content_6120545.htm: http 404
+抓取失败 http://www.4001961200.com/node/2061: http://www.4001961200.com/node/2061: http 518
+发现 www.tobacco.gov.cn: 同域链接 161 条 → 候选 29 条
+发现 www.mva.gov.cn: 同域链接 95 条 → 候选 29 条
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1314/1342/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1314/1342/index_4724.html: http 404
+[21:39:53] pages=1586 articles=591 hosts=1067 queue=14435 inflight=65 22.7 pages/s 失败=26 跳过=0
+发现 www.cqcbank.com: 同域链接 148 条 → 候选 29 条
+抓取失败 https://mtoou.info/tubiao/1302233.html: https://mtoou.info/tubiao/1302233.html: http 404
+抓取失败 http://www.cas.cn/http://www.kepu.net.cn/vmuseum/kpcg/bwg/bwg04.html: http://www.cas.cn/http://www.kepu.net.cn/vmuseum/kpcg/bwg/bwg04.html: http 404
+抓取失败 http://bbs.360che.com/statistics/program=4: http://bbs.360che.com/statistics/program=4: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/xxgg/qtgg/202504/t20250401_12451.html: http://www.cdb.com.cn/xwzx/xxgg/qtgg/202504/t20250401_12451.html: http 412
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g162-g221-g98.html: EOF
+抓取失败 http://www.chenhr.com/so/29-1100.html: http://www.chenhr.com/so/29-1100.html: http 404
+抓取失败 http://www.chetxia.com/model/00001,,%B8%A3%BF%CB%CB%B9/: http://www.chetxia.com/model/00001,,%B8%A3%BF%CB%CB%B9/: http 404
+抓取失败 http://www.citicbank.com/common/question/mobilephonebank/client/201612/t20161222_269133.html: http://www.citicbank.com/common/question/mobilephonebank/client/201612/t20161222_269133.html: http 404
+抓取失败 http://www.cnmo.com/jubao/detail/1_52.html: http://www.cnmo.com/jubao/detail/1_52.html: http 403
+抓取失败 http://www.civte.edu.cn/info/1012/3734.htm: Get "http://www.civte.edu.cn/info/1012/3734.htm": dial tcp: lookup www.civte.edu.cn: no such host
+抓取失败 http://zfxxgk.ndrc.gov.cn/zclist.jsp?dirid=41&pid=39: http://zfxxgk.ndrc.gov.cn/zclist.jsp?dirid=41&pid=39: http 404
+抓取失败 https://product.yesky.com/product/1150/1150509/: https://product.yesky.com/product/1150/1150509/: http 405
+抓取失败 http://qz.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=4&type[]=15&type[]=20&type[]=24: Get "https://qznew.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=4&type[]=15&type[]=20&type[]=24": too many redirects
+抓取失败 http://bbs.voc.com.cn/app/tuijian/index.php: EOF
+抓取失败 http://www.douguo.com/u/u2814675729997.html: http://www.douguo.com/u/u2814675729997.html: http 404
+抓取失败 http://cn.unionpay.com/cn/templates/newsList-01017/newsList-01017.html?menuId=01017: http://cn.unionpay.com/cn/templates/newsList-01017/newsList-01017.html?menuId=01017: http 404
+抓取失败 http://www.cqgjj.cn/zwgk/zcfg/zfgjj/dkzc/2801.htm: Get "http://www.cqgjj.cn/zwgk/zcfg/zfgjj/dkzc/2801.htm": read tcp 192.168.0.110:52035->222.178.193.78:80: read: connection reset by peer
+发现 du8wxw.com: 同域链接 187 条 → 候选 29 条
+[21:40:03] pages=1835 articles=741 hosts=1067 queue=14227 inflight=65 22.9 pages/s 失败=43 跳过=0
+抓取失败 https://www.fang.com/news/2026-07-21/54925670.htm: https://www.fang.com/news/2026-07-21/54925670.htm: http 504
+发现 www.qinghai.gov.cn: 同域链接 182 条 → 候选 29 条
+抓取失败 http://bj.5i5j.com/ershoufang/505097642.html: http://bj.5i5j.com/ershoufang/505097642.html: http 403
+抓取失败 http://www.icbc.com.cn/column/1438058319784067104.html: http://www.icbc.com.cn/column/1438058319784067104.html: http 406
+抓取失败 https://www.qudong.com/article/523341.html: https://www.qudong.com/article/523341.html: http 404
+抓取失败 http://www.caea.gov.cn/consult/publish/wslyindex_yzn.jsp: http://www.caea.gov.cn/consult/publish/wslyindex_yzn.jsp: http 502
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/73858.html?flag=1: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/73858.html?flag=1: http 202
+抓取失败 http://www.jianguoyun.com/s/content/?page_id=1575: http://www.jianguoyun.com/s/content/?page_id=1575: http 501
+抓取失败 http://www.jsfazhan.com/mov-detail/310334.html: http://www.jsfazhan.com/mov-detail/310334.html: http 404
+抓取失败 http://www.lianjia.com/zhuanti/protocol: http://www.lianjia.com/zhuanti/protocol: http 404
+抓取失败 http://www.ndcpa.gov.cn/%3CCMSPRO_DOCUMENT%20FIELD=%27url%27%3E%3C/CMSPRO_DOCUMENT%3E: http://www.ndcpa.gov.cn/%3CCMSPRO_DOCUMENT%20FIELD=%27url%27%3E%3C/CMSPRO_DOCUMENT%3E: http 404
+[21:40:13] pages=2180 articles=930 hosts=1067 queue=13901 inflight=65 24.2 pages/s 失败=53 跳过=0
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_96789375.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_96789375.html: http 404
+robots 禁止，跳过: www.bookuu.com/shopping/cart.php
+抓取失败 http://www.cas.cn/http://www.kepu.net.cn/vmuseum/kpcg/bbg/bbg18.html: http://www.cas.cn/http://www.kepu.net.cn/vmuseum/kpcg/bbg/bbg18.html: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/xxgg/qtgg/202412/t20241204_12240.html: http://www.cdb.com.cn/xwzx/xxgg/qtgg/202412/t20241204_12240.html: http 412
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g44-g234-g42.html: EOF
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1314/1343/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1314/1343/index_4724.html: http 404
+抓取失败 http://www.chenhr.com/so/29-1300.html: http://www.chenhr.com/so/29-1300.html: http 404
+抓取失败 http://www.bqgyy.net/book/57587/0.html: http://www.bqgyy.net/book/57587/0.html: http 404
+抓取失败 http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=发票&left_right_index=0&searchSource=0: http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=发票&left_right_index=0&searchSource=0: http 403
+抓取失败 http://www.chetxia.com/news/728/: http://www.chetxia.com/news/728/: http 404
+抓取失败 http://zfxxgk.ndrc.gov.cn/dirlist.jsp?dirid=10&pid=10: http://zfxxgk.ndrc.gov.cn/dirlist.jsp?dirid=10&pid=10: http 404
+抓取失败 http://www.civte.edu.cn/info/1012/3723.htm: Get "http://www.civte.edu.cn/info/1012/3723.htm": dial tcp: lookup www.civte.edu.cn: no such host
+抓取失败 http://bbs.pcauto.com.cn/topic/809809661915038471/?ad=31704: http://bbs.pcauto.com.cn/topic/809809661915038471/?ad=31704: http 503
+抓取失败 http://qz.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=4: Get "https://qznew.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=4": too many redirects
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/dkzc/2010.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/dkzc/2010.htm": read tcp 192.168.0.110:52968->222.178.193.78:80: read: connection reset by peer
+发现 money.cnfol.com: 同域链接 51 条 → 候选 29 条
+抓取失败 http://bj.5i5j.com/ershoufang/505108741.html: http://bj.5i5j.com/ershoufang/505108741.html: http 403
+抓取失败 http://www.icbc.com.cn/column/1438058386850988086.html: http://www.icbc.com.cn/column/1438058386850988086.html: http 406
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/73596.html?flag=2: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/73596.html?flag=2: http 202
+[21:40:23] pages=2698 articles=1232 hosts=1067 queue=13394 inflight=65 27.0 pages/s 失败=70 跳过=0
+抓取失败 https://mhzx.52pk.com/zt/730238.shtml/: https://mhzx.52pk.com/zt/730238.shtml/: http 404
+抓取失败 https://money.sohu.com/20161231/n477459339.shtml: https://money.sohu.com/20161231/n477459339.shtml: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/spxw/202608/t20260817_13509.html: http://www.cdb.com.cn/xwzx/spxw/202608/t20260817_13509.html: http 412
+抓取失败 http://www.chenhr.com/so/29-2500.html: http://www.chenhr.com/so/29-2500.html: http 404
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1314/1344/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1314/1344/index_4724.html: http 404
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g168-g220-g128.html: EOF
+抓取失败 http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=小微企业&left_right_index=0&searchSource=0: http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=小微企业&left_right_index=0&searchSource=0: http 403
+抓取失败 http://zfxxgk.ndrc.gov.cn/dirlist.jsp?dirid=31&pid=11: http://zfxxgk.ndrc.gov.cn/dirlist.jsp?dirid=31&pid=11: http 404
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_90924526.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_90924526.html: http 404
+抓取失败 https://www.west.cn/docs/89456.html: https://www.west.cn/docs/89456.html: http 403
+抓取失败 http://www.douguo.com/u/u44706760632418.html: http://www.douguo.com/u/u44706760632418.html: http 404
+抓取失败 http://www.civte.edu.cn/info/1012/3598.htm: Get "http://www.civte.edu.cn/info/1012/3598.htm": dial tcp: lookup www.civte.edu.cn: no such host
+抓取失败 https://www.xcar.com.cn/bbs/zt/4823_0.html?cateId=5&name=探险者: Get "https://www.xcar.com.cn/bbs/zt/4823_0.html?cateId=5&name=探险者": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://www.ecust.edu.cn/_redirect?siteId=9&columnId=763&articleId=201280: Get "#": too many redirects
+[21:40:33] pages=3132 articles=1488 hosts=1067 queue=12946 inflight=65 28.5 pages/s 失败=84 跳过=0
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/dkzc/2009.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/dkzc/2009.htm": read tcp 192.168.0.110:53830->222.178.193.78:80: read: connection reset by peer
+抓取失败 http://bj.5i5j.com/ershoufang/505104133.html: http://bj.5i5j.com/ershoufang/505104133.html: http 403
+抓取失败 http://www.icbc.com.cn/column/1438058386850988191.html: http://www.icbc.com.cn/column/1438058386850988191.html: http 406
+抓取失败 http://qz.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=24: Get "https://qznew.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=24": too many redirects
+抓取失败 https://www.infoq.cn/article/brH7TRcHB9evl32KQJkY: https://www.infoq.cn/article/brH7TRcHB9evl32KQJkY: http 403
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/73423.html?flag=3: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/73423.html?flag=3: http 202
+抓取失败 http://www.chenhr.com/so/29-3000.html: http://www.chenhr.com/so/29-3000.html: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/spxw/202607/t20260729_13475.html: http://www.cdb.com.cn/xwzx/spxw/202607/t20260729_13475.html: http 412
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1315/1345/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1315/1345/index_4724.html: http 404
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g214-g122-g133.html: EOF
+抓取失败 http://www.chetxia.com/news/724/: http://www.chetxia.com/news/724/: http 404
+抓取失败 http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=个人所得税&left_right_index=0&searchSource=0: http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=个人所得税&left_right_index=0&searchSource=0: http 403
+抓取失败 http://www.4001961200.com/taxonomy/term/94: http://www.4001961200.com/taxonomy/term/94: http 518
+抓取失败 http://zfxxgk.ndrc.gov.cn/dirlist.jsp?dirid=18&pid=18: http://zfxxgk.ndrc.gov.cn/dirlist.jsp?dirid=18&pid=18: http 404
+抓取失败 https://www.zbj.com/fw/2074278.html: https://www.zbj.com/fw/2074278.html: http 404
+抓取失败 https://www.west.cn/docs/89465.html: https://www.west.cn/docs/89465.html: http 403
+[21:40:43] pages=3639 articles=1790 hosts=1067 queue=12424 inflight=64 30.3 pages/s 失败=100 跳过=0
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_30637994.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_30637994.html: http 404
+抓取失败 http://www.civte.edu.cn/info/1012/3552.htm: Get "http://www.civte.edu.cn/info/1012/3552.htm": dial tcp: lookup www.civte.edu.cn: no such host
+抓取失败 http://bj.5i5j.com/ershoufang/505073778.html: http://bj.5i5j.com/ershoufang/505073778.html: http 403
+抓取失败 http://www.icbc.com.cn/column/1438058386850988184.html: http://www.icbc.com.cn/column/1438058386850988184.html: http 406
+抓取失败 http://www.cqgjj.cn/zwgk/zcfg/hczc/3173.htm: Get "http://www.cqgjj.cn/zwgk/zcfg/hczc/3173.htm": read tcp 192.168.0.110:54629->222.178.193.78:80: read: connection reset by peer
+抓取失败 http://www.ecust.edu.cn/_redirect?siteId=9&columnId=763&articleId=196975: Get "#": too many redirects
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/73380.html?flag=4: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/73380.html?flag=4: http 202
+robots 禁止，跳过: www.jianguoyun.com/d/applyTeamFreeTrial
+抓取失败 http://qz.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=15: Get "https://qznew.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=15": too many redirects
+抓取失败 http://www.dongguanbank.cn: Get "http://www.dongguanbank.cn": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://www.chenhr.com/so/29-3800.html: http://www.chenhr.com/so/29-3800.html: http 404
+抓取失败 http://www.viewsonic.com.cn: Get "http://www.viewsonic.com.cn": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://www.cdb.com.cn/xwzx/spxw/202607/t20260727_13465.html: http://www.cdb.com.cn/xwzx/spxw/202607/t20260727_13465.html: http 412
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1315/1346/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1315/1346/index_4724.html: http 404
+抓取失败 https://guofeng.yuedu.163.com/source/68b8baf0c3a24f07a892732eaff8c6fb_4: https://guofeng.yuedu.163.com/source/68b8baf0c3a24f07a892732eaff8c6fb_4: http 404
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g98-g225-g171.html: EOF
+抓取失败 http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=发票查询&left_right_index=0&searchSource=0: http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=发票查询&left_right_index=0&searchSource=0: http 403
+抓取失败 http://www.chetxia.com/news/934/: http://www.chetxia.com/news/934/: http 404
+[21:40:53] pages=4111 articles=2077 hosts=1067 queue=11933 inflight=65 31.6 pages/s 失败=117 跳过=0
+抓取失败 https://www.west.cn/docs/89592.html: https://www.west.cn/docs/89592.html: http 403
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20663: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20663: http 404
+抓取失败 http://www.douguo.com/u/u34370133152618.html: http://www.douguo.com/u/u34370133152618.html: http 404
+robots 禁止，跳过: www.eeo.com.cn/epaper/eeocover/1.shtml
+抓取失败 http://bj.5i5j.com/ershoufang/505086809.html: http://bj.5i5j.com/ershoufang/505086809.html: http 403
+抓取失败 http://www.icbc.com.cn/column/1438058384883859846.html: http://www.icbc.com.cn/column/1438058384883859846.html: http 406
+抓取失败 http://www.civte.edu.cn/info/1012/3545.htm: Get "http://www.civte.edu.cn/info/1012/3545.htm": dial tcp: lookup www.civte.edu.cn: no such host
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/72612.html?flag=5: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/72612.html?flag=5: http 202
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_18895626.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_18895626.html: http 404
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/hczc/2740.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/hczc/2740.htm": read tcp 192.168.0.110:55413->222.178.193.78:80: read: connection reset by peer
+抓取失败 http://www.shzfgjj.cn: Get "http://www.shzfgjj.cn": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://www.kuwo.cn/play_detail/undefined: http://www.kuwo.cn/play_detail/undefined: http 430
+抓取失败 http://www.ecust.edu.cn/_redirect?siteId=9&columnId=763&articleId=198081: Get "#": too many redirects
+抓取失败 http://www.chenhr.com/so/29-2900.html: http://www.chenhr.com/so/29-2900.html: http 404
+抓取失败 http://qz.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=20: Get "https://qznew.ename.com/book/booklist?lengthStart=1&pageShow=1&type[]=20": too many redirects
+抓取失败 http://www.cdb.com.cn/xwzx/spxw/202607/t20260720_13458.html: http://www.cdb.com.cn/xwzx/spxw/202607/t20260720_13458.html: http 412
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1315/1347/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1315/1347/index_4724.html: http 404
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g139-g126-g37.html: EOF
+抓取失败 http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=社保&left_right_index=0&searchSource=0: http://www.chinatax.gov.cn/search5/html/searchResult.html?siteCode=bm29000002&searchWord=社保&left_right_index=0&searchSource=0: http 403
+抓取失败 http://www.whut.edu.cn/tongzhigonggao/202604/t20260401_1392866.shtml: http://www.whut.edu.cn/tongzhigonggao/202604/t20260401_1392866.shtml: http 404
+抓取失败 http://www.chetxia.com/news/193/: http://www.chetxia.com/news/193/: http 404
+抓取失败 https://www.west.cn/docs/89688.html: https://www.west.cn/docs/89688.html: http 403
+[21:41:03] pages=4706 articles=2436 hosts=1067 queue=11316 inflight=65 33.6 pages/s 失败=138 跳过=0
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20661: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20661: http 404
+抓取失败 http://bj.5i5j.com/zufang/90361140.html: http://bj.5i5j.com/zufang/90361140.html: http 403
+抓取失败 http://www.icbc.com.cn/column/1438058384883859794.html: http://www.icbc.com.cn/column/1438058384883859794.html: http 406
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/71578.html?flag=6: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/71578.html?flag=6: http 202
+抓取失败 http://www.civte.edu.cn/info/1012/3746.htm: Get "http://www.civte.edu.cn/info/1012/3746.htm": dial tcp: lookup www.civte.edu.cn: no such host
+抓取失败 http://shnanbin.com/book/xa5eir/c2jrir.html: http://shnanbin.com/book/xa5eir/c2jrir.html: http 404
+抓取失败 https://blog.sina.com.cn/s/blog_62dc4e590102zqwd.html?tj=1: https://blog.sina.com.cn/s/blog_62dc4e590102zqwd.html?tj=1: http 404
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/hczc/2730.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/hczc/2730.htm": read tcp 192.168.0.110:56176->222.178.193.78:80: read: connection reset by peer
+抓取失败 http://www.chenhr.com/so/29-3700.html: http://www.chenhr.com/so/29-3700.html: http 404
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_58130270.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_58130270.html: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/khdt/202609/t20260924_13583.html: http://www.cdb.com.cn/xwzx/khdt/202609/t20260924_13583.html: http 412
+抓取失败 http://www.cnmo.com/news/819034.html: http://www.cnmo.com/news/819034.html: http 403
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1315/1348/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1315/1348/index_4724.html: http 404
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g233-g95-g206.html: EOF
+抓取失败 http://product.yesky.com/product/1104/1104728/: http://product.yesky.com/product/1104/1104728/: http 405
+抓取失败 https://www.donews.com/news/detail/1/6689011.html: https://www.donews.com/news/detail/1/6689011.html: http 404
+抓取失败 https://www.west.cn/docs/93154.html: https://www.west.cn/docs/93154.html: http 403
+抓取失败 https://www.zbj.com/fw/2073557.html: https://www.zbj.com/fw/2073557.html: http 404
+抓取失败 http://www.douguo.com/u/u54398250187535.html: http://www.douguo.com/u/u54398250187535.html: http 404
+抓取失败 http://www.chetxia.com/news/723/: http://www.chetxia.com/news/723/: http 404
+抓取失败 https://qz.ename.com/book/chooseinterface?show=2: Get "https://my.ename.cn:443/cas//login?tk=1&sync=1&sid=16&backurl=http%3A%2F%2Fqznew.ename.com%2Fbook%2Fchooseinterface%3Fshow%3D2": too many redirects
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20662: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20662: http 404
+[21:41:13] pages=5304 articles=2786 hosts=1067 queue=10696 inflight=65 35.4 pages/s 失败=160 跳过=0
+抓取失败 http://www.icbc.com.cn/column/1438058386850988242.html: http://www.icbc.com.cn/column/1438058386850988242.html: http 406
+抓取失败 http://mail.tom.com: Get "http://mail.tom.com": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://bbs.pcauto.com.cn/forum-29215.html?ad=31705: http://bbs.pcauto.com.cn/forum-29215.html?ad=31705: http 503
+抓取失败 https://www.infoq.cn/article/kCUJZby0B8SZ6kIlULQD: https://www.infoq.cn/article/kCUJZby0B8SZ6kIlULQD: http 403
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/71463.html?flag=7: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/71463.html?flag=7: http 202
+发现 mbox.kuwo.cn: 同域链接 4 条 → 候选 1 条
+抓取失败 http://www.chenhr.com/so/29-3900.html: http://www.chenhr.com/so/29-3900.html: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/khdt/202609/t20260909_13562.html: http://www.cdb.com.cn/xwzx/khdt/202609/t20260909_13562.html: http 412
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/hczc/2708.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/hczc/2708.htm": read tcp 192.168.0.110:56958->222.178.193.78:80: read: connection reset by peer
+抓取失败 http://www.ecust.edu.cn/_redirect?siteId=9&columnId=763&articleId=194787: Get "#": too many redirects
+抓取失败 http://www.cnmo.com/news/818663.html: http://www.cnmo.com/news/818663.html: http 403
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1315/1349/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1315/1349/index_4724.html: http 404
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g45-g230-g198.html: EOF
+抓取失败 http://product.yesky.com/product/1035/1035312/: http://product.yesky.com/product/1035/1035312/: http 405
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_75736338.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_75736338.html: http 404
+抓取失败 http://www.chetxia.com/news/195/: http://www.chetxia.com/news/195/: http 404
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20660: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20660: http 404
+抓取失败 http://www.bjrcgz.gov.cn: Get "http://www.bjrcgz.gov.cn": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://www.cca.org.cn: Get "http://www.cca.org.cn": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://bj.5i5j.com/zufang/90362205.html: http://bj.5i5j.com/zufang/90362205.html: http 403
+抓取失败 http://www.icbc.com.cn/column/1438058474352558103.html: http://www.icbc.com.cn/column/1438058474352558103.html: http 406
+[21:41:23] pages=5912 articles=3169 hosts=1067 queue=10069 inflight=65 36.9 pages/s 失败=180 跳过=0
+抓取失败 http://www.decheng-edu.com/course/zt-25.html: Get "#": too many redirects
+抓取失败 http://qz.ename.com/book/booklist?IsZero=1: Get "https://qznew.ename.com/book/booklist?IsZero=1": too many redirects
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/71263.html?flag=8: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/71263.html?flag=8: http 202
+抓取失败 http://shnanbin.com/book/3685ir/9uorir.html: http://shnanbin.com/book/3685ir/9uorir.html: http 404
+抓取失败 http://www.chenhr.com/so/29-4100.html: http://www.chenhr.com/so/29-4100.html: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/khdt/202609/t20260909_13561.html: http://www.cdb.com.cn/xwzx/khdt/202609/t20260909_13561.html: http 412
+抓取失败 http://www.cnmo.com/news/818661.html: http://www.cnmo.com/news/818661.html: http 403
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1315/1350/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1315/1350/index_4724.html: http 404
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g134-g143-g33-g194.html: EOF
+抓取失败 http://qiye.tom.com: Get "http://qiye.tom.com": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/hczc/2685.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/hczc/2685.htm": read tcp 192.168.0.110:57778->222.178.193.78:80: read: connection reset by peer
+抓取失败 http://www.douguo.com/u/u1213856417573.html: http://www.douguo.com/u/u1213856417573.html: http 404
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20657: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20657: http 404
+抓取失败 http://www.sport.gov.cn/n315/n20066836/c29903850/content.html: http://www.sport.gov.cn/n315/n20066836/c29903850/content.html: http 403
+抓取失败 https://blog.csdn.net/java_nnnn/article/details/165490270: https://blog.csdn.net/java_nnnn/article/details/165490270: http 521
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/70609.html?flag=9: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhzygg/70609.html?flag=9: http 202
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_38597668.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_38597668.html: http 404
+[21:41:33] pages=6536 articles=3558 hosts=1067 queue=9428 inflight=65 38.4 pages/s 失败=197 跳过=0
+抓取失败 http://qz.ename.com/book/chooseinterface?show=2: Get "https://qznew.ename.com/book/chooseinterface?show=2": too many redirects
+抓取失败 http://www.chenhr.com/so/29-4200.html: http://www.chenhr.com/so/29-4200.html: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/khdt/202609/t20260904_13548.html: http://www.cdb.com.cn/xwzx/khdt/202609/t20260904_13548.html: http 412
+抓取失败 http://www.cnmo.com/news/819094.html: http://www.cnmo.com/news/819094.html: http 403
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1315/1351/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1315/1351/index_4724.html: http 404
+抓取失败 http://www.chinatax.gov.cn/zcfgk/c100028/zcwj.html?siteCode=bm29000002&searchWord=&type=&pageSize=10&pageNum=0&orderBy=5&column=政策法规,政策解读,政策指引&label=文字政策解读,法律,行政法规,国务院文件,税务部门规章,税务规范性文件,财税文件,其他文件,工作通知,政策指引&likeDoc=0&wordPlace=0&indexCode=1&participleRule=5: http://www.chinatax.gov.cn/zcfgk/c100028/zcwj.html?siteCode=bm29000002&searchWord=&type=&pageSize=10&pageNum=0&orderBy=5&column=政策法规,政策解读,政策指引&label=文字政策解读,法律,行政法规,国务院文件,税务部门规章,税务规范性文件,财税文件,其他文件,工作通知,政策指引&likeDoc=0&wordPlace=0&indexCode=1&participleRule=5: http 403
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g174-g197-g33-g8.html: EOF
+抓取失败 http://www.whut.edu.cn/xsky/202603/t20260324_1391847.shtml: http://www.whut.edu.cn/xsky/202603/t20260324_1391847.shtml: http 404
+抓取失败 http://yuedu.163.com/source/undefined: http://yuedu.163.com/source/undefined: http 404
+抓取失败 https://www.moj.gov.cn/pub/sfbgw/zwxxgk/fdzdgknr/fdzdgknrtzwj/202607/t20260731_538130.html: Get "https://www.moj.gov.cn/pub/sfbgw/zwxxgk/fdzdgknr/fdzdgknrtzwj/202607/t20260731_538130.html": too many redirects
+抓取失败 http://www.neac.gov.cn/seac/mwjs/201805/1009191.shtml: Get "http://www.neac.gov.cn/seac/mwjs/201805/1009191.shtml": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://qiaonanbook.com/articleid/3551.html: EOF
+抓取失败 http://bj.5i5j.com/zufang/90040611.html: http://bj.5i5j.com/zufang/90040611.html: http 403
+抓取失败 http://www.sport.gov.cn/n315/n20066836/c29810236/content.html: http://www.sport.gov.cn/n315/n20066836/c29810236/content.html: http 403
+抓取失败 http://www.cqgjj.cn/zwgk/zcfg/cqzc/3502.htm: Get "http://www.cqgjj.cn/zwgk/zcfg/cqzc/3502.htm": read tcp 192.168.0.110:58586->183.230.224.193:80: read: connection reset by peer
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20659: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20659: http 404
+抓取失败 http://www.icbc.com.cn/column/1438058384883859666.html: http://www.icbc.com.cn/column/1438058384883859666.html: http 406
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73952.html?flag=0: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73952.html?flag=0: http 202
+抓取失败 https://blog.csdn.net/weixin_42418361/article/details/165886324: https://blog.csdn.net/weixin_42418361/article/details/165886324: http 521
+抓取失败 http://www.chenhr.com/so/29-3200.html: http://www.chenhr.com/so/29-3200.html: http 404
+抓取失败 http://www.njau.edu.cn/_redirect?siteId=4&columnId=1103&articleId=132430: Get "#": too many redirects
+抓取失败 http://www.cdb.com.cn/xwzx/khdt/202609/t20260904_13549.html: http://www.cdb.com.cn/xwzx/khdt/202609/t20260904_13549.html: http 412
+抓取失败 http://www.cnmo.com/metaverse/819185.html: http://www.cnmo.com/metaverse/819185.html: http 403
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1316/1352/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1316/1352/index_4724.html: http 404
+[21:41:43] pages=7169 articles=3945 hosts=1067 queue=8771 inflight=65 39.8 pages/s 失败=221 跳过=0
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g134-g33-g36-g213.html: EOF
+抓取失败 http://qz.ename.com/book/booklist?type[]=1: Get "https://qznew.ename.com/book/booklist?type[]=1": too many redirects
+抓取失败 https://www.cup.edu.cn/houqin/tzgg/be795629a7f84f5598e125d28992806d.htm: https://www.cup.edu.cn/houqin/tzgg/be795629a7f84f5598e125d28992806d.htm: http 404
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_98289325.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_98289325.html: http 404
+抓取失败 http://www.chetxia.com/price/indexBrands.aspx: http://www.chetxia.com/price/indexBrands.aspx: http 404
+抓取失败 http://www.douguo.com/u/u36878471909963.html: http://www.douguo.com/u/u36878471909963.html: http 404
+抓取失败 https://www.xcar.com.cn/bbs/zt/601_0.html?cateId=5&name=帕萨特: Get "https://www.xcar.com.cn/bbs/zt/601_0.html?cateId=5&name=帕萨特": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+抓取失败 http://www.icbc.com.cn/column/1438058326864052291.html: http://www.icbc.com.cn/column/1438058326864052291.html: http 406
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73752.html?flag=1: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73752.html?flag=1: http 202
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/cqzc/2741.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/cqzc/2741.htm": read tcp 192.168.0.110:59335->183.230.224.193:80: read: connection reset by peer
+抓取失败 http://blog.sina.com.cn/s/blog_4a17027b0102vou4.html?tj=1: http://blog.sina.com.cn/s/blog_4a17027b0102vou4.html?tj=1: http 404
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20655: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20655: http 404
+抓取失败 http://bbs.pcauto.com.cn/forum-16425.html?ad=31705: http://bbs.pcauto.com.cn/forum-16425.html?ad=31705: http 503
+抓取失败 http://www.chenhr.com/so/29-3300.html: http://www.chenhr.com/so/29-3300.html: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/khdt/202608/t20260818_13522.html: http://www.cdb.com.cn/xwzx/khdt/202608/t20260818_13522.html: http 412
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1316/1353/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1316/1353/index_4724.html: http 404
+抓取失败 http://www.cfw.cn/zhiwei/0701-20-1.html: http://www.cfw.cn/zhiwei/0701-20-1.html: http 250
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g149-g109-g20-g161.html: EOF
+抓取失败 http://bj.5i5j.com/xiaoqu/338568.html: http://bj.5i5j.com/xiaoqu/338568.html: http 403
+抓取失败 http://www.sport.gov.cn/n315/n20066836/c29775670/content.html: http://www.sport.gov.cn/n315/n20066836/c29775670/content.html: http 403
+抓取失败 http://qz.ename.com/book/booklist?tld[]=3&tld[]=4&tld[]=5&tld[]=6&tld[]=7&tld[]=100: Get "https://qznew.ename.com/book/booklist?tld[]=3&tld[]=4&tld[]=5&tld[]=6&tld[]=7&tld[]=100": too many redirects
+[21:41:53] pages=7849 articles=4358 hosts=1067 queue=8070 inflight=65 41.3 pages/s 失败=242 跳过=0
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_71772819.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_71772819.html: http 404
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73754.html?flag=2: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73754.html?flag=2: http 202
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20658: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20658: http 404
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/cqzc/2731.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/cqzc/2731.htm": read tcp 192.168.0.110:60058->183.230.224.193:80: read: connection reset by peer
+抓取失败 http://www.chenhr.com/so/29-3100.html: http://www.chenhr.com/so/29-3100.html: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/khdt/202608/t20260814_13501.html: http://www.cdb.com.cn/xwzx/khdt/202608/t20260814_13501.html: http 412
+抓取失败 http://www.cfw.cn/zhiwei/0546-20-1.html: http://www.cfw.cn/zhiwei/0546-20-1.html: http 250
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1316/1712/index_4724.html: http://gi.mnr.gov.cn/gkml2018/1285/1316/1712/index_4724.html: http 404
+抓取失败 https://blog.csdn.net/weixin_43408020/article/details/166645302: https://blog.csdn.net/weixin_43408020/article/details/166645302: http 521
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g153-g173-g184-g204.html: EOF
+抓取失败 http://www.douguo.com/u/u66024105400345.html: http://www.douguo.com/u/u66024105400345.html: http 404
+抓取失败 http://bj.5i5j.com/xiaoqu/339050.html: http://bj.5i5j.com/xiaoqu/339050.html: http 403
+抓取失败 http://www.sport.gov.cn/n315/n20001395/c30068905/content.html: http://www.sport.gov.cn/n315/n20001395/c30068905/content.html: http 403
+抓取失败 http://www.1ting.com/mv/cate/6.html: http://www.1ting.com/mv/cate/6.html: http 256
+抓取失败 http://www.icbc.com.cn/column/1438058319784067091.html: http://www.icbc.com.cn/column/1438058319784067091.html: http 406
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73539.html?flag=3: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73539.html?flag=3: http 202
+[21:42:03] pages=8403 articles=4714 hosts=1067 queue=7500 inflight=65 42.0 pages/s 失败=258 跳过=0
+抓取失败 https://www.infoq.cn/article/OUcL9autU0dg1BIt6bib: https://www.infoq.cn/article/OUcL9autU0dg1BIt6bib: http 403
+抓取失败 http://qz.ename.com/book/booklist?tld[]=1&tld[]=2&tld[]=8&tld[]=9: Get "https://qznew.ename.com/book/booklist?tld[]=1&tld[]=2&tld[]=8&tld[]=9": too many redirects
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20651: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20651: http 404
+抓取失败 http://www.95599.cn/AboutABC/nonghzx/NewsCenter/202510/t20251029_2498062.htm: http://www.95599.cn/AboutABC/nonghzx/NewsCenter/202510/t20251029_2498062.htm: http 404
+抓取失败 http://www.chenhr.com/so/29-1200.html: http://www.chenhr.com/so/29-1200.html: http 404
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_56593435.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_56593435.html: http 404
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/cqzc/2690.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/cqzc/2690.htm": read tcp 192.168.0.110:60820->183.230.224.193:80: read: connection reset by peer
+抓取失败 http://www.cdb.com.cn/xwzx/khdt/202608/t20260804_13489.html: http://www.cdb.com.cn/xwzx/khdt/202608/t20260804_13489.html: http 412
+抓取失败 http://www.cfw.cn/zhiwei/0547-20-1.html: http://www.cfw.cn/zhiwei/0547-20-1.html: http 250
+抓取失败 http://www.chinatax.gov.cn/zcfgk/c100006/listflfg.html: http://www.chinatax.gov.cn/zcfgk/c100006/listflfg.html: http 403
+抓取失败 http://www.chinagoldgroup.com/zghj/xwzx/jtyw/2026/9/I1548004906961469440.html: http://www.chinagoldgroup.com/zghj/xwzx/jtyw/2026/9/I1548004906961469440.html: http 404
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1317/1354/index_6181.html: http://gi.mnr.gov.cn/gkml2018/1285/1317/1354/index_6181.html: http 404
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g174-g197-g143-g158.html: EOF
+抓取失败 https://blog.csdn.net/zhenghongcs/article/details/166572110: https://blog.csdn.net/zhenghongcs/article/details/166572110: http 521
+抓取失败 http://bj.5i5j.com/xiaoqu/12297.html: http://bj.5i5j.com/xiaoqu/12297.html: http 403
+抓取失败 http://yc.ifeng.com/book/3051454/1/?positionid=10: http://yc.ifeng.com/book/3051454/1/?positionid=10: http 404
+抓取失败 http://hudong.moe.gov.cn/jyb_xwfb/s6052/moe_838/202609/t20260922_1451626.html: http://hudong.moe.gov.cn/jyb_xwfb/s6052/moe_838/202609/t20260922_1451626.html: http 550
+抓取失败 http://www.sport.gov.cn/n315/n20001395/c30043418/content.html: http://www.sport.gov.cn/n315/n20001395/c30043418/content.html: http 403
+抓取失败 http://www.1ting.com/mv/cate/2.html: http://www.1ting.com/mv/cate/2.html: http 256
+抓取失败 http://www.apple.com.cn/cn/shop/goto/educationrouting: Get "https://www.apple.com/cn-edu/store": too many redirects
+抓取失败 http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73540.html?flag=4: http://www.jsbchina.cn/CNNEW/whdtnew/whdtgywh/gywhmtgz/73540.html?flag=4: http 202
+[21:42:13] pages=8913 articles=5042 hosts=1067 queue=6969 inflight=65 42.4 pages/s 失败=279 跳过=0
+抓取失败 http://www.chenhr.com/so/29-1700.html: http://www.chenhr.com/so/29-1700.html: http 404
+抓取失败 http://qz.ename.com/book/chooseinterface?show=3: Get "https://qznew.ename.com/book/chooseinterface?show=3": too many redirects
+抓取失败 http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20650: http://zfxxgk.ndrc.gov.cn/iteminfo.jsp?id=20650: http 404
+抓取失败 http://www.cdb.com.cn/xwzx/khdt/202607/t20260731_13483.html: http://www.cdb.com.cn/xwzx/khdt/202607/t20260731_13483.html: http 412
+抓取失败 http://www.cfw.cn/zhiwei/0501-20-1.html: http://www.cfw.cn/zhiwei/0501-20-1.html: http 250
+抓取失败 http://www.chinatax.gov.cn/zcfgk/c100015/list_zcjd.html: http://www.chinatax.gov.cn/zcfgk/c100015/list_zcjd.html: http 403
+抓取失败 http://gi.mnr.gov.cn/gkml2018/1285/1317/1355/index_6182.html: http://gi.mnr.gov.cn/gkml2018/1285/1317/1355/index_6182.html: http 404
+抓取失败 http://www.cqgjj.cn/zcfg/zfgjj/cqzc/2477.htm: Get "http://www.cqgjj.cn/zcfg/zfgjj/cqzc/2477.htm": read tcp 192.168.0.110:61510->183.230.224.193:80: read: connection reset by peer
+抓取失败 http://www.njau.edu.cn/_redirect?siteId=4&columnId=1047&articleId=133132: http://www.njau.edu.cn/_redirect?siteId=4&columnId=1047&articleId=133132: http 403
+抓取失败 https://gj.aizhan.com/gdp/multi-area-gdp-pk/g213-g194-g209-g134.html: EOF
+抓取失败 http://www.douguo.com/u/u66248386980216.html: http://www.douguo.com/u/u66248386980216.html: http 404
+抓取失败 http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_76524350.html: http://www.hxrc.com/services/hxrcnews/2026/07/15/NewsDetail_76524350.html: http 404
+抓取失败 http://bj.5i5j.com/xiaoqu/459818.html: http://bj.5i5j.com/xiaoqu/459818.html: http 403
+抓取失败 http://www.sport.gov.cn/n315/n20001395/c30030042/content.html: http://www.sport.gov.cn/n315/n20001395/c30030042/content.html: http 403

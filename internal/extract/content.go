@@ -41,7 +41,7 @@ func isBlockCandidate(a atom.Atom) bool {
 //
 // 乘性组合而不是加权求和是刻意的：加权求和下，只要某一项极高就能
 // 掩盖其余项的缺陷，而正文必须四项同时成立。
-func score(st *textStats, disabled map[string]bool) float64 {
+func score(st *textStats, g gates) float64 {
 	if st.chars < minBlockChars {
 		return 0
 	}
@@ -49,12 +49,12 @@ func score(st *textStats, disabled map[string]bool) float64 {
 	density := t / float64(st.elems+1)
 
 	punctGate := 1.0
-	if !disabled["punct"] {
+	if !g.noPunct {
 		punctGate = math.Min((float64(st.punct)/t)/punctFullCredit, 1.0)
 	}
 
 	linkFactor := 1.0
-	if !disabled["link"] {
+	if !g.noLink {
 		linkFactor = 1 - st.linkRate()
 	}
 
@@ -65,11 +65,11 @@ func score(st *textStats, disabled map[string]bool) float64 {
 
 // ownScores 预计算每个候选块的原始得分。累积与容器选择都会反复取用，
 // 算一次存表。
-func ownScores(stats map[*html.Node]*textStats, disabled map[string]bool) map[*html.Node]float64 {
+func ownScores(stats map[*html.Node]*textStats, g gates) map[*html.Node]float64 {
 	m := make(map[*html.Node]float64, len(stats))
 	for n, st := range stats {
 		if isBlockCandidate(n.DataAtom) {
-			m[n] = score(st, disabled)
+			m[n] = score(st, g)
 		}
 	}
 	return m
@@ -82,7 +82,7 @@ func ownScores(stats map[*html.Node]*textStats, disabled map[string]bool) map[*h
 // 只向上汇入两层是刻意的。若沿祖先链无限累加，最外层的整页 wrapper
 // 必然因「包含所有内容」而胜出，正文容器就永远选不出来——这是
 // naive 实现的典型失败模式。
-func accumulate(root *html.Node, own map[*html.Node]float64, disabled map[string]bool) (map[*html.Node]float64, *html.Node) {
+func accumulate(root *html.Node, own map[*html.Node]float64, g gates) (map[*html.Node]float64, *html.Node) {
 	accum := make(map[*html.Node]float64, len(own))
 	var best *html.Node
 
@@ -109,7 +109,7 @@ func accumulate(root *html.Node, own map[*html.Node]float64, disabled map[string
 			walk(c)
 		}
 		a := own[n]
-		if !disabled["propagate"] {
+		if !g.noPropagate {
 			a += childSum + 0.5*grandSum
 		}
 		accum[n] = a
