@@ -60,11 +60,12 @@ type Entry struct {
 type Store struct {
 	dir string
 
-	mu    sync.Mutex
-	out   *os.File
-	bw    *bufio.Writer
-	done  map[string]struct{} // 已抓 URL，续爬时重建
-	saved int
+	mu     sync.Mutex
+	out    *os.File
+	bw     *bufio.Writer
+	done   map[string]struct{} // 已抓 URL，续爬时重建
+	saved  int
+	unlock func() // 释放数据目录的排他锁
 }
 
 // Open 打开（或创建）数据目录，并从既有的产物文件重建「已抓」集合。
@@ -72,7 +73,15 @@ func Open(dir string) (*Store, error) {
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return nil, err
 	}
-	s := &Store{dir: dir, done: make(map[string]struct{})}
+
+	// 抢锁必须在 truncateTornLine 之前：那一步是**破坏性**的，两个实例
+	// 同时进来会互相把对方正在写的行当成断行截掉。详见 lock_unix.go。
+	unlock, err := lockDir(dir)
+	if err != nil {
+		return nil, err
+	}
+
+	s := &Store{dir: dir, done: make(map[string]struct{}), unlock: unlock}
 
 	p := filepath.Join(dir, "pages.jsonl")
 	if err := s.loadDone(p); err != nil {
@@ -214,13 +223,17 @@ func (s *Store) Flush() error {
 	return s.bw.Flush()
 }
 
-// Close 刷盘并关闭。
+// Close 刷盘、关闭并释放数据目录锁。
 func (s *Store) Close() error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	err := s.bw.Flush()
 	if cerr := s.out.Close(); err == nil {
 		err = cerr
+	}
+	if s.unlock != nil {
+		s.unlock()
+		s.unlock = nil
 	}
 	return err
 }
