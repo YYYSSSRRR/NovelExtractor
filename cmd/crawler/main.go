@@ -56,11 +56,24 @@ type config struct {
 	maxPages   int // 全局页数上限，0 表示不限
 	minContent int // 判为正文页的最小字符数
 	maxLinkRt  float64
-	ua         string
+
+	// retries 是单个 URL 的失败重试次数，默认 0：抓不到就跳过。
+	retries int
+	// maxHostFailures 是「连续这么多次抓取失败就放弃整个域」的阈值。
+	maxHostFailures int
+
+	ua string
 
 	// noTemplates 关闭跨页模板过滤，仅用于消融实验：关掉后指标应当变差
 	// （正文里混进站点页脚），否则说明这套机制没起作用。
 	noTemplates bool
+
+	// tracePath 非空时，把每次请求的发起时刻逐行记下来。
+	//
+	// 「每域请求间隔 ≥ delay」是这套调度器最该被验证的性质，而它无法从结果
+	// 反推——只能把请求时刻本身记下来再算间隔。日志打在 stderr 上会被进度
+	// 信息淹没，所以单独写一个文件。
+	tracePath string
 }
 
 func main() {
@@ -76,8 +89,12 @@ func main() {
 	flag.IntVar(&c.maxPages, "max-pages", 0, "全局页数上限，0 为不限")
 	flag.IntVar(&c.minContent, "min-content", 300, "判为正文页的最小正文长度")
 	flag.Float64Var(&c.maxLinkRt, "max-link-rate", 0.3, "判为正文页的最大正文链接密度")
+	flag.IntVar(&c.retries, "retries", 0, "单个 URL 的失败重试次数，0 表示抓不到就跳过")
+	flag.IntVar(&c.maxHostFailures, "max-host-failures", 2,
+		"同一域连续失败这么多次就放弃该域剩余队列；0 表示不放弃")
 	flag.StringVar(&c.ua, "ua", fetch.DefaultUA, "User-Agent（单一、诚实，不轮换）")
 	flag.BoolVar(&c.noTemplates, "no-templates", false, "消融：关闭跨页模板过滤")
+	flag.StringVar(&c.tracePath, "trace", "", "把每次请求的发起时刻写入该文件，用于验证每域请求间隔")
 	flag.Parse()
 
 	if c.workers < 1 {
@@ -99,6 +116,12 @@ func run(c config) error {
 	}
 	defer st.Close()
 
+	trace, err := openTrace(c.tracePath)
+	if err != nil {
+		return err
+	}
+	defer trace.Close()
+
 	// 续爬：先种子、再读回上次没抓完的队列。两边都交给 frontier 去重，
 	// 已完成的页面由 store 的 manifest 集合跳过。
 	seeds, err := readSeeds(c.seedsPath)
@@ -114,15 +137,17 @@ func run(c config) error {
 	}
 
 	cr := &crawler{
-		cfg:     c,
-		client:  fetch.New(c.ua, c.timeout, c.maxBytes),
-		fr:      frontier.New(c.delay, c.budget, c.workers),
-		st:      st,
-		ext:     extract.New(extract.Options{}),
-		learner: extract.NewChromeLearner(),
-		robots:  make(map[string]*fetch.Robots),
-		sites:   make(map[string]*siteState),
-		start:   time.Now(),
+		cfg:           c,
+		client:        fetch.New(c.ua, c.timeout, c.maxBytes).SetRetries(c.retries),
+		fr:            frontier.New(c.delay, c.budget, c.workers),
+		st:            st,
+		ext:           extract.New(extract.Options{}),
+		learner:       extract.NewChromeLearner(),
+		robots:        make(map[string]*fetch.Robots),
+		sites:         make(map[string]*siteState),
+		start:         time.Now(),
+		delayReported: make(map[string]bool),
+		trace:         trace,
 	}
 	cr.stats.queuedAt = make([]int64, 0)
 
@@ -134,6 +159,8 @@ func run(c config) error {
 	if n := cr.add(queued); n > 0 {
 		fmt.Fprintf(os.Stderr, "已从队列续入 %d 个 URL\n", n)
 	}
+
+	cr.stopOnCancel(ctx)
 
 	var wg sync.WaitGroup
 	for i := 0; i < c.workers; i++ {
@@ -150,8 +177,34 @@ func run(c config) error {
 	if err := st.Flush(); err != nil {
 		return err
 	}
+	cr.checkPersistence()
 	cr.printFinal(os.Stderr)
 	return ctx.Err()
+}
+
+// checkPersistence 核对「处理过的页面」与「落盘的页面」是否对得上，对不上就吼。
+//
+// 加这道检查是因为踩过一次静默丢数据：一轮 15584 页的爬取只落盘 315 行，
+// 而所有计数、所有日志都正常——丢失发生在「本该落盘的那些页面根本没走到
+// Save」这条路径上，它不产生任何错误，也就没有任何一处会报。
+//
+// 判据刻意取得很宽（差 2% 以上才报）：多域并发时，被 kill 的那一刻总会有
+// 几页正在手上、来不及落盘，这属于正常损耗，不该天天报警把真正的信号淹掉。
+// 要抓的是「数量级对不上」这种量级的异常。
+func (c *crawler) checkPersistence() {
+	handled := atomic.LoadInt64(&c.stats.pages)
+	saved := int64(c.st.Saved())
+	skipped := atomic.LoadInt64(&c.stats.skipped)
+	// 去重跳过的页面本来就该没有产物，把它们从分母里去掉再比
+	want := handled - skipped
+	if want <= 0 || saved*100 >= want*98 {
+		return
+	}
+	fmt.Fprintf(os.Stderr,
+		"\n!! 落盘数对不上：处理 %d 页（另有 %d 页因去重跳过），落盘只有 %d 行，"+
+			"缺失 %d 页。这不是正常损耗，是页面在内存里被丢掉了——"+
+			"检查 flushSite 的调用时机。\n\n",
+		handled, skipped, saved, want-saved)
 }
 
 // crawler 把所有部件攥在一起。除 frontier 与 store 自带锁外，
@@ -168,22 +221,77 @@ type crawler struct {
 	mu     sync.Mutex
 	sites  map[string]*siteState
 	robots map[string]*fetch.Robots
-	stats  stats
+	// delayReported 记住哪些域已因 Crawl-delay 过长报过信：allowed 是每个
+	// URL 调一次，不去重就会把日志淹掉，而这条信息恰是排查停滞时先要看的
+	delayReported map[string]bool
+	stats         stats
+
+	trace *traceWriter
+}
+
+// traceWriter 逐行记请求时刻。多 worker 并发写，故自带锁。
+type traceWriter struct {
+	mu sync.Mutex
+	f  *os.File
+	bw *bufio.Writer
+}
+
+func openTrace(path string) (*traceWriter, error) {
+	if path == "" {
+		return nil, nil
+	}
+	f, err := os.Create(path)
+	if err != nil {
+		return nil, err
+	}
+	return &traceWriter{f: f, bw: bufio.NewWriter(f)}, nil
+}
+
+func (t *traceWriter) req(host, url string, at time.Time) {
+	if t == nil {
+		return
+	}
+	t.mu.Lock()
+	defer t.mu.Unlock()
+	fmt.Fprintf(t.bw, "%s\t%s\t%s\n", at.Format(time.RFC3339Nano), host, url)
+}
+
+func (t *traceWriter) Close() error {
+	if t == nil {
+		return nil
+	}
+	t.mu.Lock()
+	defer t.mu.Unlock()
+	if err := t.bw.Flush(); err != nil {
+		t.f.Close()
+		return err
+	}
+	return t.f.Close()
 }
 
 type siteState struct {
-	fetched  int  // 本域已抓页数
-	articles int  // 本域已确认的正文页数
-	seeded   bool // 首页是否已处理过（漏斗只跑一次）
-	flushed  bool // 收尾是否已做过
+	fetched   int  // 本域已抓页数
+	articles  int  // 本域已确认的正文页数
+	seeded    bool // 首页是否已处理过（漏斗只跑一次）
+	flushed   bool // 是否**至少**收过一次尾，只用于统计口径
+	targetMet bool // 已够 perHost 篇正文，本域剩余队列已丢弃（只丢一次）
+	// failStreak 是该域连续抓取失败的次数，成功一次即清零。见 noteHostFailure。
+	failStreak int
 
-	// pages 攒着本域已抽取的页面，等这个域爬完再统一做跨页清洗并落盘。
+	// tm 是本域学到的模板，学过就留着给后续每一批复用。
+	//
+	// 一个域的一生不只有一次收尾：先被别的站发现、爬完、排空、收尾，之后
+	// 又被另一个站发现，于是再次入队、再抓一批、再次排空。模板是域名级的
+	// 量，第二批页面没有理由用不上第一批学到的它。
+	tm *extract.Templates
+
+	// pages 攒着本域已抽取、尚未落盘的页面。
 	//
 	// 之所以不逐页落盘：跨页模板过滤是**域名级统计量**——「这段文字是这篇文章
 	// 的内容还是这个站的页脚」，单看一页永远判断不了，必须等同域的多页都到手。
-	// 而调度器保证同一域串行，一个域的页面本来就会在一段时间内陆续回来，攒着
-	// 几乎不占内存（每域十余页 × 每页千余字符）。域的边界由 frontier.Done 的
-	// 返回值给出，那是唯一知道「这个域一页不剩了」的地方。
+	// 而调度器保证同一域串行，攒着几乎不占内存（每域十余页 × 每页千余字符）。
+	//
+	// 但**不能只靠「排空」这一个时机落盘**。见 flushSite 的说明。
 	pages []pageOut
 }
 
@@ -195,6 +303,8 @@ type pageOut struct {
 
 type stats struct {
 	pages, articles, empty, failed, skipped, robotsBlocked int64
+	delayBlocked, hostAbandoned                            int64
+	targetMet, dropped                                     int64
 	sitesFlushed                                           int64
 	bytes                                                  int64
 	contentChars, linkChars, pageChars                     int64
@@ -209,6 +319,26 @@ func (c *crawler) add(urls []string) int {
 		fmt.Fprintf(os.Stderr, "warn: 队列持久化失败: %v\n", err)
 	}
 	return c.fr.Add(urls...)
+}
+
+// stopOnCancel 让 ctx 一取消就主动关掉任务通道，不要等队列自然排空。
+//
+// worker 是在 `range c.fr.Tasks()` 上等的，而这个通道只在队列排空时才关；
+// 队列里完全可能排着某个域几十分钟后的下一次请求——收到 SIGTERM 时最常见
+// 的恰恰是这个状态。于是 wg.Wait() 永远不返回、flushRemaining 永远不执行、
+// 进程挂着不退，只能 kill -9，内存里那批页面陪葬。
+//
+// 实测：一个已经抓到 15584 页的进程收到 SIGTERM 后原地停了二十多分钟、
+// 一页没落盘，最后是 SIGKILL 收的场。「能优雅退出」不是锦上添花——只存
+// 抽取结果、不存原始 HTML 这个取舍，全部押在「收尾那一步一定会跑到」上。
+//
+// 单独拎成方法是为了能被测试直接调用：停机这条路径的价值全在「真的会跑到」，
+// 测试里重抄一遍接线就只能证明那份抄写是对的。
+func (c *crawler) stopOnCancel(ctx context.Context) {
+	go func() {
+		<-ctx.Done()
+		c.fr.Close()
+	}()
 }
 
 func (c *crawler) work(ctx context.Context) {
@@ -242,20 +372,27 @@ func (c *crawler) handle(ctx context.Context, t frontier.Task) {
 	}
 
 	if ok, path := c.allowed(ctx, t.Host, t.URL); !ok {
-		atomic.AddInt64(&c.stats.robotsBlocked, 1)
-		fmt.Fprintf(os.Stderr, "robots 禁止，跳过: %s%s\n", t.Host, path)
+		if c.delayBlockedHost(t.Host) {
+			// 原因已经在 noteDelayBlocked 里逐域报过一次，这里不再重复刷屏
+			atomic.AddInt64(&c.stats.delayBlocked, 1)
+		} else {
+			atomic.AddInt64(&c.stats.robotsBlocked, 1)
+			fmt.Fprintf(os.Stderr, "robots 禁止，跳过: %s%s\n", t.Host, path)
+		}
 		return
 	}
 
-	res, err := c.client.Get(ctx, t.URL)
+	res, err := c.doGet(ctx, t.Host, t.URL)
 	if err != nil {
 		if ctx.Err() != nil {
 			return
 		}
 		atomic.AddInt64(&c.stats.failed, 1)
 		fmt.Fprintf(os.Stderr, "抓取失败 %s: %v\n", t.URL, err)
+		c.noteHostFailure(t.Host)
 		return
 	}
+	c.clearHostFailure(t.Host)
 
 	// 抓取时就应用跨页学到的站点模板；随后把本页的 meta_title 交给学习器，
 	// 供同域后续页面使用。这是一个在线学习过程：同域越往后越准。
@@ -285,7 +422,17 @@ func (c *crawler) handle(ctx context.Context, t frontier.Task) {
 
 	// 判「是不是正文页」用的是**清洗前**的长度：这一步要即时反馈给漏斗，
 	// 决定本域还要不要再抓候选，等不到域级收尾。
+	//
+	// 两个条件回答的是两个不同的问题，缺一不可：
+	//   !NoArticle  算法层面「这一页有没有正文」——纯中文阈值与站点规则
+	//               做不了这个判断，所以它归 extract 包，那里能同时看到
+	//               选中容器的语义、链接密度与字符数。
+	//   minContent  语料层面「够不够长才值得收」——这是策略，随用途变，
+	//               所以它留在命令行参数里。
+	// 过去只有后者，等于拿一个长度阈值去兼任两件事：菜单页只要够长就被当成
+	// 文章收进来（263 企业邮 2164 字符就是这么进来的）。
 	isArticle := exErr == nil &&
+		!out.NoArticle &&
 		out.ContentChars >= c.cfg.minContent &&
 		out.LinkRate <= c.cfg.maxLinkRt
 
@@ -306,33 +453,80 @@ func (c *crawler) handle(ctx context.Context, t frontier.Task) {
 		s.seeded = true
 		discovered = c.funnel(t.Host, t.URL, res.HTML, s)
 	}
+
+	c.stopHostIfSatisfied(t.Host, s)
 }
 
-// flushSite 在一个域爬完之后做收尾：学跨页模板、清洗正文、落盘。
+// stopHostIfSatisfied 在本域已收够正文页时丢掉它剩下的候选队列。
+//
+// 过去 -per-host 只是被解析、被打印在启动横幅里，然后就被忘了：
+// 每个域一律把 budget（默认 12）条候选全部抓完，哪怕早就拿到了目标数量的
+// 正文页。这是纯粹的浪费——每条都要占该域一个时间片（默认 1.5 秒的礼貌
+// 间隔），而这一轮的瓶颈恰恰就是「域数 × 每域请求数 × 间隔 ÷ worker 数」。
+//
+// 丢弃的是**队列**，已经抓到的页面照常收尾落盘：Abandon 之后队列变空，
+// 紧接着的 Done 就会返回「本域已排空」，flushSite 照常跑。
+//
+// 单独拎出来是为了让它可测：这一段的判断条件（perHost>0、已够数、还没收过手）
+// 与副作用（Abandon + 计数）如果散在 handle 尾部，测试就只能把条件再抄一遍，
+// 那样证明的只是抄写没写错。
+func (c *crawler) stopHostIfSatisfied(host string, s *siteState) {
+	if c.cfg.perHost <= 0 || s.articles < c.cfg.perHost || s.targetMet {
+		return
+	}
+	s.targetMet = true
+	if dropped := c.fr.Abandon(host); dropped > 0 {
+		atomic.AddInt64(&c.stats.targetMet, 1)
+		atomic.AddInt64(&c.stats.dropped, int64(dropped))
+	}
+}
+
+// flushSite 把一个域**当前攒下的**页面收尾落盘：学跨页模板、清洗正文、写文件。
 //
 // 这是「只存抽取结果、不存原始 HTML」能成立的关键一步——跨页统计所需的
 // 上下文（同域多页的正文）此刻全在内存里，用完即弃，不必落盘再读回来。
 //
 // 落盘的数值一律按**清洗后**的正文重算，保证产物文件里 main_content 的长度
 // 与 content_chars 对得上；若照搬抓取时的旧值，读产物的人会发现两者矛盾。
+//
+// **它可以被同一个域调用多次，而且必须可以。** 曾经这里用 `s.flushed` 做
+// 一次性闩锁，理由是「一个域只排空一次」——这个前提是错的：一个域先被 A 站
+// 发现、爬完、排空、收尾，之后又被 B 站发现，于是再次入队、再抓一批、再次
+// 排空。第二批页面在第 289 行照常 append 进 s.pages，到收尾时却被闩锁挡回去，
+// 既没落盘、也不报错（Save 根本没被调用，所以「落盘失败」计数是 0）——
+// 数据静默消失。实测一轮 15584 页的爬取只落盘 315 行，账面上却一切正常。
+//
+// 现在的语义是「把手上这批写完」，模板只学一次、之后每批复用；统计口径上的
+// sitesFlushed 仍然只在第一次收尾时加一，它数的是「收过尾的域」而不是「收尾次数」。
 func (c *crawler) flushSite(host string) {
 	c.mu.Lock()
 	s := c.sites[host]
-	if s == nil || s.flushed || len(s.pages) == 0 {
+	if s == nil || len(s.pages) == 0 {
 		c.mu.Unlock()
 		return
 	}
+	first := !s.flushed
 	s.flushed = true
 	pages := s.pages
 	s.pages = nil // 尽早交还给 GC：收尾期间该域不会有新页面进来
+	tm := s.tm
 	c.mu.Unlock()
 
 	if !c.cfg.noTemplates {
-		contents := make([]string, len(pages))
-		for i := range pages {
-			contents[i] = pages[i].res.MainContent
+		if tm == nil {
+			contents := make([]string, len(pages))
+			for i := range pages {
+				contents[i] = pages[i].res.MainContent
+			}
+			// LearnTemplates 自己带门槛（tmplMinPages），页数不够会返回 nil，
+			// 那时不缓存，留到页数够了的那一批再学。
+			if tm = extract.LearnTemplates(contents); tm != nil {
+				c.mu.Lock()
+				s.tm = tm
+				c.mu.Unlock()
+			}
 		}
-		if tm := extract.LearnTemplates(contents); tm != nil {
+		if tm != nil {
 			for i := range pages {
 				cleaned := tm.Strip(pages[i].res.MainContent)
 				if cleaned == pages[i].res.MainContent {
@@ -363,7 +557,9 @@ func (c *crawler) flushSite(host string) {
 	atomic.AddInt64(&c.stats.contentChars, contentChars)
 	atomic.AddInt64(&c.stats.linkChars, linkChars)
 	atomic.AddInt64(&c.stats.pageChars, pageChars)
-	atomic.AddInt64(&c.stats.sitesFlushed, 1)
+	if first {
+		atomic.AddInt64(&c.stats.sitesFlushed, 1)
+	}
 }
 
 // flushRemaining 在所有 worker 退出后兜底收尾。
@@ -375,7 +571,7 @@ func (c *crawler) flushRemaining() {
 	c.mu.Lock()
 	hosts := make([]string, 0, len(c.sites))
 	for h, s := range c.sites {
-		if !s.flushed && len(s.pages) > 0 {
+		if len(s.pages) > 0 { // 不看 s.flushed：收过尾的域也可能又攒下了新的一批
 			hosts = append(hosts, h)
 		}
 	}
@@ -412,16 +608,114 @@ func (c *crawler) funnel(host, pageURL, htmlStr string, s *siteState) []string {
 	return out
 }
 
-// allowed 查 robots.txt。结果按域缓存；首次访问该域时才真正拉取。
+// doGet 是爬虫发出**任何** HTTP 请求的唯一出口：先过本域的时间闸，再记 trace，
+// 最后才真正发出去。
 //
-// 与真实抓取共享同一条串行路径：这个请求也发生在该域独占 worker 的期间，
-// 所以不会绕过每域限速。
+// 把「过闸」和「记 trace」绑进同一个函数，是为了让「每个请求都受每域限速约束、
+// 且每个请求都留痕」成为结构上的保证，而不是靠调用方自觉。robots.txt 曾经就是
+// 这样漏掉的：它由 handle 在页面请求之前顺手发出，看起来还在该域独占的时间片里，
+// 实际上完全没等间隔，换协议重试时更是两个请求背靠背。-trace 一量就露馅。
+func (c *crawler) doGet(ctx context.Context, host, rawURL string) (*fetch.Result, error) {
+	if err := c.fr.Gate(ctx, host); err != nil {
+		return nil, err
+	}
+	c.trace.req(host, rawURL, time.Now())
+	return c.client.Get(ctx, rawURL)
+}
+
+// maxHostDelay 是愿意照做的 Crawl-delay 上限，超过就放弃整个域。
+//
+// 这个值只影响极少数站点：常见的 Crawl-delay 是 1~30 秒，都在上限之内，
+// 照做即可。设上限针对的是那些声明了小时级间隔的站——照做意味着这一轮爬虫
+// 永远结束不了，而不照做又不诚实，所以第三条路是不去。
+//
+// 顺带一提，「为什么这轮爬取不结束」这类问题过去在日志里完全看不出来，
+// 因为调度器只是安静地睡在堆顶那个域的 nextAt 上，没有任何一处会报。
+const maxHostDelay = 60 * time.Second
+
+// noteDelayBlocked 记录一个因为 Crawl-delay 过长而放弃的域，同一域只报一次。
+//
+// 去重是必要的：allowed 每个 URL 都要调一次，1067 个域里哪怕只有几个命中，
+// 不去重也会把日志淹掉，而这条信息恰恰是排查停滞时首先要看的。
+func (c *crawler) noteDelayBlocked(host string, d time.Duration) {
+	c.mu.Lock()
+	if c.delayReported[host] {
+		c.mu.Unlock()
+		return
+	}
+	c.delayReported[host] = true
+	c.mu.Unlock()
+
+	fmt.Fprintf(os.Stderr, "Crawl-delay %s 超过上限 %s，放弃该域: %s\n", d, maxHostDelay, host)
+}
+
+// noteHostFailure 记一次抓取失败；连续失败到阈值就放弃这个域的剩余队列。
+//
+// 域名解析不了、整站 5xx、连接被拒的时候，队列里剩下的每条 URL 都注定失败，
+// 却各自要付一次 timeout。与其一条条撞过去，不如认账走人——这是「抓不到就
+// 跳过」在域一级的形式，比只跳过单条 URL 省得多。
+//
+// 阈值默认 2 而不是 1：单次失败不足定罪，网络抖动很常见；连续两次基本就能
+// 说明这个域此刻确实不可达。放弃的是**队列**，已经抓到的页面照常落盘。
+func (c *crawler) noteHostFailure(host string) {
+	if c.cfg.maxHostFailures <= 0 {
+		return
+	}
+	c.mu.Lock()
+	s := c.sites[host]
+	if s == nil {
+		s = &siteState{}
+		c.sites[host] = s
+	}
+	s.failStreak++
+	n := s.failStreak
+	c.mu.Unlock()
+
+	if n < c.cfg.maxHostFailures {
+		return
+	}
+	if dropped := c.fr.Abandon(host); dropped > 0 {
+		atomic.AddInt64(&c.stats.hostAbandoned, 1)
+		fmt.Fprintf(os.Stderr, "连续失败 %d 次，放弃该域剩余 %d 条: %s\n", n, dropped, host)
+	}
+}
+
+// clearHostFailure 在一页抓成功之后清零连续失败计数。
+func (c *crawler) clearHostFailure(host string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if s := c.sites[host]; s != nil {
+		s.failStreak = 0
+	}
+}
+
+// delayBlockedHost 报告某个域是否因 Crawl-delay 过长被放弃。
+// 调用方据此把「我们主动不去」和「robots 不许去」分开计数——两者都是跳过，
+// 但原因不同，混在一起就再也分不清一轮爬取里各占多少。
+func (c *crawler) delayBlockedHost(host string) bool {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	return c.delayReported[host]
+}
+
+// allowed 查 robots.txt。结果按域缓存；首次访问该域时才真正拉取。
+// 拉取走 doGet，和页面请求一样过闸、一样留痕。
 func (c *crawler) allowed(ctx context.Context, host, rawURL string) (bool, string) {
 	rb := c.robotsFor(ctx, host)
 	if rb == nil {
 		return true, ""
 	}
 	if d := rb.Delay(); d > 0 {
+		// 站点声明的间隔超过我们能接受的上限，就**整个域都不去**，而不是照做。
+		// 两条路都礼貌，但「照做一个 3600 秒的间隔」会让整轮爬取停在这一台上
+		// 等它——实测就是这样挂了一个多小时：queue=6、inflight=0、日志一行不响，
+		// 因为调度协程只是安静地睡在堆顶那个域的 nextAt 上。
+		// 与其把「一轮爬取能不能结束」交给 1067 个站里最保守的那个声明，
+		// 不如尊重它的意思：它不想被爬得比这更快，那我们就不爬。
+		if d > maxHostDelay {
+			c.noteDelayBlocked(host, d)
+			return false, "/"
+		}
 		c.fr.SetHostDelay(host, d)
 	}
 	u, err := url.Parse(rawURL)
@@ -454,10 +748,11 @@ func (c *crawler) robotsFor(ctx context.Context, host string) *fetch.Robots {
 }
 
 func (c *crawler) fetchRobots(ctx context.Context, host string) *fetch.Robots {
-	scheme := "http"
-	res, err := c.client.Get(ctx, scheme+"://"+host+"/robots.txt")
+	u := "http://" + host + "/robots.txt"
+	res, err := c.doGet(ctx, host, u)
 	if err != nil || res.StatusCode != 200 {
-		res, err = c.client.Get(ctx, "https://"+host+"/robots.txt")
+		u = "https://" + host + "/robots.txt"
+		res, err = c.doGet(ctx, host, u)
 	}
 	if err != nil || res.StatusCode != 200 {
 		return nil // 拿不到 robots 视为无限制
@@ -498,10 +793,17 @@ func (c *crawler) printProgress(w io.Writer) {
 	if el > 0 {
 		rate = float64(pages) / el
 	}
-	fmt.Fprintf(w, "[%s] pages=%d articles=%d hosts=%d queue=%d inflight=%d %.1f pages/s 失败=%d 跳过=%d\n",
+	fmt.Fprintf(w, "[%s] pages=%d articles=%d hosts=%d queue=%d inflight=%d %.1f pages/s 失败=%d 跳过=%d",
 		time.Now().Format("15:04:05"), pages, atomic.LoadInt64(&c.stats.articles),
 		hosts, queued, inflight, rate,
 		atomic.LoadInt64(&c.stats.failed), atomic.LoadInt64(&c.stats.skipped))
+
+	// 还要等很久才发下一个请求时把它写出来。否则页面数长时间不动、queue 又很小，
+	// 看起来就是卡死，而实际上只是某个域在按自己声明的间隔慢慢等。
+	if wait := c.fr.NextWait(); wait >= 30*time.Second {
+		fmt.Fprintf(w, " 下次请求还要等 %s", wait.Round(time.Second))
+	}
+	fmt.Fprintln(w)
 }
 
 func (c *crawler) printFinal(w io.Writer) {
@@ -524,6 +826,10 @@ func (c *crawler) printFinal(w io.Writer) {
 	fmt.Fprintf(w, "抽取为空    %d\n", atomic.LoadInt64(&c.stats.empty))
 	fmt.Fprintf(w, "抓取失败    %d\n", atomic.LoadInt64(&c.stats.failed))
 	fmt.Fprintf(w, "robots 拒绝 %d\n", atomic.LoadInt64(&c.stats.robotsBlocked))
+	fmt.Fprintf(w, "Crawl-delay 过长放弃 %d\n", atomic.LoadInt64(&c.stats.delayBlocked))
+	fmt.Fprintf(w, "连续失败放弃的域 %d\n", atomic.LoadInt64(&c.stats.hostAbandoned))
+	fmt.Fprintf(w, "已够 %d 篇而收手的域 %d（省下 %d 次请求）\n",
+		c.cfg.perHost, atomic.LoadInt64(&c.stats.targetMet), atomic.LoadInt64(&c.stats.dropped))
 	fmt.Fprintf(w, "续爬跳过    %d\n", atomic.LoadInt64(&c.stats.skipped))
 	fmt.Fprintf(w, "正文链接密度 %.4f（越低越干净）\n", linkRate)
 	fmt.Fprintf(w, "总页面字符  %d，正文占比 %.2f\n",

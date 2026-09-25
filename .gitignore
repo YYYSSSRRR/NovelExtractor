@@ -1,11 +1,7 @@
-# 构建产物
-/web-extract
-/crawler
-/extractor
-/seeds
-cmd/crawler/crawler
-cmd/extractor/extractor
-cmd/seeds/seeds
+# 构建产物。四个二进制统一放 bin/，不散在仓库根目录——
+# cmd/eval 的产物若叫 ./eval，就会和它的输出目录 eval/ 撞名，
+# 表现为 `mkdir eval: not a directory`，白跑一轮抓取。
+/bin/
 *.test
 *.out
 *.prof
@@ -16,10 +12,19 @@ crawl.log
 data/queue.jsonl
 data/tmp/
 
+# 数据目录的排他锁文件。它必须留在磁盘上（flock 锁的是 inode，
+# 删掉会让下一个进程在一个新 inode 上加锁，互斥当场失效），
+# 但内容毫无意义，空文件一个
+data/crawler.lock
+
 # 注意：以下**保留**在仓库里，它们是面试官要看的证据
-#   data/pages.jsonl       爬取产物：一行一页的标题与正文
-#   eval/                  对比实验结果表
-#   bench/                 性能基准输出
+#   data/pages.jsonl       交付语料：一行一页的标题与正文，由 scripts/sample.py 抽样自全量产物
+#   eval/                  对比实验结果表、小规模验证现场
+#   seeds/                 种子域名表
+#
+# 以下刻意**不入库**，README 里引用它们的地方都注明了「需重跑才能复核」：
+#   crawl.log              全量爬取的原始进度日志，184KB 且每次运行都不同
+#   cpu.prof / *.test      pprof 采样文件与被 profile 的测试二进制，体积大且可重建
 
 # 系统
 .DS_Store
