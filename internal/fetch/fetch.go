@@ -60,6 +60,19 @@ func New(ua string, timeout time.Duration, maxBytes int64) *Client {
 	}
 }
 
+// SetRetries 调整失败重试次数，返回自身以便链式构造。
+//
+// 抓取正文时重试是划算的——一次网络抖动不该让这个 URL 白丢。但批量探测
+// 可达性时正相反：探测只关心「活着没有」，重试既不会改变结论，又让每个
+// 死域名都付出 (retries+1) × timeout 的代价，整批探测的墙钟时间直接翻三倍。
+func (c *Client) SetRetries(n int) *Client {
+	if n < 0 {
+		n = 0
+	}
+	c.retries = n
+	return c
+}
+
 // Get 抓取一个 URL 并解码成 UTF-8。
 //
 // 只对「可能自愈」的失败重试：网络抖动、5xx、429。4xx 一律不重试——

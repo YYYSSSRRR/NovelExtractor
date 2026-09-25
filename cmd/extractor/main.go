@@ -12,6 +12,9 @@
 // 吞吐设计：按批读取（默认 256 行）→ 批内并行抽取 → 按原序写出。
 // 既拿到多核并行，又把内存占用钉在「批大小 × 单页大小」这个上界内，
 // 不需要把整个输入读进内存。
+//
+// 用 -data 指向爬取产物目录时，改为直接消费爬虫落盘的 HTML，产出同一份
+// JSONL。爬虫的 manifest 只是索引、不含正文，所以最终交付物必须由这一步生成。
 package main
 
 import (
@@ -22,6 +25,7 @@ import (
 	"io"
 	"net/url"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
@@ -56,6 +60,8 @@ func main() {
 	var opt extract.Options
 	var batch int
 	var showStats, noCrossPage bool
+	var dataDir string
+	flag.StringVar(&dataDir, "data", "", "改为消费爬取产物目录（含 manifest.jsonl 与 raw/），而不是 stdin")
 	flag.BoolVar(&opt.DisablePunctGate, "no-punct", false, "消融：关闭标点率因子")
 	flag.BoolVar(&opt.DisableLinkPenalty, "no-link", false, "消融：关闭链接密度惩罚")
 	flag.BoolVar(&opt.DisablePropagation, "no-propagate", false, "消融：关闭祖先累积（退化为选单块最高分）")
@@ -73,8 +79,16 @@ func main() {
 		learner = extract.NewChromeLearner()
 	}
 
+	in := io.Reader(os.Stdin)
+	if dataDir != "" {
+		rc := dataReader(dataDir)
+		defer rc.Close()
+		in = rc
+		fmt.Fprintf(os.Stderr, "从爬取产物读取：%s\n", dataDir)
+	}
+
 	var st stats
-	if err := run(os.Stdin, os.Stdout, extract.New(opt), learner, batch, &st); err != nil {
+	if err := run(in, os.Stdout, extract.New(opt), learner, batch, &st); err != nil {
 		fmt.Fprintf(os.Stderr, "extractor: %v\n", err)
 		os.Exit(1)
 	}
@@ -82,6 +96,57 @@ func main() {
 	if showStats {
 		reportStats(os.Stderr, &st)
 	}
+}
+
+// dataReader 把爬取产物目录伪装成一个 JSONL 输入流。
+//
+// 这样重抽完全复用 stdin 那条路径——分批、批内并行、跨页模板学习、原序写出
+// 一行都不用改。若另写一条「从目录读」的路径，两份实现迟早会漂移，
+// 而它们本该产出完全相同的结果。
+func dataReader(dir string) io.ReadCloser {
+	pr, pw := io.Pipe()
+	go func() { pw.CloseWithError(streamData(dir, pw)) }()
+	return pr
+}
+
+// streamData 逐行读 manifest、逐页读回落盘的 HTML，编码成输入格式写进管道。
+//
+// 单页读失败只跳过、不中断：几千页里总有落盘不完整或被清理掉的，
+// 不该因为一页就让整轮重抽失败。
+func streamData(dir string, w io.Writer) error {
+	f, err := os.Open(filepath.Join(dir, "manifest.jsonl"))
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	sc := bufio.NewScanner(f)
+	sc.Buffer(make([]byte, 0, 1<<20), 16<<20)
+
+	for sc.Scan() {
+		var e struct {
+			URL  string `json:"url"`
+			Path string `json:"path"`
+		}
+		if err := json.Unmarshal(sc.Bytes(), &e); err != nil {
+			continue
+		}
+		if e.URL == "" || e.Path == "" {
+			continue
+		}
+		raw, err := os.ReadFile(filepath.Join(dir, e.Path))
+		if err != nil {
+			continue
+		}
+		b, err := json.Marshal(record{URL: e.URL, HTML: string(raw)})
+		if err != nil {
+			continue
+		}
+		if _, err := w.Write(append(b, '\n')); err != nil {
+			return err
+		}
+	}
+	return sc.Err()
 }
 
 func reportStats(w io.Writer, st *stats) {

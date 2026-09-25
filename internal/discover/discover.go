@@ -120,9 +120,20 @@ func LooksLikeArticle(rawURL string) bool {
 	}
 	p := strings.ToLower(u.Path)
 
-	// 静态资源与二进制：按扩展名直接排除
-	for _, ext := range []string{".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg",
-		".css", ".js", ".ico", ".pdf", ".zip", ".rar", ".mp4", ".mp3", ".woff", ".woff2"} {
+	// 静态资源、二进制与文档：按扩展名直接排除。
+	//
+	// 网银、网银助手这类页面上挂的 .exe 下载链一度被当成候选正文页抓了下来
+	// （实测 4 个 .exe + 1 个 .xlsx），既浪费抓取预算，又会污染语料。
+	for _, ext := range []string{
+		".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".bmp", ".ico",
+		".css", ".js", ".json", ".xml",
+		".pdf", ".zip", ".rar", ".7z", ".tar", ".gz",
+		".mp4", ".mp3", ".avi", ".mov", ".flv", ".wmv", ".mkv",
+		".woff", ".woff2", ".ttf", ".eot",
+		".exe", ".msi", ".dmg", ".pkg", ".apk", ".ipa", ".deb", ".rpm",
+		".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".csv",
+		".swf", ".iso", ".bin",
+	} {
 		if strings.HasSuffix(p, ext) {
 			return false
 		}

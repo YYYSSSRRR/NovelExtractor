@@ -1,7 +1,11 @@
 # 构建产物
 /web-extract
+/crawler
+/extractor
+/seeds
 cmd/crawler/crawler
 cmd/extractor/extractor
+cmd/seeds/seeds
 *.test
 *.out
 *.prof
