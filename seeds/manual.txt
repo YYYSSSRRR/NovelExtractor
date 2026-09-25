@@ -1,0 +1,89 @@
+# 人工兜底清单
+#
+# 目录站自动扩散回来的域名以商业站、导航站为主，体裁分布是失控的。这份清单
+# 存在的唯一目的是**保证体裁覆盖**：题目明确要求「不只有小说，还有新闻、
+# 问答等多种样式」，那就必须有确定性的几个问答站、百科站、论坛站在里面。
+#
+# 一行一个域名或 URL，# 开头为注释。可达性统一由 -probe 把关，
+# 所以这里宁可多写，死站会被自动剔除。
+
+# ── 新闻：中央媒体 ───────────────────────────────
+www.gov.cn
+www.people.com.cn
+www.xinhuanet.com
+www.chinanews.com.cn
+www.cctv.com
+www.chinadaily.com.cn
+www.gmw.cn
+www.china.com.cn
+www.youth.cn
+www.ce.cn
+
+# ── 新闻：市场化媒体 ─────────────────────────────
+www.thepaper.cn
+www.yicai.com
+www.caixin.com
+www.jiemian.com
+www.21jingji.com
+www.nbd.com.cn
+www.eeo.com.cn
+www.stcn.com
+www.36kr.com
+www.ithome.com
+www.infoq.cn
+www.solidot.org
+www.tmtpost.com
+www.huxiu.com
+
+# ── 新闻：地方站 ─────────────────────────────────
+www.hinews.cn
+www.yunnan.cn
+www.southcn.com
+www.jxnews.com.cn
+www.dzwww.com
+www.hnrb.cn
+www.northnews.cn
+
+# ── 问答 / 知识 ──────────────────────────────────
+www.zybang.com
+www.guokr.com
+iask.sina.com.cn
+www.baike.com
+zh.wikipedia.org
+www.wikiwand.com
+
+# ── 论坛 / 社区 ──────────────────────────────────
+www.v2ex.com
+bbs.hupu.com
+www.newsmth.net
+bbs.tianya.cn
+www.19lou.com
+bbs.tiexue.net
+www.oschina.net
+
+# ── 博客 / 技术 ──────────────────────────────────
+www.cnblogs.com
+blog.csdn.net
+www.runoob.com
+www.liaoxuefeng.com
+juejin.cn
+
+# ── 政府 / 教育（结构规范、robots 宽松，是最好的非小说语料）──
+www.moe.gov.cn
+www.mot.gov.cn
+www.stats.gov.cn
+www.customs.gov.cn
+www.pbc.gov.cn
+www.tsinghua.edu.cn
+www.pku.edu.cn
+www.fudan.edu.cn
+www.nju.edu.cn
+www.zju.edu.cn
+news.tsinghua.edu.cn
+
+# ── 财经 / 健康 / 生活 ───────────────────────────
+www.eastmoney.com
+www.10jqka.com.cn
+www.dxy.cn
+www.39.net
+www.xiangha.com
