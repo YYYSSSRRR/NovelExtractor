@@ -70,6 +70,14 @@ type Result struct {
 	PageLinkRate float64
 	// ContainerTag 是选中容器的标签名，排查个案时有用。
 	ContainerTag string
+
+	// NoArticle 表示这一页**根本没有正文**，而不是「正文质量差」。
+	//
+	// 判据见 looksLikeArticle，全是结构性的。为 true 时 MainContent 与
+	// ContentChars 一律是零值——上面那点文字不是文章，是整页样板（菜单、列表、
+	// 页眉），它就不该以「正文」的名义交出去。要弄清为什么被判没了，看
+	// ContainerTag / LinkRate / PageChars 这三个统计量。
+	NoArticle bool
 }
 
 // Extractor 可复用。内部无可变状态，可安全并发调用。
@@ -139,5 +147,19 @@ func (e *Extractor) ExtractWithChrome(pageURL, htmlStr string, ch Chrome) (Resul
 	content = dropLeadingTitleLine(content, title)
 	res.MainContent = content
 	res.ContentChars = countContentChars(content)
+
+	// 判定放在最后：要用的四个量（容器、链接密度、字符数）到这里才齐，
+	// 而且必须在下面清零 ContentChars 之前做。
+	if !looksLikeArticle(&res) {
+		res.NoArticle = true
+		// 契约：MainContent 是「这一页的正文」，这一页没有正文，它就是空的。
+		//
+		// 也可以选择留着那段样板文字、让调用方自己看 NoArticle 决定要不要——
+		// 但那样每一个调用方都得记得判，忘掉的那个就会把整页菜单当成文章
+		// 收进语料，而它恰恰是这条判据要防的事。诊断信息并没有丢：容器标签、
+		// 链接密度、整页字符数都留在 Result 的统计字段里，排查时看那些就够。
+		res.MainContent = ""
+		res.ContentChars = 0
+	}
 	return res, nil
 }

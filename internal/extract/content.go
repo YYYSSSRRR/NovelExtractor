@@ -148,6 +148,60 @@ func pickContainer(accum map[*html.Node]float64, stats map[*html.Node]*textStats
 	return best
 }
 
+// nonProseAtom 列出「即便得分最高也不可能是正文」的元素。
+//
+// 与 dropSubtree 同源：这些标签的含义由 HTML 规范定义，任何站点上都一致，
+// 用它们不违反「算法不读 class/id」的约束。列表、表格、页眉是导航与版式的
+// 载体——正文可以是列表里的**一项**，但正文本身不会是整个 <ul>。
+var nonProseAtom = map[atom.Atom]bool{
+	atom.Ul: true, atom.Ol: true, atom.Dl: true, atom.Dd: true, atom.Dt: true,
+	atom.Table: true, atom.Tbody: true, atom.Thead: true, atom.Tr: true,
+	atom.Header: true, atom.Footer: true, atom.Nav: true, atom.Aside: true,
+	atom.Form: true, atom.Select: true,
+}
+
+// minArticleChars 是「短到不成句」的下限，不是「够不够进语料」的门槛。
+//
+// 取 80 这个量级是为了排除「整页只抽出来 2 个字符」「36 个字符的页眉」
+// 这类显然不是正文的结果。「正文要多长才收」是语料策略，属于调用方
+// （爬虫的 -min-content），不该由算法替它定。
+const minArticleChars = 80
+
+// looksLikeArticle 判断选中的容器是不是真的承载正文。
+//
+// 存在的理由：pickContainer 阻止的是「向上爬到 <body>」，但阻止不了 best
+// **一开始就是 <body>**。于是一个纯菜单页、列表页或工具页同样会被判出
+// 「正文」，整页样板文字就这样进了语料——实测 263 企业邮（body，2164 字符）、
+// 汽车之家车型列表（dd，130 字符）、aizhan 的链接站（ul）都是这么来的。
+//
+// 四条判据全是结构性的，没有一条是对着某个站点调的：
+//
+//	容器是 html/body   没有任何子区域在竞争中胜出，说明这一页没有正文主体
+//	容器是非散文元素    胜出的是列表/表格/页眉，即导航或版式
+//	链接密度过高        抽出来的文字以链接为主，那是导航不是文章
+//	短到不成句          见 minArticleChars
+//
+// 链接密度这一条刻意复用 skipLinkRate：渲染阶段「整块链接密度超过它即跳过」
+// 用的就是这个阈值，容器级的判断不该另立一套口径。
+//
+// 在 44 页人工标注样本（14 篇真文章 + 30 页导航/列表/工具页）上：
+// 误杀 0 篇，拦下 9 页（另有 9 页本就抽不出字符）。剩下 12 页「一个 div
+// 确实装着全页大部分文字」的站点拦不下来——那需要的是正文边界识别，
+// 不是再加一个阈值去凑，所以这里不凑。
+func looksLikeArticle(res *Result) bool {
+	switch res.ContainerTag {
+	case "", "html", "body":
+		return false
+	}
+	if nonProseAtom[atom.Lookup([]byte(res.ContainerTag))] {
+		return false
+	}
+	if res.LinkRate > skipLinkRate {
+		return false
+	}
+	return res.ContentChars >= minArticleChars
+}
+
 // isBlockElement 判定元素是否为块级，即「能独立成段」。
 //
 // 输出阶段的处理分两类：块级元素做「整块跳过」判断（导航、相关阅读、标签云
