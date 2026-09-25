@@ -1,0 +1,23 @@
+# 构建产物
+/web-extract
+cmd/crawler/crawler
+cmd/extractor/extractor
+*.test
+*.out
+*.prof
+
+# 原始语料：数千个 HTML 文件，体积大，不入库
+data/raw/
+data/tmp/
+
+# 注意：以下**保留**在仓库里，它们是面试官要看的证据
+#   data/manifest.jsonl    爬取结果索引
+#   eval/                  对比实验结果表
+#   bench/                 性能基准输出
+
+# 系统
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
