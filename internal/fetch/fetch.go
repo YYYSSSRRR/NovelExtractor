@@ -7,6 +7,7 @@ package fetch
 
 import (
 	"context"
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"io"
@@ -24,6 +25,7 @@ type Result struct {
 	URL        string
 	FinalURL   string // 跟随重定向之后的地址
 	StatusCode int
+	Proto      string // "HTTP/1.1" 等。客户端刻意关掉了 HTTP/2，留个字段可验证
 	HTML       string
 	Bytes      int
 	Elapsed    time.Duration
@@ -35,18 +37,45 @@ type Client struct {
 	hc       *http.Client
 	ua       string
 	maxBytes int64
+	timeout  time.Duration
 	retries  int
 }
 
 // New 构造客户端。maxBytes 是响应体上限——不设上限的话，一个指向大文件的
 // URL 就能把内存打满。
+//
+// 这里显式关掉 HTTP/2，两个理由：
+//
+//  1. **HTTP/2 下 Client.Timeout 会失效。** 实测被卡死过：评测跑到最后一个域
+//     时挂住两分多钟不动，kill -QUIT 打出的栈是
+//     `net/http.(*http2ClientStream).writeRequest` 里的 select，
+//     而 15s 的 Client.Timeout 始终没触发。HTTP/2 的 roundTrip 走的是
+//     stream 级的 select，Client.Timeout 那套基于连接 deadline 的取消覆盖不到它。
+//     详见 once 里再补的请求级 context 超时——两道保险都要。
+//  2. **多路复用对礼貌爬虫没有价值。** 我们对每个域本来就是串行的，
+//     HTTP/2 把多个请求塞进一条 TCP 连接，只会让「一次请求 = 一次可计时的
+//     网络往返」这个账算不清。HTTP/1.1 的连接池语义更适合这里。
+//
+// 关掉 HTTP/2 不影响可达性：HTTP/1.1 是所有服务器都支持的兜底协议。
 func New(ua string, timeout time.Duration, maxBytes int64) *Client {
 	if ua == "" {
 		ua = DefaultUA
 	}
+	tr := &http.Transport{
+		Proxy:                 http.ProxyFromEnvironment,
+		MaxIdleConns:          256,
+		MaxIdleConnsPerHost:   4,
+		IdleConnTimeout:       30 * time.Second,
+		TLSHandshakeTimeout:   10 * time.Second,
+		ResponseHeaderTimeout: timeout,
+		ExpectContinueTimeout: time.Second,
+		ForceAttemptHTTP2:     false,
+		TLSNextProto:          map[string]func(string, *tls.Conn) http.RoundTripper{},
+	}
 	return &Client{
 		hc: &http.Client{
-			Timeout: timeout,
+			Transport: tr,
+			Timeout:   timeout,
 			CheckRedirect: func(req *http.Request, via []*http.Request) error {
 				if len(via) >= 5 {
 					return errors.New("too many redirects")
@@ -56,6 +85,7 @@ func New(ua string, timeout time.Duration, maxBytes int64) *Client {
 		},
 		ua:       ua,
 		maxBytes: maxBytes,
+		timeout:  timeout,
 		retries:  2,
 	}
 }
@@ -103,6 +133,16 @@ func (c *Client) Get(ctx context.Context, rawURL string) (*Result, error) {
 
 func (c *Client) once(ctx context.Context, rawURL string) (res *Result, retryable bool, err error) {
 	start := time.Now()
+
+	// 请求级超时。Client.Timeout 在 HTTP/2 下不可靠（见 New 的注释），
+	// 这里用 context 再兜一道：context 的取消是所有 RoundTripper 都必须响应的，
+	// 与协议实现无关。两道保险叠加，单个请求的最坏耗时就被钉死在 timeout 上，
+	// 「一个请求永远挂着」这种状态不可能出现。
+	if c.timeout > 0 {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, c.timeout)
+		defer cancel()
+	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, rawURL, nil)
 	if err != nil {
@@ -153,6 +193,7 @@ func (c *Client) once(ctx context.Context, rawURL string) (res *Result, retryabl
 		URL:        rawURL,
 		FinalURL:   resp.Request.URL.String(),
 		StatusCode: resp.StatusCode,
+		Proto:      resp.Proto,
 		HTML:       string(raw),
 		Bytes:      len(raw),
 		Elapsed:    time.Since(start),
