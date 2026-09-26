@@ -204,9 +204,30 @@ accum(n) = own(n) + Σ own(直接子块) + 0.5 × Σ own(孙块)
 只向上汇入两层。若沿祖先链无限累加，最外层的整页 wrapper 必然因「包含所有内容」
 胜出，正文容器就永远选不出来——这是 naive 实现的典型失败模式。
 
+两层折半挡得住无限上溯，挡不住**一轮聚合**：`own` 只对候选块填过值，
+`<body>`/`<html>`/`<ul>`/`<tr>` 这些结构元素的 `own` 恒为 0，可它们照样能从
+直接子块拿满学分。当正文容器**没有块级子元素**时（正文用 `<br>` 分段而不是
+`<p>`，移动端小说站几乎都是这个写法），双方就调了个个儿：
+
+```
+<div class=content>  accum = own(自己)             = 3.32
+<body>               accum = 0 + own(content) + … = 4.08   ← 赢了
+```
+
+`<body>` 赢了之后被 Step 6 的 `looksLikeArticle` 按判据一（容器是 body）正确地
+判成「这一页没有正文」，正文其实好端端地在第二名待着。所以当选资格与累计拆开：
+**`accum` 谁都算，但只有 `own > 0` 的元素才有资格当选**，结构容器只负责被
+Step 5 上溯进去。
+
+这个形状不小：在 `data/novel.json` 的 801 页抽样里占 63.9%（其中 `<body>`
+独占 429 页），是那一轮 66.4% 空结果的主因；修完降到 12.9%。细节与不可回归的
+论证见 **`eval/novel_run.md`**。
+
 **Step 5 容器上溯**：父节点累积分 ≥ 自身 × 0.75（`climbRatio`）且链接密度没有明显
 恶化（允许 +0.10，`climbLinkSlack`）时取父节点，循环直到不满足。这解决的是
-「正文被多包了一层 wrapper」的常见情况。
+「正文被多包了一层 wrapper」的常见情况。上溯同时也是 Step 4 那条资格判据不会
+改坏原有结果的保证：一个结构容器当初能赢，就说明它的累积分不低于任何一个子块，
+从子块出发的上溯阈值必然满足，会原路爬回同一个容器。
 
 > 这里原本还想做**兄弟合并**（把 top candidate 的兄弟里得分接近的一并纳入，应对
 > 正文被 CSS 分栏拆开的情况），但核代码时发现根本没实现，README 却已经写上去了。
@@ -424,6 +445,13 @@ go build -o bin/eval      ./cmd/eval
 
 消融开关：`-no-punct`、`-no-link`、`-no-propagate`、`-no-cross-page`、`-keep-attribution`。
 
+对题目下发的小说数据集跑一轮的产物与逐项指标在 **`eval/novel_run.md`**：
+
+```bash
+./bin/extractor -stats < data/novel.json > data/novel_out.jsonl
+# 3473 行 / 203 个域名 → 空正文 12.87%
+```
+
 ### 种子表
 
 ```bash
@@ -620,32 +648,33 @@ $ grep -rnE "novel|chapter|ptm-|wenku" internal/extract/ | grep -vE ':[0-9]+:[[:
 
 ```
 $ go clean -testcache && go test ./...
-ok  	web-extract/cmd/crawler	9.021s
+ok  	web-extract/cmd/crawler	8.544s
 ?   	web-extract/cmd/eval	[no test files]
-?   	web-extract/cmd/extractor	[no test files]
+ok  	web-extract/cmd/extractor	1.404s
 ?   	web-extract/cmd/seeds	[no test files]
-ok  	web-extract/internal/discover	1.069s
-ok  	web-extract/internal/extract	1.748s
-ok  	web-extract/internal/fetch	3.209s
-ok  	web-extract/internal/frontier	4.809s
-ok  	web-extract/internal/seed	0.792s
-ok  	web-extract/internal/store	1.475s
+ok  	web-extract/internal/discover	1.281s
+ok  	web-extract/internal/extract	2.235s
+ok  	web-extract/internal/fetch	2.739s
+ok  	web-extract/internal/frontier	3.674s
+ok  	web-extract/internal/seed	1.713s
+ok  	web-extract/internal/store	0.577s
 ```
 
-`go vet ./...`、`gofmt -l .` 均无输出。共 63 个测试函数，分布：
+`go vet ./...`、`gofmt -l .` 均无输出。共 66 个测试函数，分布：
 
 | 包 | 测试文件 | 测试函数 |
 |---|---|---|
 | `cmd/crawler` | 5 | 11 |
+| `cmd/extractor` | 1 | 2 |
 | `internal/frontier` | 4 | 19 |
-| `internal/extract` | 6 | 12 |
+| `internal/extract` | 6 | 13 |
 | `internal/fetch` | 2 | 8 |
 | `internal/discover` | 1 | 4 |
 | `internal/seed` | 1 | 6 |
 | `internal/store` | 1 | 3 |
 
 **测试大多是回归测试，每一条都对应一个真实发生过的 bug**，注释里写了现场。
-最值得看的三条：
+最值得看的四条：
 
 - `cmd/crawler/stall_test.go` —— 一个只会超时的域必须在有限次失败之后被放弃，
   整轮爬取必须能自己结束。对应那次停在 `queue=1 inflight=0` 二十多分钟的事故。
@@ -655,6 +684,10 @@ ok  	web-extract/internal/store	1.475s
   等于各域 URL 总数之和、`state=queued` 的域恰好在堆中一次、`state=busy` 的域
   不在堆中、`state=idle` 的域必无 URL。最后一条就是那个事故的形状：有 URL 躺在
   一个不在堆里的域中，而三个公开计数怎么读都自洽。
+- `cmd/extractor/contract_test.go` —— 与外部系统之间的接口约定，不是内部实现：
+  输入几行就输出几行（坏 JSON 也占一格）、每行恰好那四个字段、stdout 只有 JSON。
+  另有一条给同域 4 页、**故意不给 `<h1>`**，断言每页的 `real_title` 都剥到只剩
+  章节名——靠 `<h1>` 是单页特征，靠跨页统计才是这题要的泛化。
 
 ### 5.6 请求不会永远挂着（HTTP/2 超时失效）
 
@@ -1245,6 +1278,15 @@ max      0.48
 见[第一节](#两个主动接受的代价)。爬虫边抓边抽，只留结果。想换算法重抽必须重爬。
 种子表和去重集合都在，重爬复现的是同一批 URL，但站点内容会变。评分方若需要离线
 复算，把 `store.Save` 加回一次写文件即可。
+
+**这条缺口已经真实兑现过一次。** 交付语料 `data/pages.jsonl` 是全量爬取那一轮
+（6.5）的产物，而 2.3 的「当选资格」判据是之后才补的。产物里只存了 `html_sha1`，
+所以**改不了**——不能拿新代码把旧语料重算一遍，只能重爬。方向上不会更糟：新判据
+在 `data/novel.json` 的 3473 页上让 1858 页从「抽不出」变成「抽得出」，而没有一页
+从「抽得出」变成「抽不出」（对照见 `eval/novel_run.md`），所以旧语料里不会有哪一行
+是新代码会拒绝的，但会有一些行本可以更长。要让语料与代码对齐，得按 6.5 重跑一轮
+爬取再抽样——这一步没有做，README 里所有基于该语料的数字（6.3/6.4/7.1/7.6/7.7/7.8）
+因此描述的都是**那一轮算法**的产出。
 
 ### 7.4 抓取失败率
 

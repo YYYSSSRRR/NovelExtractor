@@ -17,9 +17,14 @@ data/tmp/
 # 但内容毫无意义，空文件一个
 data/crawler.lock
 
+# 题目下发的小说数据集，126MB，只有输入没有产出价值。
+# 不提这条的话 `git add -A` 会把它整个吞进去。
+data/novel.json
+
 # 注意：以下**保留**在仓库里，它们是面试官要看的证据
-#   data/pages.jsonl       交付语料：一行一页的标题与正文，由 scripts/sample.py 抽样自全量产物
-#   eval/                  对比实验结果表、小规模验证现场
+#   data/novel_out.jsonl   基础题的产出：对 data/novel.json 全量抽取的结果
+#   data/pages.jsonl       进阶题的交付语料：一行一页的标题与正文，由 scripts/sample.py 抽样自全量产物
+#   eval/                  对比实验结果表、小规模验证现场、基础题跑批报告
 #   seeds/                 种子域名表
 #
 # 以下刻意**不入库**，README 里引用它们的地方都注明了「需重跑才能复核」：
