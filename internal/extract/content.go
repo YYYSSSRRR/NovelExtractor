@@ -82,6 +82,25 @@ func ownScores(stats map[*html.Node]*textStats, g gates) map[*html.Node]float64 
 // 只向上汇入两层是刻意的。若沿祖先链无限累加，最外层的整页 wrapper
 // 必然因「包含所有内容」而胜出，正文容器就永远选不出来——这是
 // naive 实现的典型失败模式。
+//
+// 但两层折半只挡住「无限上溯」，挡不住「一轮聚合」：own 只对 blockCandidate
+// 填过值，<body>/<main>/<ul> 这类结构元素的 own 恒为 0，可它们照样能从直接
+// 子块拿满学分。于是当正文容器**没有块级子元素**时（正文用 <br> 分段而不是
+// <p>，移动端小说站几乎都是这样），双方就调了个个儿：
+//
+//	<div class="content">  accum = own(自己)               = 3.32
+//	<body>                 accum = 0 + own(content) + …    = 4.08   ← 赢了
+//
+// 正文容器以自己一己之力去比「自己 + 邻居 + 半层孙子」，必然输，然后
+// looksLikeArticle 看到容器是 body 就判这页没有正文——正文其实好端端地在
+// 第二名待着。在 data/novel.json 的 801 页抽样里，旧规则下 63.9% 的页面是被
+// 这类结构容器赢走的（其中 <body> 独占 429 页），空结果率因此停在 66.4%。
+//
+// 所以当选资格与累计是两回事：**accum 谁都算，但只有自己就能承载正文的
+// 元素（own > 0）才有资格当选**。结构容器一个都不参选，它们的作用是被
+// pickContainer 上溯进去——那条路径本来就存在，而且当初能让结构容器赢的
+// 页面，其 accum 必然高于任何一个子块，上溯的 0.75 倍阈值一定满足，
+// 所以修完之后这些页面的容器与修之前完全相同，不会左右横跳。
 func accumulate(root *html.Node, own map[*html.Node]float64, g gates) (map[*html.Node]float64, *html.Node) {
 	accum := make(map[*html.Node]float64, len(own))
 	var best *html.Node
@@ -109,11 +128,14 @@ func accumulate(root *html.Node, own map[*html.Node]float64, g gates) (map[*html
 			walk(c)
 		}
 		a := own[n]
+		// 参选资格只看 own：own 恒为 0 的元素（结构容器、纯导航块）不管聚合到
+		// 多少分都不能当选。见函数注释里的反例。
+		eligible := own[n] > 0
 		if !g.noPropagate {
 			a += childSum + 0.5*grandSum
 		}
 		accum[n] = a
-		if best == nil || a > accum[best] {
+		if eligible && (best == nil || a > accum[best]) {
 			best = n
 		}
 	}

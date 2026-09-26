@@ -142,6 +142,56 @@ func TestListingPageIsNotAnArticle(t *testing.T) {
 	}
 }
 
+// 一页移动端小说站的章节页：正文**没有块级子元素**，段落之间只有 <br>，
+// 前后还各挂着一份站点模板。这是移动端小说站的主流写法，也正是
+// accumulate 里那条「当选资格」判据要处理的形状。
+//
+// 为什么它单独需要一个用例：<body> 的三个子块里，只有中间那个是正文，
+// 可 <body> 自己能把三个子块的分数全收进来，正文容器却只能拿自己那一份
+// （它没有块级子元素可汇总）。于是 <body> 以 4.08 对 3.32 赢下竞争，
+// looksLikeArticle 看到容器是 body 就把整页判成「没有正文」——而正文
+// 好端端地在第二名待着。见 content.go 的 accumulate。
+const brSegmentedChapterHTML = `<!DOCTYPE html><html><head><title>第三十七章 夜行-某某书库</title></head>
+<body>
+<div class="pagee"><span><a href="/">首页</a></span><span><a href="/book/1">某某书</a></span><span><a href="/book/1/38.htm">下章</a></span></div>
+<div class="novelinfo">「路还长着呢。」他把斗笠往下压了压，雨水顺着边沿连成一条线。<br><br>客栈的灯还亮着。掌柜的趴在柜台上打盹，听见门响也没抬头，只含糊地说了句「客房在楼上，自己挑一间」。<br><br>他挑了最里头那间。推开窗，正好能看见城门口那棵老槐树，树底下停着一辆盖着油布的马车，从傍晚到现在一动没动。<br><br>「跟了一路了。」他心想，却并不着急。有些事，等对方先动，反而看得更清楚。</div>
+<div class="footer"><div class="copyright">某某书库 版权所有 京ICP备00000000号</div></div>
+</body></html>`
+
+// TestBrSegmentedArticleIsExtracted 钉住上面那个形状。
+//
+// 断言的是两件不同的事，缺一不可：
+//
+//	抽得出来      容器不是 body，整页没有被判成无正文
+//	抽得准        <br> 的分段变成了换行，而站点模板的页眉页脚没有被裹进来
+//
+// 第二条比第一条更值钱。只放开判据、让 <body> 当选也能让第一件事成立，
+// 代价是每页都多带一份导航和版权声明——那正是 looksLikeArticle 存在的理由。
+func TestBrSegmentedArticleIsExtracted(t *testing.T) {
+	e := New(Options{})
+	res, err := e.Extract("http://book.example/1/37.htm", brSegmentedChapterHTML)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if res.NoArticle {
+		t.Fatalf("无块级子元素的章节页被判成无正文：容器=%q 链接密度=%.3f 字符数=%d",
+			res.ContainerTag, res.LinkRate, res.ContentChars)
+	}
+	if res.ContainerTag == "body" || res.ContainerTag == "html" {
+		t.Fatalf("容器退回了整页：%q", res.ContainerTag)
+	}
+	if !strings.Contains(res.MainContent, "客房在楼上") {
+		t.Errorf("正文没抽到，MainContent = %q", truncate(res.MainContent, 200))
+	}
+	if strings.Contains(res.MainContent, "京ICP备") || strings.Contains(res.MainContent, "下章") {
+		t.Errorf("站点模板被裹进了正文：%q", truncate(res.MainContent, 200))
+	}
+	// <br> 是块级边界，段落结构必须留下来——语料里丢分段等于丢信息
+	if n := strings.Count(res.MainContent, "\n"); n < 3 {
+		t.Errorf("段落结构丢了，换行只有 %d 个：%q", n, truncate(res.MainContent, 200))
+	}
+}
+
 func truncate(s string, n int) string {
 	r := []rune(s)
 	if len(r) <= n {
