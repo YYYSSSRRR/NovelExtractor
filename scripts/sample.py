@@ -12,8 +12,15 @@ data/pages.jsonl（按字节写、没有 truncate），在覆写边界上把一�
 
 用法：
 
-    git show HEAD:data/pages.jsonl > /tmp/src.jsonl
-    python3 scripts/sample.py --per-host 2 --cap 300 < /tmp/src.jsonl > data/pages.jsonl
+    ./bin/crawler -data /tmp/fullrun -seeds seeds/seeds.txt ...   # 先跑一轮全量
+    python3 scripts/sample.py --per-host 2 --cap 300 \
+        < /tmp/fullrun/pages.jsonl > data/pages.jsonl
+
+注意输入是**全量产物**，而全量产物本身不入库（几十 MB，每次都不同）。
+所以这条命令不是「拿仓库里已有的东西跑一遍」就能复现的：要复核交付语料，
+得先重跑一轮全量爬取，而站点内容会变，重跑出来的样本不会与现在这份逐行相同。
+仓库能保证的只有**规则**——同一份输入两次跑出逐字节相同的输出。当前这份
+`data/pages.jsonl` 的 md5 与构成写在 README「语料来源」一节。
 
 抽样规则（两步，各自都是确定性的，不需要随机种子）：
 

@@ -23,7 +23,7 @@ data/crawler.lock
 #   seeds/                 种子域名表
 #
 # 以下刻意**不入库**，README 里引用它们的地方都注明了「需重跑才能复核」：
-#   crawl.log              全量爬取的原始进度日志，184KB 且每次运行都不同
+#   crawl.log              全量爬取的原始进度日志，82KB 且每次运行都不同
 #   cpu.prof / *.test      pprof 采样文件与被 profile 的测试二进制，体积大且可重建
 
 # 系统
@@ -32,3 +32,8 @@ data/crawler.lock
 # IDE
 .idea/
 .vscode/
+
+# Python：scripts/sample.py 的字节码缓存。
+# 之前没写这条，跑过一次就会多出一个未跟踪又没被忽略的目录
+__pycache__/
+*.pyc
