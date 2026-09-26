@@ -21,11 +21,10 @@ data/crawler.lock
 # 不提这条的话 `git add -A` 会把它整个吞进去。
 data/novel.json
 
-# 注意：以下**保留**在仓库里，它们是面试官要看的证据
-#   data/novel_out.jsonl   基础题的产出：对 data/novel.json 全量抽取的结果
+# 注意：以下**保留**在仓库里，它们是「这活儿真跑过」的证据
+#   data/novel_out.jsonl   基础题的产出：对 data/novel.json 全量抽取的结果（md5 见 README 第四节）
 #   data/pages.jsonl       进阶题的交付语料：一行一页的标题与正文，由 scripts/sample.py 抽样自全量产物
-#   eval/                  对比实验结果表、小规模验证现场、基础题跑批报告
-#   seeds/                 种子域名表
+#   seeds/seeds.txt        全量爬取用的 1067 个种子域
 #
 # 以下刻意**不入库**，README 里引用它们的地方都注明了「需重跑才能复核」：
 #   crawl.log              全量爬取的原始进度日志，82KB 且每次运行都不同
