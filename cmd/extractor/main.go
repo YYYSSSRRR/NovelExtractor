@@ -8,6 +8,8 @@
 // 输出： {"url": "...", "meta_title": "...", "real_title": "...", "main_content": "..."}
 //
 // stdout 只出现 JSON，任何日志与告警一律走 stderr，保证管道可直接被下游消费。
+// **输入几行就输出几行**：坏 JSON 行也占一格（输出四个字段全空），
+// 这样按下标与输入配对的下游不会错位。
 //
 // 吞吐设计：按批读取（默认 256 行）→ 批内并行抽取 → 按原序写出。
 // 既拿到多核并行，又把内存占用钉在「批大小 × 单页大小」这个上界内，
@@ -144,6 +146,11 @@ type item struct {
 }
 
 // readBatch 读满一批或读到 EOF。返回已读条数与终止原因。
+//
+// 解析不了的行**占一个槽位**而不是被丢掉：输出必须与输入逐行对齐，
+// 少一行会让按下标配对的下游从那一行起全部错位。占位记录的 url 为空，
+// 抽出来就是一条四个字段全空的行，一眼能认出是坏输入。
+// 畸形 HTML 走的是另一条路（正常出行、能填的字段照填），这里只管坏 JSON。
 func readBatch(r *bufio.Reader, buf []record) (int, error) {
 	n := 0
 	for n < len(buf) {
@@ -154,10 +161,11 @@ func readBatch(r *bufio.Reader, buf []record) (int, error) {
 				var rec record
 				if json.Unmarshal(line, &rec) == nil {
 					buf[n] = rec
-					n++
 				} else {
-					fmt.Fprintf(os.Stderr, "skip malformed json line (%d bytes)\n", len(line))
+					buf[n] = record{} // 占位，保证行数对齐；见函数注释
+					fmt.Fprintf(os.Stderr, "malformed json line (%d bytes), emitted as empty record\n", len(line))
 				}
+				n++
 			}
 		}
 		if err != nil {
